@@ -1,0 +1,13 @@
+/.idea
+tests/_output/*
+tests/_output/*
+tests/_output/*
+.DS_Store
+log/*
+
+*/runtime/*
+*/error.log
+*.swp
+
+backend/web/jpush.log
+
