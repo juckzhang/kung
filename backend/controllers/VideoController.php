@@ -13,27 +13,20 @@ use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
-require '../../common/components/jpush/autoload.php';
-use JPush\Client as JPush;
+//require '../../common/components/jpush/autoload.php';
+//use JPush\Client as JPush;
 
-/**
- * Site controller
- */
 class VideoController extends BaseController
 {
-    //卡片信息管理开始{{{
-    /**
-     * 卡片列表
-     * @return string
-     */
     public function actionVideoList()
     {
         $_prePage  = ArrayHelper::getValue($this->paramData,'numPerPage');
         $_page       = ArrayHelper::getValue($this->paramData,'pageNum');
         $_keyWord  = ArrayHelper::getValue($this->paramData,'keyword');
-        $_category = ArrayHelper::getValue($this->paramData,'category',false);
-        $_recommend = ArrayHelper::getValue($this->paramData,'recommend',false);
+        $_category = ArrayHelper::getValue($this->paramData,'category');
+        $_recommend = ArrayHelper::getValue($this->paramData,'recommend');
         $_other    = ArrayHelper::getValue($this->paramData,'other',[]);
+        $_other['source_type'] = ArrayHelper::getValue($this->paramData,'source_type',1);
         $_order = $this->_sortOrder(VideoModel::tableName().'.');
         $data = VideoService::getService()->videoList($_keyWord,$_other,$_order,$_page,$_prePage,$_category,$_recommend);
         return $this->render('video-list',$data);

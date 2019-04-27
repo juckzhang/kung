@@ -57,174 +57,25 @@ class VideoService extends BackendService
     public function videoList($keyWord,$other,array $order = [],$page,$prePage,$_category,$_recommend)
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
-        //过滤出所有的条件
-        $album = ArrayHelper::getValue($other,'album');
-
         $data = ['pageCount' => 0,'dataList' => [],'dataCount' => 0];
 
         $models = $cardModels = VideoModel::find()
             ->select(VideoModel::tableName().'.*')
-            ->where(['!=','zuiying_video.status' , VideoModel::STATUS_DELETED])
+            ->where(['!=','status' , VideoModel::STATUS_DELETED])
             ->andFilterWhere(['like','title',$keyWord])
-            ->andFilterWhere(['album_id' => $album])
-            ->joinWith(['album'=>function($query) use($_category,$_recommend){
-                $query->andWhere(['is_album'=>0]);
-                if(isset($_category) && $_category)
-                    $query->andWhere(['cate_id'=>$_category]);
-
-                    //$query->andWhere("cate_id=$_category");
-                if(isset($_recommend) && $_recommend)
-                    $query->andWhere(['is_recommend'=>$_recommend]);
-
-                    //$query->andWhere("is_recommend=$_recommend");
-                $query->with('category');
-            }]);
-//            ->joinWith('album')->where("cate_id=$_category");
+            ->andFilterWhere(['cate_id' => $_category])
+            ->andFilterWhere(['source_type' => $other['source_type']])
+            ->andFilterWhere(['is_recommd' => $_recommend]);
 
         $data['dataCount'] = $models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
         $data['categorys']  = $_category;
         $data['recommends']= $_recommend;
-        
 
         if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
             $data['dataList'] = $models->orderBy($order)->limit($limit)->offset($offset)->asArray()->all();
-//        $commandQuery = clone $models;
-//        echo $commandQuery->createCommand()->getRawSql();
-//        var_dump($data);exit;
-//        var_dump($data['dataList'][0]['album']);exit;
-        foreach ($data['dataList'] as $key=>$value){
-            $user = UserModel::find()->where(['id'=>$value['album']['user_id']])->one();
-//            echo "<pre>";
-//            var_dump($user);exit();
-            if($user){
-                $data['dataList'][$key]['username'] = $user->nick_name;
-            }else{
-                $data['dataList'][$key]['username'] = 'root';
-            }
-        }
-        
-        return $data;
-    }
-
-    /*
-     * 获取可以给专辑添加的视频
-     * @param $userid
-     * @param $albumid
-     * $return array
-     */
-    public function videoToalbum($albumid,$_keyWord,$_order,$_page,$_prePage,$_category,$_recommend){
-        list($offset,$limit) = $this->parsePageParam($_page,$_prePage);
-        $album_videoid = AdretationModel::find()
-            ->select('video_id')
-            ->where(['album_id'=>$albumid])
-            ->asArray()->all();
-
-        $model = VideoModel::find()
-            ->select(VideoModel::tableName().".*")
-            ->where([VideoModel::tableName().'.status'=>VideoModel::STATUS_ACTIVE])
-            ->andFilterWhere(['like','title',$_keyWord])
-            ->joinWith(['album'=>function($query) use($_category,$_recommend){
-                $query->andWhere(['is_album'=>0]);
-                if(isset($_category) && $_category)
-                    $query->andWhere(['cate_id'=>$_category]);
-
-                //$query->andWhere("cate_id=$_category");
-                if(isset($_recommend) && $_recommend)
-                    $query->andWhere(['is_recommend'=>$_recommend]);
-
-                //$query->andWhere("is_recommend=$_recommend");
-                $query->with('category');
-            }]);
-        $data['dataCount'] = $model->count();
-        $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
-        $data['categorys']  = $_category;
-        $data['recommends']= $_recommend;
-        if($album_videoid && count($album_videoid)>0){
-            foreach($album_videoid as $value) $data_[] = $value['video_id'];
-            $model = $model->andWhere(['not in',VideoModel::tableName().'.id',$data_]);
-        }
-
-        $data['dataList'] = $model->orderBy($_order)->offset($offset)->limit($limit)->asArray()->all();
 
         return $data;
-
-    }
-
-    public function delvideoToalbum($albumid,$_keyWord,$_order,$_page,$_prePage,$_category,$_recommend){
-        list($offset,$limit) = $this->parsePageParam($_page,$_prePage);
-        $album_videoid = AdretationModel::find()
-            ->select('video_id')
-            ->where(['album_id'=>$albumid])
-            ->asArray()->all();
-
-        $model = VideoModel::find()
-            ->select(VideoModel::tableName().".*")
-            ->where([VideoModel::tableName().'.status'=>VideoModel::STATUS_ACTIVE])
-            ->andFilterWhere(['like','title',$_keyWord])
-            ->joinWith(['album'=>function($query) use($_category,$_recommend){
-                $query->andWhere(['is_album'=>0]);
-                if(isset($_category) && $_category)
-                    $query->andWhere(['cate_id'=>$_category]);
-
-                //$query->andWhere("cate_id=$_category");
-                if(isset($_recommend) && $_recommend)
-                    $query->andWhere(['is_recommend'=>$_recommend]);
-
-                //$query->andWhere("is_recommend=$_recommend");
-                $query->with('category');
-            }]);
-        $data['dataCount'] = $model->count();
-        $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
-        $data['categorys']  = $_category;
-        $data['recommends']= $_recommend;
-        if($album_videoid && count($album_videoid)>0){
-            foreach($album_videoid as $value) $data_[] = $value['video_id'];
-            $model = $model->andFilterWhere([VideoModel::tableName().'.id'=>$data_]);
-            $data['dataList'] = $model->orderBy($_order)->offset($offset)->limit($limit)->asArray()->all();
-        }else{
-            $data['dataList'] = array();
-        }
-
-
-        return $data;
-
-    }
-
-    /*
-     * 获取可以删除专辑视频的列表
-     */
-    
-    /*
-     * 将视频转移到专辑下面
-     */
-    public function toalbum($albumid,$videoid){
-        if(!is_array($videoid) && empty($videoid)){
-            return false;
-        }
-        $result = true;
-        foreach ($videoid as $value){
-            $model = new AdretationModel();
-            $model->video_id = $value;
-            $model->album_id = $albumid;
-            $result = $result && $model->save();
-        }
-
-        return $result;
-
-    }
-
-    /*
-     * 将视频从某个专辑下面移除
-     */
-    public function deltoalbum($albumid,$videoid){
-        if(!is_array($videoid) && empty($videoid)){
-            return false;
-        }
-
-        $result = AdretationModel::deleteAll(['album_id'=>$albumid,'video_id'=>$videoid]);
-
-        return $result;
     }
 
     /*
@@ -236,16 +87,7 @@ class VideoService extends BackendService
     }
     
 
-    /**
-     * 编辑视频
-     * 1：编辑一个新视频并且选择了一个专辑
-     * 2：编辑一个信息视频新创建一个单独的专辑
-     * 3：编辑一个已有的视频并且修改了专辑信息
-     * 4：编辑一个已有的视频重新选择了一个专辑
-     * @param $id
-     * @param $albumId
-     * @return bool
-     */
+    //编辑视频 音频
     public function editVideo($id,$albumId)
     {
         $bodyParams = \Yii::$app->request->post();
@@ -271,41 +113,13 @@ class VideoService extends BackendService
         return $return;
     }
 
-    /**
-     * 删除卡片
-     * @param $id
-     * @return bool
-     */
+    // 删除
     public function deleteVideo($id)
     {
         $result = $this->deleteInfo($id,VideoModel::className());
-        if($result == true) $this->onAfterDeleteVideo($id);
+        //if($result == true) $this->onAfterDeleteVideo($id);
         return $result;
     }
-
-    /*
-     * 审核
-     * @param $id
-     * @return bool
-     */
-    public function auditingVideo($id)
-    {
-        $result = $this->checkInfo($id,VideoModel::className(),0);
-        return $result;
-    }
-
-    /*
-     * 发布专辑
-     * @param $id
-     * @return bool
-     */
-    public function publishAlbum($id)
-    {
-        $result = $this->checkInfo($id,VideoAlbumModel::className(),0);
-        return $result;
-
-    }
-
 
     /**
      * 视频推荐操作
@@ -316,23 +130,13 @@ class VideoService extends BackendService
      */
     public function recommendVideo($ids,$column,$value)
     {
-        $albumIds = VideoModel::find()->select('album_id')->where(['id' => $ids])->column();
-        $num = VideoAlbumModel::updateAll([$column => $value],['id' => $albumIds]);
+        $num = VideoModel::updateAll([$column => $value],['id' => $ids]);
         if($num > 0) return true;
         return false;
     }
     //视频信息管理结束
 
     //视频分类信息管理开始{{{
-    /**
-     * 视频分类
-     * @param $keyWord
-     * @param array $other
-     * @param array $order
-     * @param $page
-     * @param $prePage
-     * @return array
-     */
     public function categoryList($keyWord,array $other = [],array $order,$page,$prePage)
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
@@ -411,14 +215,12 @@ class VideoService extends BackendService
         return $this->deleteInfo($id,VideoCategoryModel::className());
     }
 
-    /**
-     * 获取所有的分类
-     * @return array
-     */
-    public function categories()
+    //获取分类
+    public function categories($sourceType = 1)
     {
         $model = VideoCategoryModel::find()->select(['id','name','parent_id'])
             ->where(['status' => VideoCategoryModel::STATUS_ACTIVE])
+            ->andWhere(['source_type' => $sourceType])
             ->asArray()
             ->all();
 

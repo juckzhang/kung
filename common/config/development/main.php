@@ -27,12 +27,6 @@ return [
                         ],
                     ],
                 ],
-
-//                'class' => 'common\components\uploadRemote\UploadAliYun',
-//                'accessKeyId' => 'co3JsNrKj3OTvudo',
-//                'accessKeySecret' => 'usjjuWN201z9DQNVAvtRftiB51pDZA',
-//                'bucket' => 'test-zaizaitv-upload',
-//                'endPoint' => 'http://test-zaizaitv-upload.oss-cn-beijing.aliyuncs.com',
             ],
         ],
         'errorHandler' => [

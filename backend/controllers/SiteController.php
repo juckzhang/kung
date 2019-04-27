@@ -6,15 +6,8 @@ use Yii;
 use common\models\LoginForm;
 use yii\helpers\ArrayHelper;
 
-/**
- * Site controller
- */
 class SiteController extends BaseController
 {
-    /**
-     * 首页
-     * @return string
-     */
     public function actionIndex()
     {
         if(Yii::$app->user->isGuest) return $this->redirect(['site/login']);
@@ -22,11 +15,6 @@ class SiteController extends BaseController
         return $this->render('index');
     }
 
-    /**
-     * Login action.
-     *
-     * @return string
-     */
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -42,11 +30,6 @@ class SiteController extends BaseController
         }
     }
 
-    /**
-     * Logout action.
-     *
-     * @return string
-     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
@@ -57,9 +40,6 @@ class SiteController extends BaseController
         ]);
     }
 
-    /**
-     * @return string|\yii\web\Response
-     */
     public function actionChangePassword()
     {
         if(\Yii::$app->request->getIsPost()) {

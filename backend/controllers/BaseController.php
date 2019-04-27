@@ -16,9 +16,6 @@ class BaseController extends CommonController
     public $layout = false;
     public $enableCsrfValidation = false;
 
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -87,11 +84,6 @@ class BaseController extends CommonController
         return [$orderFiled => $desc];
     }
 
-    /**
-     * 解析参数
-     *
-     * @return mixed
-     */
     protected function parseParam()
     {
         //return \yii::$app->request->postGet(\yii::$app->params['requestParam'],[]);
@@ -109,12 +101,6 @@ class BaseController extends CommonController
         return $_requestParam;
     }
 
-    /**
-     * ajax返回正确
-     * @param array $data
-     * @param int $code
-     * @return array
-     */
     public function returnAjaxSuccess(array $data = [],$code = CodeConstant::SUCCESS)
     {
         Yii::$app->getResponse()->format = Response::FORMAT_JSON;
@@ -123,11 +109,6 @@ class BaseController extends CommonController
         return $return;
     }
 
-    /**
-     * ajax返回错误信息
-     * @param $code
-     * @return array
-     */
     protected function returnAjaxError($code)
     {
         Yii::$app->getResponse()->format = Response::FORMAT_JSON;

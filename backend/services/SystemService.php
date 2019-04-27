@@ -15,16 +15,6 @@ use yii\helpers\ArrayHelper;
 
 class SystemService extends BackendService
 {
-    //资源信息管理开始{{{
-    /**
-     * 获取文章分类列表
-     * @param $keyWord
-     * @param $other
-     * @param array $order
-     * @param $page
-     * @param $prePage
-     * @return array
-     */
     public function sourceList($keyWord,$other,array $order = [],$page,$prePage)
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
@@ -45,10 +35,6 @@ class SystemService extends BackendService
         return $data;
     }
 
-    /**
-     * 获取所有的资源
-     * @return array|\yii\db\ActiveRecord[]
-     */
     public function sourceAll()
     {
         $models = SourceModel::find()->where(['status' => SourceModel::STATUS_ACTIVE])
@@ -73,21 +59,11 @@ class SystemService extends BackendService
         return $models;
     }
 
-    /**
-     * 编辑文章分类
-     * @param $id
-     * @return null
-     */
     public function editSource($id)
     {
          return $this->editInfo($id,SourceModel::className());
     }
 
-    /**
-     * 删除文章分类
-     * @param $ids
-     * @return bool
-     */
     public function deleteSource($ids)
     {
         $num = $this->deleteInfo($ids,SourceModel::className());
@@ -98,18 +74,7 @@ class SystemService extends BackendService
         }
         return false;
     }
-    //资源分类信息管理结束}}}
 
-    //角色信息管理开始{{{
-    /**
-     * 获取文章列表
-     * @param $keyWord
-     * @param $other
-     * @param array $order
-     * @param $page
-     * @param $prePage
-     * @return array
-     */
     public function roleList($keyWord,$other,array $order = [],$page,$prePage)
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
@@ -130,10 +95,6 @@ class SystemService extends BackendService
         return $data;
     }
 
-    /**
-     * 获取所有角色信息
-     * @return array|\yii\db\ActiveRecord[]
-     */
     public function roleAll()
     {
         $models = RoleModel::find()->where(['status' => RoleModel::STATUS_ACTIVE])
@@ -142,12 +103,6 @@ class SystemService extends BackendService
         return $models;
     }
 
-    /**
-     * 编辑文章
-     * @param $id
-     * @param $sources
-     * @return bool
-     */
     public function editRole($id,array $sources)
     {
         $model = $this->editInfo($id,RoleModel::className());
@@ -162,11 +117,6 @@ class SystemService extends BackendService
         return CodeConstant::PARAM_ERROR;
     }
 
-    /**
-     * 删除文章
-     * @param $ids
-     * @return bool
-     */
     public function deleteRole($ids)
     {
         $num = $this->deleteInfo($ids,RoleModel::className());
@@ -175,12 +125,6 @@ class SystemService extends BackendService
         return false;
     }
 
-    /**
-     * 分配角色权限
-     * @param $role
-     * @param array $sources
-     * @return bool
-     */
     public function assignPrivilege($role,array $sources)
     {
         $now = DateHelper::now();
@@ -204,18 +148,7 @@ class SystemService extends BackendService
 
         return CodeConstant::PARAM_ERROR;
     }
-    //角色信息管理结束}}}
 
-    //用户信息管理开始{{{
-    /**
-     * 获取文章列表
-     * @param $keyWord
-     * @param $other
-     * @param array $order
-     * @param $page
-     * @param $prePage
-     * @return array
-     */
     public function userList($keyWord,$other,array $order = [],$page,$prePage)
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
@@ -236,21 +169,11 @@ class SystemService extends BackendService
         return $data;
     }
 
-    /**
-     * 编辑文章
-     * @param $id
-     * @return bool
-     */
     public function editUser($id)
     {
         return $this->editInfo($id,AdminModel::className());
     }
 
-    /**
-     * 删除文章
-     * @param $ids
-     * @return bool
-     */
     public function deleteUser($ids)
     {
         $num = $this->deleteInfo($ids,AdminModel::className());
@@ -258,6 +181,5 @@ class SystemService extends BackendService
 
         return false;
     }
-    //用户信息管理结束}}}
 }
 

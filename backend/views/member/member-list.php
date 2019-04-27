@@ -7,7 +7,6 @@ $page   = ArrayHelper::getValue($params,'pageNum','1');
 $orderFiled = ArrayHelper::getValue($params,'orderFiled','');
 $orderDirection = ArrayHelper::getValue($params,'orderDirection','asc');
 $prePage = ArrayHelper::getValue($params,'numPerPage','20');
-$participator = ArrayHelper::getValue($params,'participator');
 
 ?>
 <div class="" id="card-list" rel="card-list">
@@ -18,7 +17,7 @@ $participator = ArrayHelper::getValue($params,'participator');
         <input type="hidden" name="orderDirection" value="<?=$orderDirection?>" />
     </form>
     <div class="pageHeader">
-        <form rel="pagerForm" onsubmit="return <?= $participator ? 'dialogSearch' : 'navTabSearch' ?>(this);" action="<?=Url::to(['member/member-list'])?>" method="post">
+        <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<?=Url::to(['member/member-list'])?>" method="post">
             <div class="searchBar">
                 <ul class="searchContent">
                     <li>
@@ -26,16 +25,17 @@ $participator = ArrayHelper::getValue($params,'participator');
                         <input type="text" name="keyword" value="<?=ArrayHelper::getValue($params,'keyword','')?>" alt="关键词"/>
                     </li>
                 </ul>
-                <div class="subBar">
-                    <ul>
-                        <input type="hidden" name="participator" value="<?= $participator ?>" />
-                        <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
-                        <?php if($participator):?>
-                            <li><div class="button"><div class="buttonContent"><button type="button">选为合作会员</button></div></div></li>
-                            <!-- Url::to(['member/update-participator', 'user_id' => 1, 'state' => 1])?> -->
-                        <?php endif;?>
-                    </ul>
-                </div>
+            </div>
+            <div class="subBar">
+                <ul>
+                    <li>
+                        <div class="buttonActive">
+                            <div class="buttonContent">
+                                <button type="submit">检索</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </form>
     </div>
@@ -57,7 +57,6 @@ $participator = ArrayHelper::getValue($params,'participator');
                 <th width="22"><input type="checkbox" group="ids[]" class="checkboxCtrl"></th>
                 <th width="30">用户ID</th>
                 <th width="80">用户昵称</th>
-                <th width="80">手机号</th>
                 <th width="50">用户头像</th>
 <!--                <th width="30">积分</th>-->
                 <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="create_time" width="80">建档日期</th>
@@ -70,7 +69,6 @@ $participator = ArrayHelper::getValue($params,'participator');
                     <td><input name="ids[]" value="<?=$data->id?>" type="checkbox"></td>
                     <td><?=$data->id?></td>
                     <td><?=$data->nick_name?></td>
-                    <td><?=$data->mobile?></td>
                     <td><img src="<?=$data->icon_url?>" width="100%"/></td>
 <!--                    <td><=$data->credit_num?></td>-->
                     <td><?=date('Y-m-d H:i:s',$data->create_time)?></td>
@@ -82,9 +80,6 @@ $participator = ArrayHelper::getValue($params,'participator');
                         <?php if(\Yii::$app->user->can('member/delete-member')):?>
                         <a title="删除" target="ajaxTodo" href="<?=Url::to(['member/delete-member', 'ids' => $data->id])?>" class="btnDel">删除</a>
                         <?php endif;?>
-                        <?php if (\Yii::$app->user->can('member/update-participator')): ?>
-                        <a title="设为合作会员" target="ajaxTodo" href="<?= Url::to(['member/update-participator', 'user_id' => $data->id, 'state' => 1]) ?>" class="btnAssign">设为合作会员</a>
-                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach;?>

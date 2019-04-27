@@ -8,7 +8,7 @@ return [
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
-            'keyPrefix' => 'kahu_',
+            'keyPrefix' => 'kung_',
         ],
 
         'config' => [

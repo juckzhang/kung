@@ -11,9 +11,6 @@ use yii\helpers\Url;
 
 class MemberController extends BaseController
 {
-    /*
-     * 个人认证列表
-     */
     public function actionQualificationList() {
         $_prePage = ArrayHelper::getValue($this->paramData, 'numPerPage');
         $_page = ArrayHelper::getValue($this->paramData, 'pageNum');
@@ -22,9 +19,6 @@ class MemberController extends BaseController
         return $this->render('qualification-list', $data);
     }
 
-    /*
-     * 个人认证审核编辑
-     */
     public function actionEditQualification() {
         $param = $this->paramData;
         $user_id = ArrayHelper::getValue($param, 'user_id');
@@ -163,10 +157,6 @@ class MemberController extends BaseController
         }
     }
 
-    /**
-     * 编辑广告
-     * @return string
-     */
     public function actionEditAd()
     {
         $id = ArrayHelper::getValue($this->paramData,'id');
@@ -190,10 +180,6 @@ class MemberController extends BaseController
         }
     }
 
-    /*
-     * 编辑用户信息
-     * @return string
-     */
     public function actionEditUser(){
         $user_id = ArrayHelper::getValue($this->paramData,'user_id');
         if(\Yii::$app->request->getIsPost())
@@ -216,11 +202,6 @@ class MemberController extends BaseController
 
     }
 
-
-    /**
-     * 编辑会员信息
-     * @return string
-     */
     public function actionEditMember()
     {
         $id = ArrayHelper::getValue($this->paramData,'id');
@@ -244,10 +225,6 @@ class MemberController extends BaseController
         }
     }
 
-    /**
-     * 删除广告
-     * @return string
-     */
     public function actionDeleteMember()
     {
         if(! Yii::$app->request->getIsAjax()) return $this->returnError(CodeConstant::REQUEST_METHOD_ERROR);

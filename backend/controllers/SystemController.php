@@ -13,16 +13,8 @@ use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
-/**
- * Site controller
- */
 class SystemController extends BaseController
 {
-    //资源信息管理开始{{{
-    /**
-     * 文章分类
-     * @return string
-     */
     public function actionSourceList()
     {
         $_prePage  = ArrayHelper::getValue($this->paramData,'numPerPage');
@@ -35,10 +27,6 @@ class SystemController extends BaseController
         return $this->render('source-list',$data);
     }
 
-    /**
-     * 编辑文章分类
-     * @return string
-     */
     public function actionEditSource()
     {
         if(\Yii::$app->request->getIsPost())
@@ -62,10 +50,6 @@ class SystemController extends BaseController
         }
     }
 
-    /**
-     * 删除文章分类
-     * @return mixed
-     */
     public function actionDeleteSource()
     {
         if(! Yii::$app->request->getIsAjax()) return $this->returnAjaxError(CodeConstant::REQUEST_METHOD_ERROR);
@@ -82,13 +66,7 @@ class SystemController extends BaseController
             ]);
         return $this->returnAjaxError($return);
     }
-    //文章分类信息管理结束}}}
 
-    //文章信息管理开始{{{
-    /**
-     * 文章列表
-     * @return string
-     */
     public function actionRoleList()
     {
         $_prePage  = ArrayHelper::getValue($this->paramData,'numPerPage');
@@ -101,10 +79,6 @@ class SystemController extends BaseController
         return $this->render('role-list',$data);
     }
 
-    /**
-     * 编辑文章
-     * @return string
-     */
     public function actionEditRole()
     {
         if(\Yii::$app->request->getIsPost())
@@ -131,10 +105,6 @@ class SystemController extends BaseController
         }
     }
 
-    /**
-     * 删除文章
-     * @return mixed
-     */
     public function actionDeleteRole()
     {
         if(! Yii::$app->request->getIsAjax()) return $this->returnAjaxError(CodeConstant::REQUEST_METHOD_ERROR);
@@ -152,10 +122,6 @@ class SystemController extends BaseController
         return $this->returnAjaxError($return);
     }
 
-    /**
-     * 为角色分配权限
-     * @return array|string
-     */
     public function actionAssignPrivilege()
     {
         if(\Yii::$app->request->getIsPost())
@@ -184,13 +150,7 @@ class SystemController extends BaseController
             return $this->render('edit-role-source', ['sources' => $sources, 'selected' => $models]);
         }
     }
-    //文章信息管理结束}}}
 
-    //系统管理员信息管理开始{{{
-    /**
-     * 文章列表
-     * @return string
-     */
     public function actionUserList()
     {
         $_prePage  = ArrayHelper::getValue($this->paramData,'numPerPage');
@@ -203,10 +163,6 @@ class SystemController extends BaseController
         return $this->render('user-list',$data);
     }
 
-    /**
-     * 编辑文章
-     * @return string
-     */
     public function actionEditUser()
     {
         if(\Yii::$app->request->getIsPost())
@@ -231,10 +187,6 @@ class SystemController extends BaseController
         }
     }
 
-    /**
-     * 删除文章
-     * @return mixed
-     */
     public function actionDeleteUser()
     {
         if(! Yii::$app->request->getIsAjax()) return $this->returnAjaxError(CodeConstant::REQUEST_METHOD_ERROR);
@@ -251,5 +203,4 @@ class SystemController extends BaseController
             ]);
         return $this->returnAjaxError($return);
     }
-    //系统管理员信息管理结束}}}
 }

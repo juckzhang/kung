@@ -4,9 +4,6 @@ namespace backend\controllers;
 use crazydb\ueditor\UEditorController;
 use common\services\UploadService;
 
-/**
- * Site controller
- */
 class EditorController extends UEditorController
 {
     public function actionUploadImage()
