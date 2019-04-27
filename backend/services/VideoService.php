@@ -21,6 +21,7 @@ use common\models\mysql\UserModel;
 use common\models\mysql\VideoAppDownloadModel;
 use common\models\mysql\VideoAlbumModel;
 use common\models\mysql\VideoCategoryModel;
+use common\models\mysql\VideoCommentModel;
 use common\models\mysql\VideoModel;
 use common\models\User;
 use Yii;
@@ -43,17 +44,7 @@ class VideoService extends BackendService
             ],
         ];
     }
-    //卡片信息管理开始{{{
-    /**
-     * 获取文章分类列表
-     * @param $keyWord
-     * @param $other
-     * @param array $order
-     * @param $page
-     * @param $prePage
-     * @param $_category
-     * @return array
-     */
+
     public function videoList($keyWord,$other,array $order = [],$page,$prePage,$_category,$_recommend)
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
@@ -78,9 +69,7 @@ class VideoService extends BackendService
         return $data;
     }
 
-    /*
-     * 修改视频排序
-     */
+    //编辑排序
     public function editSort($videoid,$sort){
         $result =  VideoModel::updateAll(['sort_order' => $sort],['id' => $videoid]);
         return $result;
@@ -121,22 +110,13 @@ class VideoService extends BackendService
         return $result;
     }
 
-    /**
-     * 视频推荐操作
-     * @param $ids
-     * @param $column
-     * @param $value
-     * @return bool
-     */
     public function recommendVideo($ids,$column,$value)
     {
         $num = VideoModel::updateAll([$column => $value],['id' => $ids]);
         if($num > 0) return true;
         return false;
     }
-    //视频信息管理结束
 
-    //视频分类信息管理开始{{{
     public function categoryList($keyWord,array $other = [],array $order,$page,$prePage)
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
@@ -144,7 +124,8 @@ class VideoService extends BackendService
         $data = ['dataList' => [],'dataCount' => 0,'pageCount' => 0];
 
         $models = VideoCategoryModel::find()->where(['status' => VideoCategoryModel::STATUS_ACTIVE])
-            ->andFilterWhere(['like','name',$keyWord]);
+            ->andFilterWhere(['like','name',$keyWord])
+            ->andFilterWhere(['source_type' => $other['source_type']]);
 
         $data['dataCount'] = $models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
@@ -156,60 +137,11 @@ class VideoService extends BackendService
         return $data;
     }
 
-    public function appDownloadVideoList(array $order, $page, $prePage) {
-        list($offset,$limit) = $this->parsePageParam($page,$prePage);
-
-        $models = VideoAlbumModel::find()->where(['status' => VideoAlbumModel::STATUS_ACTIVE])->andFilterWhere(['can_download' => 1]);
-        $data = ['dataList' => [],'dataCount' => 0,'pageCount' => 0];
-        $data['dataCount'] = $models->count();
-        $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
-
-        if($data['pageCount'] > 0 AND $page <= $data['pageCount']) {
-            $data['dataList'] = $models->orderBy($order)->limit($limit)->offset($offset)->all();
-        }
-
-        return $data;
-    }
-
-    public function deleteAppDownload($id)
-    {
-        $video = VideoModel::find()->where(['album_id' => $id])->one();
-        $leShi = LeShiVideoService::getService();
-        $r = $leShi->updateVideoDownloadStatus(['video_id' => $video->video_id, 'status' => 0]);
-
-        $album = VideoAlbumModel::find()->where(['id' => $id])->one();
-        $album->can_download = 0;
-        $album->save();
-        return true;
-    }
-
-    public function addAppDownload($id)
-    {
-        $video = VideoModel::find()->where(['album_id' => $id])->one();
-        $leShi = LeShiVideoService::getService();
-        $r = $leShi->updateVideoDownloadStatus(['video_id' => $video->video_id, 'status' => 1]);
-
-        $album = VideoAlbumModel::find()->where(['id' => $id])->one();
-        $album->can_download = 1;
-        $album->save();
-        return true;
-    }
-
-    /**
-     * 编辑分类
-     * @param $id
-     * @return bool
-     */
     public function editCategory($id)
     {
         return $this->editInfo($id,VideoCategoryModel::className());
     }
 
-    /**
-     * 删除分类
-     * @param $id
-     * @return bool
-     */
     public function deleteCategory($id)
     {
         return $this->deleteInfo($id,VideoCategoryModel::className());
@@ -230,65 +162,35 @@ class VideoService extends BackendService
         return $categories;
     }
 
-    /**
-     * 获取所有的分类
-     * @return array
-     */
+    public function commentList($_keyWord,$_other = [],$_order = [],$_page,$_prePage)
+    {
+        $_other['source_id'] = null;
+        list($offset,$limit) = $this->parsePageParam($_page,$_prePage);
+        $data = ['pageCount' => 0,'dataList' => [],'dataCount' => 0];
+
+        $models = $cardModels = VideoCommentModel::find()
+            ->where(['!=','status' , VideoCommentModel::STATUS_DELETED])
+            ->andFilterWhere(['content','title',$_keyWord])
+            ->andFilterWhere(['source_id' => $_other['source_id']]);
+
+        $data['dataCount'] = $models->count();
+        $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
+
+        if($data['pageCount'] > 0 AND $_page <= $data['pageCount'])
+            $data['dataList'] = $models->orderBy($_order)->limit($limit)->offset($offset)->all();
+
+        return $data;
+    }
+
     public function getUser()
     {
         $model = UserModel::find()->select(['id','nick_name'])
             ->asArray()
             ->all();
 
-
         return $model;
     }
 
-    //卡片相册管理开始{{{
-    public function albumList($keyWord,$other,array $order = [],$page,$prePage)
-    {
-        list($offset,$limit) = $this->parsePageParam($page,$prePage);
-        $cateId = ArrayHelper::getValue($other,'category');
-
-        $data = ['dataList' => [],'dataCount' => 0,'pageCount' => 0];
-
-        $models = VideoAlbumModel::find()->where(['status' => VideoAlbumModel::STATUS_ACTIVE])
-            ->andFilterWhere(['like','name',$keyWord])
-            ->andFilterWhere(['cate_id' => $cateId,'is_album' => VideoAlbumModel::IS_ALBUM]);
-
-        $data['dataCount'] = $models->count();
-        $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
-
-        if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
-        {
-            $data['dataList'] = $models->orderBy($order)->limit($limit)->offset($offset)->all();
-        }
-
-        return $data;
-    }
-
-    public function editAlbum($id)
-    {
-        return $this->editInfo($id,VideoAlbumModel::className());
-    }
-
-    /**
-     * 删除专辑
-     * @param $ids
-     * @return bool
-     */
-    public function deleteAlbum($ids)
-    {
-        $result = $this->deleteInfo($ids,VideoAlbumModel::className());
-        if($result == true) $this->onAfterDeleteAlbum($ids);
-        return $result;
-    }
-
-    /**
-     * 将视频转移到一个专辑列表
-     * @param $oldAlbumId
-     * @param $newAlbumId
-     */
     private function onAfterEditVideo($oldAlbumId,$newAlbumId)
     {
         $event = new VideoChangeEvent(['oldAlbumId' => $oldAlbumId,'newAlbumId' => $newAlbumId]);

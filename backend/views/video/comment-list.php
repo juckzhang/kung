@@ -9,22 +9,19 @@ $page   = ArrayHelper::getValue($params,'pageNum','1');
 $orderFiled = ArrayHelper::getValue($params,'orderFiled','');
 $orderDirection = ArrayHelper::getValue($params,'orderDirection','asc');
 $prePage = ArrayHelper::getValue($params,'numPerPage','20');
-$other = ArrayHelper::getValue($params, 'other', []);
+
 $search = ArrayHelper::getValue($params,'search');
 ?>
-<div class="" id="category-list" rel="category-list">
+<div class="" id="comment-list" rel="comment-list">
 <form id="pagerForm" method="post" action="#rel#">
     <input type="hidden" name="search", value="<?=$search?>">
     <input type="hidden" name="pageNum" value="<?=$page?>" />
     <input type="hidden" name="numPerPage" value="<?=$prePage?>" />
     <input type="hidden" name="orderField" value="<?=$orderFiled?>" />
     <input type="hidden" name="orderDirection" value="<?=$orderDirection?>" />
-    <?php foreach ($other as $key => $value):?>
-        <input type="hidden" name="other[<?=$key;?>]" value="<?= $value ?>"/>
-    <?php endforeach;?>
 </form>
 <div class="pageHeader">
-    <form rel="pagerForm" onsubmit="return <?=$search ? 'dialogSearch' : 'navTabSearch'?>(this);" action="<?=Url::to(['video/category-list','search' => $search])?>" method="post">
+    <form rel="pagerForm" onsubmit="return <?=$search ? 'dialogSearch' : 'navTabSearch'?>(this);" action="<?=Url::to(['video/comment-list','search' => $search])?>" method="post">
         <div class="searchBar">
             <table class="searchContent">
                 <tbody>
@@ -47,12 +44,12 @@ $search = ArrayHelper::getValue($params,'search');
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
-            <?php if(\Yii::$app->user->can('video/edit-category')):?>
-            <li><a class="add" href="<?=Url::to(['video/edit-category'])?>" target="dialog"><span>添加</span></a></li>
+            <?php if(\Yii::$app->user->can('video/edit-comment')):?>
+            <li><a class="add" href="<?=Url::to(['video/edit-comment'])?>" target="dialog"><span>添加</span></a></li>
             <?php endif;?>
 
-            <?php if(\Yii::$app->user->can('video/delete-category')):?>
-            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids[]" href="<?=Url::to(['video/delete-category'])?>" class="delete"><span>批量删除</span></a></li>
+            <?php if(\Yii::$app->user->can('video/delete-comment')):?>
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids[]" href="<?=Url::to(['video/delete-comment'])?>" class="delete"><span>批量删除</span></a></li>
             <?php endif;?>
         </ul>
     </div>
@@ -60,9 +57,10 @@ $search = ArrayHelper::getValue($params,'search');
         <thead>
         <tr>
             <th width="22"><input type="checkbox" group="ids[]" class="checkboxCtrl"></th>
-            <th width="40">分类ID</th>
-            <th width="80">分类名称</th>
-            <th width="80">上级分类</th>
+            <th width="40">评论ID</th>
+            <th width="80">资源ID</th>
+            <th width="80">用户ID</th>
+            <th width="80">评论内容</th>
             <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="80">建档日期</th>
             <th width="70">操作</th>
         </tr>
@@ -72,20 +70,17 @@ $search = ArrayHelper::getValue($params,'search');
             <tr target="card-id" rel="<?=$data->id?>">
                 <td><input name="ids[]" value="<?=$search? "{id:$data->id,name:'{$data->name}'}" : $data->id?>" type="checkbox"></td>
                 <td><?=$data->id?></td>
-                <td><?=$data->name?></td>
-                <td><?=$data->parent_id?></td>
+                <td><?=$data->source_id?></td>
+                <td><?=$data->user_id?></td>
+                <td><?=$data->content?></td>
                 <td><?=date('Y-m-d H:i:s',$data->create_time)?></td>
                 <td>
-                    <?php if(\Yii::$app->user->can('video/delete-category')):?>
-                    <a title="删除" target="ajaxTodo" href="<?=Url::to(['video/delete-category','ids' => $data->id])?>" class="btnDel">删除</a>
+                    <?php if(\Yii::$app->user->can('video/delete-comment')):?>
+                    <a title="删除" target="ajaxTodo" href="<?=Url::to(['video/delete-comment','ids' => $data->id])?>" class="btnDel">删除</a>
                     <?php endif;?>
 
-                    <?php if(\Yii::$app->user->can('video/edit-category')):?>
-                    <a title="编辑" target="dialog" href="<?=Url::to(['video/edit-category','id' => $data->id])?>" class="btnEdit">编辑</a>
-                    <?php endif;?>
-
-                    <?php if(\Yii::$app->user->can('video/card-list')):?>
-                        <a title="卡片信息列表" target="navTab" href="<?=Url::to(['video/album-list','other' => ['category' => $data->id]])?>" class="btnView" rel="card-list">专辑信息列表</a>
+                    <?php if(\Yii::$app->user->can('video/edit-comment')):?>
+                    <a title="编辑" target="dialog" href="<?=Url::to(['video/edit-comment','id' => $data->id])?>" class="btnEdit">编辑</a>
                     <?php endif;?>
                 </td>
             </tr>

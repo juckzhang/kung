@@ -25,6 +25,9 @@ $categories = $videoService->categories();
         <input type="hidden" name="numPerPage" value="<?= $prePage ?>"/>
         <input type="hidden" name="orderField" value="<?= $orderFiled ?>"/>
         <input type="hidden" name="orderDirection" value="<?= $orderDirection ?>"/>
+        <?php foreach ($other as $key => $value):?>
+            <input type="hidden" name="other[<?=$key;?>]" value="<?= $value ?>"/>
+        <?php endforeach;?>
     </form>
     <div class="pageHeader">
         <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<?= Url::to(['video/video-list']) ?>"
