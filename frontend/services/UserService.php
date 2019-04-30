@@ -13,13 +13,12 @@ class UserService extends FrontendService{
         //判断账号是否存在
         $model = UserModel::find(['id','nick_name','icon_url'])
             ->where(['third_account' => $params['third_account'], 'account_type' => $params['account_type']])
-            ->asArray()
             ->one();
 
         if(!($model instanceof UserModel)){
             $model = new UserModel();
         }
-        $model->access_token = md5('token-'.time().'-'.mt_rand(1000,9999));
+        $params['access_token'] = md5('token-'.time().'-'.mt_rand(1000,9999));
         if($model->load($params, '') and $model->save()){
             return $model->toArray();
         }

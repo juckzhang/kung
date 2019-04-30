@@ -74,20 +74,25 @@ class MediaService extends OperationService
     }
 
     // 台词列表
-    public function mediaLines($id, $lang){
+    public function mediaLines($id, $lang, $page, $count){
+        $count *= 2;
+        list($offset,$limit) = $this->parsePageParam($page, $count);
+        $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $models = MediaLinesModel::find()
             ->where(['source_id' => $id, 'lang_type' => ['zh_CN', $lang]])
             ->andWhere(['status' => MediaLinesModel::STATUS_ACTIVE])
             ->orderBy(['line_number' => SORT_ASC, 'lang_type' => SORT_ASC])
+            ->offset($offset)
+            ->limit($limit)
             ->asArray()
             ->all();
-        $data = [];
+        $lines = [];
         foreach($models as $line){
             $lineNumber = $line['line_number'];
             if(! empty($lines[$lineNumber])){
-                $data[$lineNumber]['content'][$line['lang_type']] = $line['content'];
+                $lines[$lineNumber]['content'][$line['lang_type']] = $line['content'];
             }else{
-                $data[$lineNumber] = [
+                $lines[$lineNumber] = [
                     'start_time' => $line['start_time'],
                     'end_time' => $line['end_time'],
                     'line' => $line['line_number'],
@@ -95,7 +100,7 @@ class MediaService extends OperationService
                 ];
             }
         }
-
+        $data['dataList'] = $lines;
         return $data;
     }
 

@@ -35,10 +35,12 @@ class MediaController extends BaseController
     //音频视频台词列表
     public function actionMediaLines()
     {
-        $videoId = ArrayHelper::getValue($this->paramData,'source_id');
+        $mediaId = ArrayHelper::getValue($this->paramData,'source_id');
         $lang  = ArrayHelper::getValue($this->paramData,'lang');
+        $page = ArrayHelper::getValue($this->paramData,'page');
+        $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $ret = MediaService::getService()->mediaLines($videoId, $lang);
+        $ret = MediaService::getService()->mediaLines($mediaId, $lang, $page, $count);
 
         return $this->returnSuccess($ret);
     }
@@ -62,7 +64,7 @@ class MediaController extends BaseController
         $userId = ArrayHelper::getValue($this->paramData,'user_id');
         $content = ArrayHelper::getValue($this->paramData,'content');
 
-        $ret = MediaService::getService()->videoComment($videoId, $content, $userId);
+        $ret = MediaService::getService()->mediaComment($videoId, $content, $userId);
         if($ret === true) return $this->returnSuccess();
         return $this->returnError($ret);
     }

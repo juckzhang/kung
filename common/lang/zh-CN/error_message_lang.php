@@ -18,7 +18,6 @@ return [
     CodeConstant::SOURCE_NOT_EXISTS    => '资源不存在',
     CodeConstant::USER_TOKEN_NOT_EXISTS     => 'TOKEN 无效!',
     CodeConstant::PERMISSION_DENIED    => '对不起,你无权进行此项操作',
-    CodeConstant::MOBIL_FORMAT_INVALID  => '手机号格式不正确！',
 
     /** upload file **/
     CodeConstant::UPLOAD_FILE_MIME_ERROR      => '文件mime类型错误',
@@ -30,14 +29,9 @@ return [
     CodeConstant::UPLOAD_FILE_FAILED          => '文件上传失败',
 
     //video
-    CodeConstant::VIDEO_COMMENT_FAILED        => '专辑评论失败',
-    CodeConstant::COLLECT_ALBUM_FAILED        => '收藏失败',
-    CodeConstant::CANCEL_COLLECT_ALBUM_FAILED => '取消收藏失败',
-    CodeConstant::SUBSCRIBE_ALBUM_FAILED      => '订阅失败',
-    CodeConstant::CANCEL_SUBSCRIBE_ALBUM_FAILED => '取消订阅失败',
-    CodeConstant::EDIT_VIDEO_FAILED           => '视频编辑失败',
+    CodeConstant::MEDIA_COMMENT_FAILED        => '专辑评论失败',
+    CodeConstant::COLLECT_MEDIA_FAILED        => '收藏失败',
+    CodeConstant::CANCEL_COLLECT_MEDIA_FAILED => '取消收藏失败',
 
     CodeConstant::USER_LOGIN_FAILED           => '用户名或密码错误!',
-    CodeConstant::SEND_MESSAGE_OFTEN          => '操作过于频繁，请您两分钟后在尝试！',
-    CodeConstant::SEND_MESSAGE_FAILED         => '验证码发送失败！',
 ];

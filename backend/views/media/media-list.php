@@ -112,7 +112,7 @@ $categories = $mediaService->categories();
                 <th width="80">名称</th>
                 <th width="80">描述</th>
                 <th width="80">资源连接</th>
-<!--                <th width="80">海报图片</th>-->
+                <th width="80">海报图片</th>
                 <th width="60">播放数</th>
                 <th class="<?= $orderDirection ?>" tyle="cursor: pointer;" orderfield="play_num" width="60">真实播放数</th>
                 <th class="<?= $orderDirection ?>" tyle="cursor: pointer;" orderfield="real_play_num" width="60">下载数</th>
@@ -133,6 +133,7 @@ $categories = $mediaService->categories();
                     <td><?= $data['title']?></td>
                     <td><?= $data['sub_title']?></td>
                     <td><?= $data['play_link']?></td>
+                    <td><?= $data['poster_url']?></td>
                     <td align="center"><?= $data['play_num']?></td>
                     <td align="center"><?= $data['real_play_num']?></td>
                     <td align="center"><?= $data['download_num']?></td>

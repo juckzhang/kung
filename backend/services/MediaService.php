@@ -24,7 +24,7 @@ class MediaService extends BackendService
         ];
     }
 
-    public function videoList($keyWord,$other,array $order = [],$page,$prePage,$_category,$_recommend)
+    public function mediaList($keyWord,$other,array $order = [],$page,$prePage,$_category,$_recommend)
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['pageCount' => 0,'dataList' => [],'dataCount' => 0];
