@@ -17,56 +17,26 @@ class OperationService extends Service
     const IS_OPERATED = 1;
     const NOT_OPERATED = 0;
 
-    /**
-     * 收藏（取消收藏）资源
-     * @param $id
-     * @param $userId
-     * @return array|int
-     */
     protected function collect($id,$userId)
     {
         return $this->operateTwoWay($id,$userId,$this->collectModel);
     }
 
-    /**
-     * 查看是否已经有记录
-     * @param $id
-     * @param $userId
-     * @return mixed
-     */
     protected function isCollected($id,$userId)
     {
         return $this->checkOperated($id,$userId,$this->collectModel);
     }
 
-    /**
-     * 查看是否已经有记录
-     * @param $id
-     * @param $userId
-     * @return mixed
-     */
     protected function isDownload($id,$userId)
     {
         return $this->checkOperated($id,$userId,$this->downloadModel);
     }
-    /**
-     * 查看是否已经有记录
-     * @param $videoid
-     * @param $userId
-     * @return mixed
-     */
-    protected function isScanned($videoid,$userId)
+
+    protected function isScanned($sourceid,$userId)
     {
-        return $this->checkOperated($videoid,$userId,$this->scanModel);
+        return $this->checkOperated($sourceid,$userId,$this->scanModel);
     }
 
-    /**
-     * 查询是否已经有记录
-     * @param $id
-     * @param $userId
-     * @param $opModel
-     * @return int
-     */
     private function checkOperated($id,$userId,$opModel)
     {
         $model = $opModel::find()
@@ -78,33 +48,17 @@ class OperationService extends Service
         return static::NOT_OPERATED;
     }
 
-    /**
-     * 查看数量
-     * @param $id
-     * @return mixed
-     */
     protected function subscribeNum($id)
     {
         return $this->userNum($id,$this->downloadModel);
     }
 
-    /**
-     * 查看数量
-     * @param $id
-     * @param $opModel
-     * @return mixed
-     */
     private function userNum($id,$opModel)
     {
         $model = $opModel::find()->where(['source_id' => $id,'status' => $opModel::STATUS_ACTIVE]);
         return $model->count();
     }
-    /**
-     * 下载
-     * @param $id
-     * @param $userId
-     * @return array|int
-     */
+
     protected function download($id,$userId)
     {
         return $this->operateOneWay($id,$userId,$this->downloadModel);
@@ -115,13 +69,6 @@ class OperationService extends Service
         return $this->operateOneWay($id,$userId,$this->scanModel);
     }
 
-    /**
-     * 单向操作
-     * @param $id
-     * @param $userId
-     * @param $opModel
-     * @return bool|int
-     */
     protected function operateOneWay($id,$userId,$opModel)
     {
         $check = $this->check($id,$userId);
@@ -134,13 +81,7 @@ class OperationService extends Service
         if($model->add(['user_id' => $userId,'source_id' => $id])) return true;
         return false;
     }
-    /**
-     * 操作与取消操作
-     * @param $id
-     * @param $userId
-     * @param $opModel
-     * @return array|int
-     */
+
     protected function operateTwoWay($id,$userId,$opModel)
     {
         $check = $this->check($id,$userId);
@@ -162,12 +103,6 @@ class OperationService extends Service
         return ['operation' => $opType,'status' => $status,'operationId' => $model->id];
     }
 
-    /**
-     * 资源检查
-     * @param $sourceId
-     * @param $userId
-     * @return bool|int
-     */
     protected function check($sourceId,$userId)
     {
         $sourceModel = $this->sourceModel;
@@ -213,9 +148,14 @@ class OperationService extends Service
         {
             if(is_array($order)) $order = ['create_time' => SORT_DESC];
             $models = $models->orderBy($order)->asArray()
-                ->with('video')
+                ->with('media')
                 ->offset($offset)->limit($limit)->all();
-            $data['dataList'] = $models;
+            //$data['dataList'] = $models;
+            foreach ($models as $model){
+                if($model['media']){
+                    $data['dataList'][] = $model['media'];
+                }
+            }
         }
 
         return $data;

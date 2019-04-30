@@ -2,40 +2,40 @@
 namespace common\services;
 
 use common\constants\CodeConstant;
-use common\events\VideoEvent;
-use common\models\mysql\VideoCommentModel;
-use common\models\mysql\VideoLinesModel;
-use common\models\mysql\VideoModel;
+use common\events\MediaEvent;
+use common\models\mysql\MediaCommentModel;
+use common\models\mysql\MediaLinesModel;
+use common\models\mysql\MediaModel;
 use common\services\base\OperationService;
 
-class VideoService extends OperationService
+class MediaService extends OperationService
 {
-    const AFTER_SCANNED_VIDEO  = 'after_scanned_video';
-    const AFTER_COLLECT_VIDEO  = 'after_collect_video';
-    const AFTER_CANCEL_COLLECT_VIDEO = 'after_cancel_collect_video';
-    const AFTER_DOWNLOAD_VIDEO = 'after_download_video';
+    const AFTER_SCANNED_MEDIA  = 'after_scanned_media';
+    const AFTER_COLLECT_MEDIA  = 'after_collect_media';
+    const AFTER_CANCEL_COLLECT_MEDIA = 'after_cancel_collect_media';
+    const AFTER_DOWNLOAD_MEDIA = 'after_download_media';
 
-    protected $collectModel = 'common\models\mysql\VideoCollectionModel';//收藏model
-    protected $scanModel = 'common\models\mysql\VideoLookModel'; //浏览model
-    protected $downloadModel = 'common\models\mysql\VideoDownloadModel'; //下载model
-    protected $sourceModel = 'common\models\mysql\VideoModel';//操作的资源model
+    protected $collectModel = 'common\models\mysql\MediaCollectionModel';//收藏model
+    protected $scanModel = 'common\models\mysql\MediaLookModel'; //浏览model
+    protected $downloadModel = 'common\models\mysql\MediaDownloadModel'; //下载model
+    protected $sourceModel = 'common\models\mysql\MediaModel';//操作的资源model
 
     public function behaviors()
     {
         return [
-            'videoBehavior' => [
-                'class' => 'common\behaviors\VideoBehavior',
+            'mediaBehavior' => [
+                'class' => 'common\behaviors\MediaBehavior',
             ],
         ];
     }
 
     //视频/音频列表
-    public function videoList($cateId,$page,$prePage,$sourceType = null, $order = 'create_time')
+    public function mediaList($cateId,$page,$prePage,$sourceType = null, $order = 'create_time')
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
-        $models = VideoModel::find()
-            ->where(['status' => VideoModel::STATUS_ACTIVE])
+        $models = MediaModel::find()
+            ->where(['status' => MediaModel::STATUS_ACTIVE])
             ->andFilterWhere(['source_type' => $sourceType])
             ->andFilterWhere(['cate_id' => $cateId]);
         $data['dataCount'] = $models->count();
@@ -57,8 +57,8 @@ class VideoService extends OperationService
     {
         list($offset,$limit) = $this->parsePageParam($page, $count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
-        $models = VideoModel::find()
-            ->where(['status' => VideoModel::STATUS_ACTIVE]);
+        $models = MediaModel::find()
+            ->where(['status' => MediaModel::STATUS_ACTIVE]);
         $data['dataCount'] = $models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
 
@@ -74,10 +74,10 @@ class VideoService extends OperationService
     }
 
     // 台词列表
-    public function videoLines($id, $lang){
-        $models = VideoLinesModel::find()
+    public function mediaLines($id, $lang){
+        $models = MediaLinesModel::find()
             ->where(['source_id' => $id, 'lang_type' => ['zh_CN', $lang]])
-            ->andWhere(['status' => VideoLinesModel::STATUS_ACTIVE])
+            ->andWhere(['status' => MediaLinesModel::STATUS_ACTIVE])
             ->orderBy(['line_number' => SORT_ASC, 'lang_type' => SORT_ASC])
             ->asArray()
             ->all();
@@ -100,26 +100,26 @@ class VideoService extends OperationService
     }
 
     //视频音频资源详情
-    public function videoDetails($id, $uid){
-        $data = VideoModel::find()
+    public function mediaDetails($id, $uid){
+        $data = MediaModel::find()
             ->where(['id' => $id])
-            ->andWhere(['status'=>VideoModel::STATUS_ACTIVE])
+            ->andWhere(['status'=>MediaModel::STATUS_ACTIVE])
             ->asArray()
             ->one();
         if($uid){
-            $this->onAfterScannedVideo($id, $uid);
+            $this->onAfterScannedMedia($id, $uid);
         }
         return $data;
     }
 
     //评论列表
-    public function commentList($video,$page,$prePage)
+    public function commentList($media,$page,$prePage)
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
-        $models = VideoCommentModel::find()
+        $models = MediaCommentModel::find()
             ->select(['id','user_id','content','create_time'])
-            ->where(['source_id' => $video,'status' => VideoCommentModel::STATUS_ACTIVE]);
+            ->where(['source_id' => $media,'status' => MediaCommentModel::STATUS_ACTIVE]);
         $data['dataCount'] = $models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
 
@@ -137,73 +137,73 @@ class VideoService extends OperationService
     }
 
     //评论
-    public function videoComment($video,$content,$userId)
+    public function mediaComment($media,$content,$userId)
     {
-        $check = $this->check($video, $userId);
+        $check = $this->check($media, $userId);
         if($check !== true){
             return $check;
         }
-        $model = new VideoCommentModel();
-        $id = $model->add(['user_id' => $userId, 'source_id' => $video, 'content' => $content]);
+        $model = new MediaCommentModel();
+        $id = $model->add(['user_id' => $userId, 'source_id' => $media, 'content' => $content]);
         if (is_numeric($id)) return true;
-        return CodeConstant::VIDEO_COMMENT_FAILED;
+        return CodeConstant::MEDIA_COMMENT_FAILED;
     }
 
     //收藏与取消收藏
-    public function collectVideo($video,$userId)
+    public function collectMedia($media,$userId)
     {
-        $return = $this->collect($video,$userId);
+        $return = $this->collect($media,$userId);
         if(is_numeric($return)) return $return;
         //判断是收藏还是取消收藏
         if($return['operation'] == static::POSITIVE_OPERATION)
         {
             if($return['status'] == true){
-                $this->onAfterCollect($return['operationId'],$video,$userId);
+                $this->onAfterCollect($return['operationId'],$media,$userId);
                 return true;
             }
             return CodeConstant::COLLECT_ALBUM_FAILED;
         }
 
         if($return['status'] == true){
-            $this->onAfterCancelCollect($return['operationId'],$video,$userId);
+            $this->onAfterCancelCollect($return['operationId'],$media,$userId);
             return true;
         }
         return CodeConstant::CANCEL_COLLECT_ALBUM_FAILED;
     }
 
     //下载
-    public function downloadVideo($video,$userId)
+    public function downloadMedia($media,$userId)
     {
-        $return = $this->download($video,$userId);
+        $return = $this->download($media,$userId);
         if($return != true) {
-            $this->onAfterDownload($video, $userId);
-            return CodeConstant::DOWNLOAD_VIDEO_FAILED;
+            $this->onAfterDownload($media, $userId);
+            return CodeConstant::DOWNLOAD_MEDIA_FAILED;
         }
 
         return true;
     }
 
-    private function onAfterDownload($video,$userId)
+    private function onAfterDownload($media,$userId)
     {
-        $event = new VideoEvent(['videoId' => $video,'userId' => $userId]);
-        $this->trigger(static::AFTER_DOWNLOAD_VIDEO,$event);
+        $event = new MediaEvent(['mediaId' => $media,'userId' => $userId]);
+        $this->trigger(static::AFTER_DOWNLOAD_MEDIA,$event);
     }
 
-    private function onAfterCollect($operationId,$video,$userId)
+    private function onAfterCollect($operationId,$media,$userId)
     {
-        $event = new VideoEvent(['operationId' => $operationId,'videoId' => $video,'userId' => $userId]);
-        $this->trigger(static::AFTER_COLLECT_VIDEO,$event);
+        $event = new MediaEvent(['operationId' => $operationId,'mediaId' => $media,'userId' => $userId]);
+        $this->trigger(static::AFTER_COLLECT_MEDIA,$event);
     }
 
-    private function onAfterCancelCollect($operationId,$video,$userId)
+    private function onAfterCancelCollect($operationId,$media,$userId)
     {
-        $event = new VideoEvent(['operationId' => $operationId,'videoId' => $video,'userId' => $userId]);
-        $this->trigger(static::AFTER_CANCEL_COLLECT_VIDEO,$event);
+        $event = new MediaEvent(['operationId' => $operationId,'mediaId' => $media,'userId' => $userId]);
+        $this->trigger(static::AFTER_CANCEL_COLLECT_MEDIA,$event);
     }
 
-    private function onAfterScannedVideo($video,$userId)
+    private function onAfterScannedMedia($media,$userId)
     {
-        $event = new VideoEvent(['videoId' => $video,'userId' => $userId]);
-        $this->trigger(static::AFTER_SCANNED_VIDEO,$event);
+        $event = new MediaEvent(['mediaId' => $media,'userId' => $userId]);
+        $this->trigger(static::AFTER_SCANNED_MEDIA,$event);
     }
 }

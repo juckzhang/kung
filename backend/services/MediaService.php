@@ -1,46 +1,25 @@
 <?php
 namespace backend\services;
 
-use backend\events\AlbumEvent;
-use common\components\leshi\Video;
-use common\constants\CodeConstant;
-use common\events\VideoChangeEvent;
-use common\events\VideoEvent;
+use common\events\MediaEvent;
 use common\helpers\TreeHelper;
-use common\models\mongodb\CardAlbumModel;
-use common\models\mongodb\CardFirmsModel;
-use common\models\mongodb\CardTypeNameModel;
-use common\models\mongodb\ClubModel;
-use common\models\mongodb\IssuingDateModel;
-use common\models\mongodb\PlayerModel;
-use common\models\mongodb\ProductRangeModel;
-use common\models\mongodb\SellCardModel;
-use common\models\mongodb\TeamModel;
-use common\models\mysql\AdretationModel;
 use common\models\mysql\UserModel;
-use common\models\mysql\VideoAppDownloadModel;
-use common\models\mysql\VideoAlbumModel;
-use common\models\mysql\VideoCategoryModel;
-use common\models\mysql\VideoCommentModel;
-use common\models\mysql\VideoModel;
-use common\models\User;
-use Yii;
-use common\models\mongodb\CardModel;
+use common\models\mysql\MediaCategoryModel;
+use common\models\mysql\MediaCommentModel;
+use common\models\mysql\MediaModel;
 use backend\services\base\BackendService;
 use yii\helpers\ArrayHelper;
-use common\services\LeShiVideoService;
 
-class VideoService extends BackendService
+class MediaService extends BackendService
 {
-    const ON_AFTER_EDIT_VIDEO  = 'on_after_edit_video';
-    const ON_AFTER_DELETED_VIDEO = 'on_after_deleted_video';
-    const ON_AFTER_DELETED_ALBUM = 'on_after_deleted_album';
+    const ON_AFTER_EDIT_MEDIA  = 'on_after_edit_media';
+    const ON_AFTER_DELETED_MEDIA = 'on_after_deleted_media';
 
     public function behaviors()
     {
         return [
-            'albumBehavior' => [
-                'class' => 'common\behaviors\VideoBehavior',
+            'mediaBehavior' => [
+                'class' => 'common\behaviors\MediaBehavior',
             ],
         ];
     }
@@ -50,13 +29,13 @@ class VideoService extends BackendService
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['pageCount' => 0,'dataList' => [],'dataCount' => 0];
 
-        $models = $cardModels = VideoModel::find()
-            ->select(VideoModel::tableName().'.*')
-            ->where(['!=','status' , VideoModel::STATUS_DELETED])
+        $models = $cardModels = MediaModel::find()
+            ->select(MediaModel::tableName().'.*')
+            ->where(['!=','status' , MediaModel::STATUS_DELETED])
             ->andFilterWhere(['like','title',$keyWord])
             ->andFilterWhere(['cate_id' => $_category])
             ->andFilterWhere(['source_type' => $other['source_type']])
-            ->andFilterWhere(['is_recommd' => $_recommend]);
+            ->andFilterWhere(['is_recommend' => $_recommend]);
 
         $data['dataCount'] = $models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
@@ -70,14 +49,14 @@ class VideoService extends BackendService
     }
 
     //编辑排序
-    public function editSort($videoid,$sort){
-        $result =  VideoModel::updateAll(['sort_order' => $sort],['id' => $videoid]);
+    public function editSort($mediaId,$sort){
+        $result =  MediaModel::updateAll(['sort_order' => $sort],['id' => $mediaId]);
         return $result;
     }
     
 
     //编辑视频 音频
-    public function editVideo($id,$albumId)
+    public function editMedia($id, $albumId)
     {
         $bodyParams = \Yii::$app->request->post();
         $bodyParams['VideoAlbumModel']['name'] = $bodyParams['VideoAlbumModel']['name'] ?: $bodyParams['VideoModel']['title'];
@@ -91,7 +70,7 @@ class VideoService extends BackendService
         $bodyParams['VideoModel']['album_id'] = $albumModel->id;
         \Yii::$app->request->setBodyParams($bodyParams);
 
-        $return = $this->editInfo($id,VideoModel::className());
+        $return = $this->editInfo($id,MediaModel::className());
 
         if($return == false) return $return;
 
@@ -103,16 +82,16 @@ class VideoService extends BackendService
     }
 
     // 删除
-    public function deleteVideo($id)
+    public function deleteMedia($id)
     {
-        $result = $this->deleteInfo($id,VideoModel::className());
+        $result = $this->deleteInfo($id,MediaModel::className());
         //if($result == true) $this->onAfterDeleteVideo($id);
         return $result;
     }
 
-    public function recommendVideo($ids,$column,$value)
+    public function recommendMedia($ids,$column,$value)
     {
-        $num = VideoModel::updateAll([$column => $value],['id' => $ids]);
+        $num = MediaModel::updateAll([$column => $value],['id' => $ids]);
         if($num > 0) return true;
         return false;
     }
@@ -123,7 +102,7 @@ class VideoService extends BackendService
 
         $data = ['dataList' => [],'dataCount' => 0,'pageCount' => 0];
 
-        $models = VideoCategoryModel::find()->where(['status' => VideoCategoryModel::STATUS_ACTIVE])
+        $models = MediaCategoryModel::find()->where(['status' => MediaCategoryModel::STATUS_ACTIVE])
             ->andFilterWhere(['like','name',$keyWord])
             ->andFilterWhere(['source_type' => $other['source_type']]);
 
@@ -139,19 +118,19 @@ class VideoService extends BackendService
 
     public function editCategory($id)
     {
-        return $this->editInfo($id,VideoCategoryModel::className());
+        return $this->editInfo($id,MediaCategoryModel::className());
     }
 
     public function deleteCategory($id)
     {
-        return $this->deleteInfo($id,VideoCategoryModel::className());
+        return $this->deleteInfo($id,MediaCategoryModel::className());
     }
 
     //获取分类
     public function categories($sourceType = 1)
     {
-        $model = VideoCategoryModel::find()->select(['id','name','parent_id'])
-            ->where(['status' => VideoCategoryModel::STATUS_ACTIVE])
+        $model = MediaCategoryModel::find()->select(['id','name','parent_id'])
+            ->where(['status' => MediaCategoryModel::STATUS_ACTIVE])
             ->andWhere(['source_type' => $sourceType])
             ->asArray()
             ->all();
@@ -168,8 +147,8 @@ class VideoService extends BackendService
         list($offset,$limit) = $this->parsePageParam($_page,$_prePage);
         $data = ['pageCount' => 0,'dataList' => [],'dataCount' => 0];
 
-        $models = $cardModels = VideoCommentModel::find()
-            ->where(['!=','status' , VideoCommentModel::STATUS_DELETED])
+        $models = $cardModels = MediaCommentModel::find()
+            ->where(['!=','status' , MediaCommentModel::STATUS_DELETED])
             ->andFilterWhere(['content','title',$_keyWord])
             ->andFilterWhere(['source_id' => $_other['source_id']]);
 
@@ -200,14 +179,14 @@ class VideoService extends BackendService
     private function onAfterDeleteVideo($id)
     {
         $id = is_array($id) ? $id : (array)$id;
-        $event = new VideoEvent(['videoId' => $id]);
+        $event = new MediaEvent(['videoId' => $id]);
         $this->trigger(static::ON_AFTER_DELETED_VIDEO,$event);
     }
 
     private function onAfterDeleteAlbum($id)
     {
         $id = is_array($id) ? $id : (array)$id;
-        $event = new VideoEvent(['AlbumId' => $id]);
+        $event = new MediaEvent(['AlbumId' => $id]);
         $this->trigger(static::ON_AFTER_DELETED_ALBUM,$event);
     }
 }

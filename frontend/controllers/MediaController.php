@@ -1,17 +1,14 @@
 <?php
 namespace frontend\controllers;
 
-use common\services\VideoService;
+use common\services\MediaService;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-/**
- * Site controller
- */
-class VideoController extends BaseController
+class MediaController extends BaseController
 {
     // 视频/音频列表
-    public function actionVideoList()
+    public function actionMediaList()
     {
         $cateId = ArrayHelper::getValue($this->paramData,'cate_id');
         $sourceType = ArrayHelper::getValue($this->paramData,'source_type');
@@ -19,29 +16,29 @@ class VideoController extends BaseController
         $count = ArrayHelper::getValue($this->paramData,'count');
         $order = ArrayHelper::getValue($this->paramData,'order', 'create_time');
 
-        $ret = VideoService::getService()->videoList($cateId,$page,$count,$sourceType, $order);
+        $ret = MediaService::getService()->mediaList($cateId,$page,$count,$sourceType, $order);
 
         return $this->returnSuccess($ret);
     }
 
     // 视频/音频详情
-    public function actionVideoDetails()
+    public function actionMediaDetails()
     {
         $videoId = ArrayHelper::getValue($this->paramData,'source_id');
         $userId  = ArrayHelper::getValue($this->paramData,'user_id');
 
-        $ret = VideoService::getService()->videoDetails($videoId, $userId);
+        $ret = MediaService::getService()->mediaDetails($videoId, $userId);
 
         return $this->returnSuccess($ret);
     }
 
     //音频视频台词列表
-    public function actionVideoLines()
+    public function actionMediaLines()
     {
         $videoId = ArrayHelper::getValue($this->paramData,'source_id');
         $lang  = ArrayHelper::getValue($this->paramData,'lang');
 
-        $ret = VideoService::getService()->videoLines($videoId, $lang);
+        $ret = MediaService::getService()->mediaLines($videoId, $lang);
 
         return $this->returnSuccess($ret);
     }
@@ -53,41 +50,41 @@ class VideoController extends BaseController
         $page    = ArrayHelper::getValue($this->paramData,'page');
         $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $return  = VideoService::getService()->commentList($videoId,$page,$count);
+        $return  = MediaService::getService()->commentList($videoId,$page,$count);
         if(is_array($return)) return $this->returnSuccess($return);
         return $this->returnError($return);
     }
 
     //视频/音频评论
-    public function actionCommentVideo()
+    public function actionCommentMedia()
     {
         $videoId = ArrayHelper::getValue($this->paramData,'source_id');
         $userId = ArrayHelper::getValue($this->paramData,'user_id');
         $content = ArrayHelper::getValue($this->paramData,'content');
 
-        $ret = VideoService::getService()->videoComment($videoId, $content, $userId);
+        $ret = MediaService::getService()->videoComment($videoId, $content, $userId);
         if($ret === true) return $this->returnSuccess();
         return $this->returnError($ret);
     }
 
     // 收藏与取消收藏
-    public function actionCollectVideo()
+    public function actionCollectMedia()
     {
         $sourced = ArrayHelper::getValue($this->paramData,'source_id');
         $userId  = ArrayHelper::getValue($this->paramData,'user_id');
 
-        $return = VideoService::getService()->collectVideo($sourced,$userId);
+        $return = MediaService::getService()->collectMedia($sourced,$userId);
         if($return === true) return $this->returnSuccess();
         return $this->returnError($return);
     }
 
     // 视频下载
-    public function actionDownloadVideo()
+    public function actionDownloadMedia()
     {
         $sourceId = ArrayHelper::getValue($this->paramData,'source_id');
         $userId  = ArrayHelper::getValue($this->paramData,'user_id');
 
-        $return = VideoService::getService()->downloadVideo($sourceId,$userId);
+        $return = MediaService::getService()->downloadMedia($sourceId,$userId);
         if($return === true) return $this->returnSuccess();
         return $this->returnError($return);
     }

@@ -2,13 +2,10 @@
 namespace frontend\controllers;
 
 use common\constants\CodeConstant;
-use common\services\VideoService;
+use common\services\MediaService;
 use frontend\services\UserService;
 use yii\helpers\ArrayHelper;
 
-/**
- * Site controller
- */
 class SiteController extends BaseController
 {
     // 首页推荐
@@ -17,14 +14,11 @@ class SiteController extends BaseController
         $page    = ArrayHelper::getValue($this->paramData,'page');
         $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $ret = VideoService::getService()->recommendList($page, $count);
+        $ret = MediaService::getService()->recommendList($page, $count);
         return $this->returnSuccess($ret);
     }
-    /**
-     * 登陆
-     * @return string
-     * @throws \yii\base\InvalidConfigException
-     */
+
+    // 登陆
     public function actionLogin()
     {
         $userService = UserService::getService();
@@ -38,10 +32,6 @@ class SiteController extends BaseController
         return $this->returnSuccess(CodeConstant::SUCCESS, $ret);
     }
 
-    /**
-     * 联系我们
-     * @return string
-     */
     public function actionContact()
     {
         return $this->returnSuccess();

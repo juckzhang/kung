@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/11/17
- * Time: 21:14
- */
-
 namespace frontend\controllers;
 
 use Yii;
@@ -14,10 +7,6 @@ use yii\web\Response;
 
 class UploadController extends BaseController
 {
-    /**
-     * 乐视视频上传初始化
-     * @return string
-     */
     public function actionLeshiVideo()
     {
         $return = LeShiVideoService::getService()->uploadVideo($this->paramData);

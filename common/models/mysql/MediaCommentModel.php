@@ -1,19 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/11/9
- * Time: 12:14
- */
-
 namespace common\models\mysql;
 
-
-class VideoCommentModel extends ActiveRecord
+class MediaCommentModel extends ActiveRecord
 {
     public static function tableName()
     {
-        return "{{%video_comment}}";
+        return "{{%media_comment}}";
     }
 
     public function getUser(){

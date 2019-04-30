@@ -7,13 +7,6 @@ return [
     'language' => 'zh-CN',
     'layout' => false,
     'components' => [
-//        'user' => [
-//            'identityClass' => 'common\models\mysql\UserModel',
-//            'idParam' => 'zuiying_frontend_id',
-//            'identityCookie' => ['name' => 'zuiying_frontend_identity', 'httpOnly' => true],
-//            'enableAutoLogin' => true,
-//        ],
-
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -22,10 +15,6 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
-        ],
-
-        'authManager' => [
-            'class' => 'common\components\rabc\DbManager',
         ],
 
         'urlManager' => [

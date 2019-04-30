@@ -2,25 +2,13 @@
 
 namespace frontend\services;
 
-
 use common\models\mysql\FeedbackModel;
 use common\models\mysql\UserModel;
 use frontend\services\base\FrontendService;
 use common\constants\CodeConstant;
 
-/**
- * Class UserService
- * @package backend\services\users
- * @author zhangchao
- * @since	Version 1.0.0
- */
 class UserService extends FrontendService{
 
-    /**
-     * 登陆
-     * @param array $params
-     * @return array|UserModel|int|null|\yii\db\ActiveRecord
-     */
     public function login(array $params){
         //判断账号是否存在
         $model = UserModel::find(['id','nick_name','icon_url'])
@@ -28,12 +16,10 @@ class UserService extends FrontendService{
             ->asArray()
             ->one();
 
-        if(!empty($model)){//账号存在，返回uid
-            return $model;
+        if(!($model instanceof UserModel)){
+            $model = new UserModel();
         }
-
-        //新建账号
-        $model = new UserModel();
+        $model->access_token = md5('token-'.time().'-'.mt_rand(1000,9999));
         if($model->load($params, '') and $model->save()){
             return $model->toArray();
         }
@@ -41,11 +27,7 @@ class UserService extends FrontendService{
         return CodeConstant::USER_LOGIN_FAILED;
     }
 
-    /**
-     * 添加feedback
-     * @param $params
-     * @return int
-     */
+    // 用户反馈
     public function feedback($params)
     {
         $model = new FeedbackModel();

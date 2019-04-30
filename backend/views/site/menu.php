@@ -12,38 +12,38 @@ use common\models\mysql\AdModel;
         <div class="accordionContent">
             <ul class="tree treeFolder">
                 <!-- 视频信息 -->
-                <?php if(\Yii::$app->user->can('video')):?>
+                <?php if(\Yii::$app->user->can('media')):?>
                 <li><a>视频信息管理</a>
                     <ul>
-                        <?php if(\Yii::$app->user->can('video/video-list')):?>
-                        <li><a href="<?=Url::to(['video/video-list','other' => ['source_type' => 1]])?>" target="navTab" rel="video-list">视频信息列表</a></li>
+                        <?php if(\Yii::$app->user->can('media/media-list')):?>
+                        <li><a href="<?=Url::to(['media/media-list','other' => ['source_type' => 1]])?>" target="navTab" rel="media-list">视频信息列表</a></li>
                         <?php endif;?>
 
-                        <?php if(\Yii::$app->user->can('video/category-list')):?>
-                        <li><a href="<?=Url::to(['video/category-list', 'other' => ['source_type' => 1]])?>" target="navTab" rel="category-list">视频分类信息列表</a></li>
+                        <?php if(\Yii::$app->user->can('media/category-list')):?>
+                        <li><a href="<?=Url::to(['media/category-list', 'other' => ['source_type' => 1]])?>" target="navTab" rel="category-list">视频分类信息列表</a></li>
                         <?php endif;?>
 
-                        <?php if(\Yii::$app->user->can('video/comment-list')):?>
-                            <li><a href="<?=Url::to(['video/comment-list'])?>" target="navTab" rel="comment-list">视频评论列表</a></li>
+                        <?php if(\Yii::$app->user->can('media/comment-list')):?>
+                            <li><a href="<?=Url::to(['media/comment-list'])?>" target="navTab" rel="comment-list">视频评论列表</a></li>
                         <?php endif;?>
                     </ul>
                 </li>
                 <?php endif;?>
 
                 <!-- 音频信息 -->
-                <?php if(\Yii::$app->user->can('video')):?>
+                <?php if(\Yii::$app->user->can('media')):?>
                     <li><a>音频信息管理</a>
                         <ul>
-                            <?php if(\Yii::$app->user->can('video/video-list')):?>
-                                <li><a href="<?=Url::to(['video/video-list','other' => ['source_type' => 2]])?>" target="navTab" rel="video-list">音频信息列表</a></li>
+                            <?php if(\Yii::$app->user->can('media/media-list')):?>
+                                <li><a href="<?=Url::to(['media/media-list','other' => ['source_type' => 2]])?>" target="navTab" rel="media-list">音频信息列表</a></li>
                             <?php endif;?>
 
-                            <?php if(\Yii::$app->user->can('video/category-list')):?>
-                                <li><a href="<?=Url::to(['video/category-list', 'other' => ['source_type' => 2]])?>" target="navTab" rel="category-list">音频分类信息列表</a></li>
+                            <?php if(\Yii::$app->user->can('media/category-list')):?>
+                                <li><a href="<?=Url::to(['media/category-list', 'other' => ['source_type' => 2]])?>" target="navTab" rel="category-list">音频分类信息列表</a></li>
                             <?php endif;?>
 
-                            <?php if(\Yii::$app->user->can('video/comment-list')):?>
-                                <li><a href="<?=Url::to(['video/comment-list'])?>" target="navTab" rel="comment-list">视频评论列表</a></li>
+                            <?php if(\Yii::$app->user->can('media/comment-list')):?>
+                                <li><a href="<?=Url::to(['media/comment-list'])?>" target="navTab" rel="comment-list">视频评论列表</a></li>
                             <?php endif;?>
                         </ul>
                     </li>

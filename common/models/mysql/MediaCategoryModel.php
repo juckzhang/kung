@@ -9,10 +9,10 @@
 namespace common\models\mysql;
 
 
-class VideoCategoryModel extends ActiveRecord
+class MediaCategoryModel extends ActiveRecord
 {
     public static function tableName()
     {
-        return "{{%video_category}}";
+        return "{{%media_category}}";
     }
 }

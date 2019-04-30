@@ -1,21 +1,20 @@
 <?php
 namespace common\models\mysql;
 
-
-class VideoModel extends ActiveRecord
+class MediaModel extends ActiveRecord
 {
     const IS_RECOMMEND = 1;
     const NOT_RECOMMEND = 0;
 
     public static function tableName()
     {
-        return "{{%video}}";
+        return "{{%media}}";
     }
 
     public function getLines()
     {
-        return $this->hasMany(VideoLinesModel::className(),['source_id' => 'id'])
-            ->where([VideoLinesModel::tableName().'.status' => VideoLinesModel::STATUS_ACTIVE])
+        return $this->hasMany(MediaLinesModel::className(),['source_id' => 'id'])
+            ->where(['status' => MediaLinesModel::STATUS_ACTIVE])
             ->select(['source_id','lang_type','line_number','content','start_time','end_time'])
             ->orderBy(['line_number' => SORT_ASC,'lang_type' => SORT_ASC])
             ->asArray();

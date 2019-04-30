@@ -2,9 +2,9 @@
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use common\services\UploadService;
-use backend\services\VideoService;
+use backend\services\MediaService;
 
-$videoService = VideoService::getService();
+$videoService = MediaService::getService();
 $cateId       = ArrayHelper::getValue($album,'cate_id');
 $categories   = $videoService->categories();
 $user = $videoService->getUser();

@@ -1,12 +1,9 @@
 <?php
 namespace frontend\controllers;
 
-use common\services\VideoService;
+use common\services\MediaService;
 use yii\helpers\ArrayHelper;
 
-/**
- * User controller
- */
 class UserController extends BaseController{
 
     //收藏列表
@@ -16,7 +13,7 @@ class UserController extends BaseController{
         $page    = ArrayHelper::getValue($this->paramData,'page');
         $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $ret = VideoService::getService()->collectionList($userId, $page, $count);
+        $ret = MediaService::getService()->collectionList($userId, $page, $count);
         return $this->returnSuccess($ret);
     }
 
@@ -27,7 +24,7 @@ class UserController extends BaseController{
         $page    = ArrayHelper::getValue($this->paramData,'page');
         $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $ret = VideoService::getService()->collectionList($userId, $page, $count);
+        $ret = MediaService::getService()->collectionList($userId, $page, $count);
         return $this->returnSuccess($ret);
     }
 
@@ -38,7 +35,7 @@ class UserController extends BaseController{
         $page    = ArrayHelper::getValue($this->paramData,'page');
         $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $ret = VideoService::getService()->downloadList($userId, $page, $count);
+        $ret = MediaService::getService()->downloadList($userId, $page, $count);
         return $this->returnSuccess($ret);
     }
 

@@ -5,9 +5,6 @@ use Yii;
 use common\controllers\CommonController;
 use yii\helpers\ArrayHelper;
 
-/**
- * Site controller
- */
 class BaseController extends CommonController
 {
     protected $paramData = [];
@@ -29,9 +26,6 @@ class BaseController extends CommonController
         return $this->paramData;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -41,11 +35,6 @@ class BaseController extends CommonController
         ];
     }
 
-    /**
-     * 解析参数
-     *
-     * @return mixed
-     */
     protected function parseParam()
     {
         $_requestParam = Yii::$app->getRequest()->getPost();

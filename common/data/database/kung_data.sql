@@ -12,11 +12,14 @@ create table if NOT EXISTS kung_user(
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
   create_time bigint unsigned NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned NOT NULL DEFAULT 0 comment'修改时间',
-  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：禁用 2：删除'
+  access_token char(32) not null default '' comment'登陆token',
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：禁用 2：删除',
+  key account(third_account,account_type),
+  key access_token(access_token)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1000000000;
 
 -- 资源分类表
-CREATE TABLE if NOT EXISTS kung_video_category(
+CREATE TABLE if NOT EXISTS kung_media_category(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'主键',
   parent_id int unsigned NOT NULL default 0 comment'父id',
   source_type tinyint(1) unsigned NOT NULL default 0 comment'资源类型 1：视频， 2，音频',
@@ -24,20 +27,22 @@ CREATE TABLE if NOT EXISTS kung_video_category(
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
   create_time bigint unsigned NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned NOT NULL DEFAULT 0 comment'修改时间',
-  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除'
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除',
+  key source_type(source_type),
+  key parent_id(parent_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
 
--- 视频/音频资源表
-CREATE TABLE if NOT EXISTS kung_video(
+CREATE TABLE if NOT EXISTS kung_media(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
   cate_id int unsigned NOT NULL DEFAULT 0 comment'分类id',
   source_type int unsigned NOT NULL DEFAULT 0 comment'资源类型 1：视频 2：音频',
-  is_recommd tinyint(1) unsigned NOT NULL DEFAULT 0 comment'是否首页推荐 1:推荐 0：不推荐',
+  is_recommend tinyint(1) unsigned NOT NULL DEFAULT 0 comment'是否首页推荐 1:推荐 0：不推荐',
   title varchar(255) NOT NULL DEFAULT '' comment'标题',
-  video_avatar varchar(255) NOT NULL DEFAULT '' comment'海报图标',
   sub_title varchar(255) NOT NULL DEFAULT '' comment'副标题',
-  videl_desc varchar(255) NOT NULL DEFAULT '' comment'描述',
-  video_link VARCHAR(255) NOT NULL DEFAULT '' comment'视屏地址',
+  `desc` varchar(255) NOT NULL DEFAULT '' comment'描述',
+  poster_url varchar(255) NOT NULL DEFAULT '' comment'海报图标',
+  play_link VARCHAR(255) NOT NULL DEFAULT '' comment'视屏播放地址',
+  download_link VARCHAR(255) NOT NULL DEFAULT '' comment'视屏下载地址',
   play_num int unsigned NOT NULL DEFAULT 0 comment'播放次数',
   real_play_num int unsigned NOT NULL DEFAULT 0 comment'真实播放次数',
   collection_num int unsigned NOT NULL DEFAULT 0 comment'收藏数',
@@ -47,14 +52,16 @@ CREATE TABLE if NOT EXISTS kung_video(
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
   create_time bigint unsigned  NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned  NOT NULL DEFAULT 0 comment'修改时间',
-  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除',
+  key source_type(source_type),
+  key cate_id(cate_id),
+  key is_recommend(is_recommend)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'资源列表';
 
--- 视频/音频台词表
-CREATE TABLE if NOT EXISTS kung_video_lines(
+CREATE TABLE if NOT EXISTS kung_media_lines(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
   source_id int unsigned NOT NULL DEFAULT 0 comment'资源id',
-  lang_type char(15) NOT NULL DEFAULT '' comment'台词语言类型',
+  lang_type char(10) NOT NULL DEFAULT '' comment'台词语言类型 中文: zh_CN, 英文: en_US',
   line_number int unsigned NOT NULL DEFAULT 0 comment'表示第几段台词',
   content varchar(255) NOT NULL DEFAULT '' comment'内容',
   start_time char(25) NOT NULL default '' comment'开始时间',
@@ -62,44 +69,46 @@ CREATE TABLE if NOT EXISTS kung_video_lines(
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
   create_time bigint unsigned  NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned  NOT NULL DEFAULT 0 comment'修改时间',
-  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除',
+  key source_id(source_id),
+  key lang_type(lang_type),
+  key line_number(line_number)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'资源台词列表';
 
--- 资源收藏表
-CREATE TABLE if NOT EXISTS kung_video_collection(
+CREATE TABLE if NOT EXISTS kung_media_collection(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
   user_id int unsigned NOT NULL DEFAULT 0 comment'用户id',
   source_id int unsigned NOT NULL DEFAULT 0 comment'资源id',
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
   create_time bigint unsigned  NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned  NOT NULL DEFAULT 0 comment'修改时间',
-  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除',
+  key source(source_id,user_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'用户收藏列表';
 
--- 资源浏览记录表
-CREATE TABLE if NOT EXISTS kung_video_look(
+CREATE TABLE if NOT EXISTS kung_media_look(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
   user_id int unsigned NOT NULL DEFAULT 0 comment'用户id',
   source_id int unsigned NOT NULL DEFAULT 0 comment'资源id',
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
   create_time bigint unsigned  NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned  NOT NULL DEFAULT 0 comment'修改时间',
-  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除',
+  key source(source_id,user_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'浏览列表';
 
--- 资源下载记录表
-CREATE TABLE if NOT EXISTS kung_video_download(
+CREATE TABLE if NOT EXISTS kung_media_download(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
   user_id int unsigned NOT NULL DEFAULT 0 comment'用户id',
   source_id int unsigned NOT NULL DEFAULT 0 comment'资源id',
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
   create_time bigint unsigned  NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned  NOT NULL DEFAULT 0 comment'修改时间',
-  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除',
+  key source(source_id,user_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'资源下载记录表';
 
--- 评论表
-CREATE TABLE if NOT EXISTS kung_video_comment(
+CREATE TABLE if NOT EXISTS kung_media_comment(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
   parent_id int unsigned NOT NULL DEFAULT 0 comment'父id',
   user_id int unsigned NOT null DEFAULT 0 comment'用户id',
@@ -108,10 +117,23 @@ CREATE TABLE if NOT EXISTS kung_video_comment(
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
   create_time bigint unsigned  NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned  NOT NULL DEFAULT 0 comment'修改时间',
-  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除',
+  key source(source_id,user_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'评论列表';
 
--- 管理员角色表
+CREATE TABLE IF NOT EXISTS kung_feedback(
+  id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
+  user_id int unsigned NOT NULL DEFAULT 0 comment'用户id',
+  content VARCHAR(255) NOT NULL DEFAULT '' comment'操作内容说明',
+  parent_id int unsigned NOT NULL DEFAULT 0 comment'回复id',
+  sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
+  create_time bigint unsigned NOT NULL DEFAULT 0 comment'创建时间',
+  update_time bigint unsigned NOT NULL DEFAULT 0 comment'修改时间',
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：1：删除',
+  key user_id(user_id),
+  key parent_id(parent_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'用户反馈列表';
+
 CREATE TABLE IF NOT EXISTS kung_role(
   `id` int unsigned NOT NULL PRIMARY  key AUTO_INCREMENT COMMENT '自增ID，主键',
   `name` char(25) NOT NULL comment'角色名称',
@@ -119,9 +141,8 @@ CREATE TABLE IF NOT EXISTS kung_role(
   create_time bigint unsigned NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned NOT NULL DEFAULT 0 comment'修改时间',
   status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'管理员角色列表';
 
--- 后台管理员列表
 create TABLE IF NOT EXISTS kung_admin(
   `id` int unsigned NOT NULL PRIMARY  key AUTO_INCREMENT COMMENT '自增ID，主键',
   role_id int unsigned NOT null default 0 comment'角色',
@@ -131,21 +152,18 @@ create TABLE IF NOT EXISTS kung_admin(
   create_time bigint unsigned NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned NOT NULL DEFAULT 0 comment'修改时间',
   status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'管理员列表';
 
-INSERT into`kung_admin` VALUES (null,0,'root','$2y$13$zVjSKOcaBEnuwFFtW7fNCuVX1dysOj5U6oxOiWNDGoxpCd1JKD8ii',500,123456789,123456789,0);
-
--- 后台控制访问的资源列表
 CREATE TABLE IF NOT EXISTS kung_source(
   `id` int unsigned NOT NULL PRIMARY  key AUTO_INCREMENT COMMENT '自增ID，主键',
   parent_id int unsigned NOT NULL DEFAULT 0 comment'父id',
-  name char(25) NOT NULL comment'资源名称',
+  `name` char(25) NOT NULL comment'资源名称',
   request char(25) NOT NULL comment'对应的控制器方法',
   sort_order int unsigned  NOT NULL DEFAULT 500 comment'排序字段',
   create_time bigint unsigned   NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned   NOT NULL DEFAULT 0 comment'修改时间',
   status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'资源列表';
 
 -- 角色资源关系表
 CREATE TABLE IF NOT EXISTS kung_role_source(
@@ -156,9 +174,8 @@ CREATE TABLE IF NOT EXISTS kung_role_source(
   create_time bigint unsigned  NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned  NOT NULL DEFAULT 0 comment'修改时间',
   status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'资源角色关系表';
 
--- 操作记录表
 CREATE TABLE IF NOT EXISTS kung_admin_operation(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
   user_id int unsigned NOT NULL DEFAULT 0 comment'用户id',
@@ -166,17 +183,6 @@ CREATE TABLE IF NOT EXISTS kung_admin_operation(
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
   create_time bigint unsigned NOT NULL DEFAULT 0 comment'创建时间',
   update_time bigint unsigned NOT NULL DEFAULT 0 comment'修改时间',
-  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
-
--- 用户反馈
-CREATE TABLE IF NOT EXISTS kung_feedback(
-  id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
-  user_id int unsigned NOT NULL DEFAULT 0 comment'用户id',
-  content VARCHAR(255) NOT NULL DEFAULT '' comment'操作内容说明',
-  parent_id int unsigned NOT NULL DEFAULT 0 comment'回复id',
-  sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
-  create_time bigint unsigned NOT NULL DEFAULT 0 comment'创建时间',
-  update_time bigint unsigned NOT NULL DEFAULT 0 comment'修改时间',
-  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：1：删除'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：1：删除',
+  key user_id(user_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'管理员操作记录表';

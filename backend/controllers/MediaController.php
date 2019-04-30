@@ -2,18 +2,18 @@
 namespace backend\controllers;
 
 use common\constants\CodeConstant;
-use common\models\mysql\VideoCategoryModel;
-use common\models\mysql\VideoCommentModel;
-use common\models\mysql\VideoModel;
+use common\models\mysql\MediaCategoryModel;
+use common\models\mysql\MediaCommentModel;
+use common\models\mysql\MediaModel;
 use Yii;
-use backend\services\VideoService;
+use backend\services\MediaService;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
-class VideoController extends BaseController
+class MediaController extends BaseController
 {
-    public function actionVideoList()
+    public function actionMediaList()
     {
         $_prePage  = ArrayHelper::getValue($this->paramData,'numPerPage');
         $_page       = ArrayHelper::getValue($this->paramData,'pageNum');
@@ -21,49 +21,49 @@ class VideoController extends BaseController
         $_category = ArrayHelper::getValue($this->paramData,'category');
         $_recommend = ArrayHelper::getValue($this->paramData,'recommend');
         $_other    = ArrayHelper::getValue($this->paramData,'other',[]);
-        $_order = $this->_sortOrder(VideoModel::tableName().'.');
-        $data = VideoService::getService()->videoList($_keyWord,$_other,$_order,$_page,$_prePage,$_category,$_recommend);
-        return $this->render('video-list',$data);
+        $_order = $this->_sortOrder(MediaModel::tableName().'.');
+        $data = MediaService::getService()->MediaList($_keyWord,$_other,$_order,$_page,$_prePage,$_category,$_recommend);
+        return $this->render('media-list',$data);
     }
 
-    public function actionEditVideo()
+    public function actionEditMedia()
     {
         if(\Yii::$app->request->getIsPost())
         {
             $id = ArrayHelper::getValue($this->paramData,'id');
             $albumId = ArrayHelper::getValue($this->paramData,'albumId');
-            $result = VideoService::getService()->editVideo($id,$albumId);
+            $result = MediaService::getService()->editMedia($id,$albumId);
             if($result instanceof Model)
                 return $this->returnAjaxSuccess([
                     'message' => '编辑成功',
-                    'navTabId' => 'video-list',
+                    'navTabId' => 'media-list',
                     'callbackType' => 'closeCurrent',
-                    'forwardUrl' => Url::to(['video/video-list'])
+                    'forwardUrl' => Url::to(['media/media-list'])
                 ]);
             return $this->returnAjaxError($result);
         }else{
             $id = ArrayHelper::getValue($this->paramData,'id');
-            $model = VideoModel::find()->where(['id' => $id])->asArray()->one();
+            $model = MediaModel::find()->where(['id' => $id])->asArray()->one();
             $album = [];
             if(! empty($model)) $album = VideoAlbumModel::find()
                 ->where(['id' => $model['album_id'],'status' => VideoAlbumModel::STATUS_ACTIVE])->asArray()->one();
-            return $this->render('edit-video',['model' => $model,'album' => $album]);
+            return $this->render('edit-media',['model' => $model,'album' => $album]);
         }
     }
 
-    public function actionDeleteVideo()
+    public function actionDeleteMedia()
     {
         if(! Yii::$app->request->getIsAjax()) return $this->returnAjaxError(CodeConstant::REQUEST_METHOD_ERROR);
 
         $ids = ArrayHelper::getValue($this->paramData,'ids');
 
-        $return = VideoService::getService()->deleteVideo($ids);
+        $return = MediaService::getService()->deleteMedia($ids);
         if($return === true)
             return $this->returnAjaxSuccess([
                 'message' => '删除成功',
-                'navTabId' => 'video-list',
+                'navTabId' => 'media-list',
                 'callbackType' => 'forward',
-                'forwardUrl'  => Url::to(['video/video-list'])
+                'forwardUrl'  => Url::to(['media/media-list'])
             ]);
         return $this->returnAjaxError($return);
     }
@@ -76,13 +76,13 @@ class VideoController extends BaseController
         $column = ArrayHelper::getValue($this->paramData,'column');
         $value = ArrayHelper::getValue($this->paramData,'value');
 
-        $return = VideoService::getService()->recommendVideo($ids,$column,$value);
+        $return = MediaService::getService()->recommendMedia($ids,$column,$value);
         if($return === true)
             return $this->returnAjaxSuccess([
                 'message' => '操作',
-                'navTabId' => 'video-list',
+                'navTabId' => 'media-list',
                 'callbackType' => 'forward',
-                'forwardUrl'  => Url::to(['video/video-list'])
+                'forwardUrl'  => Url::to(['media/media-list'])
             ]);
         return $this->returnAjaxError($return);
     }
@@ -94,7 +94,7 @@ class VideoController extends BaseController
         $_keyWord  = ArrayHelper::getValue($this->paramData,'keyword');
         $_other    = ArrayHelper::getValue($this->paramData,'other',[]);
         $_order = $this->_sortOrder();
-        $data = VideoService::getService()->categoryList($_keyWord,$_other,$_order,$_page,$_prePage);
+        $data = MediaService::getService()->categoryList($_keyWord,$_other,$_order,$_page,$_prePage);
         return $this->render('category-list',$data);
     }
 
@@ -103,20 +103,20 @@ class VideoController extends BaseController
         if(\Yii::$app->request->getIsPost())
         {
             $id = ArrayHelper::getValue($this->paramData,'id');
-            $result = VideoService::getService()->editCategory($id);
+            $result = MediaService::getService()->editCategory($id);
             if($result instanceof Model)
                 return $this->returnAjaxSuccess([
                     'message' => '编辑成功',
                     'navTabId' => 'category-list',
                     'callbackType' => 'closeCurrent',
-                    'forwardUrl' => Url::to(['video/category-list'])
+                    'forwardUrl' => Url::to(['media/category-list'])
                 ]);
             return $this->returnAjaxError($result);
         }else{
             //获取广告id
             $id = ArrayHelper::getValue($this->paramData,'id');
-            $model = VideoCategoryModel::find()->where(['id' => $id])->asArray()->one();
-            $categories = VideoCategoryModel::find()->where(['parent_id' => 0,'status' => VideoCategoryModel::STATUS_ACTIVE])
+            $model = MediaCategoryModel::find()->where(['id' => $id])->asArray()->one();
+            $categories = MediaCategoryModel::find()->where(['parent_id' => 0,'status' => MediaCategoryModel::STATUS_ACTIVE])
                 ->asArray()->all();
             return $this->render('edit-category',['model' => $model,'categories' => $categories]);
         }
@@ -128,13 +128,13 @@ class VideoController extends BaseController
 
         $ids = ArrayHelper::getValue($this->paramData,'ids');
 
-        $return = VideoService::getService()->deleteCategory($ids);
+        $return = MediaService::getService()->deleteCategory($ids);
         if($return === true)
             return $this->returnAjaxSuccess([
                 'message' => '删除成功',
                 'navTabId' => 'category-list',
                 'callbackType' => 'forward',
-                'forwardUrl'  => Url::to(['video/category-list'])
+                'forwardUrl'  => Url::to(['media/category-list'])
             ]);
         return $this->returnAjaxError($return);
     }
@@ -145,23 +145,23 @@ class VideoController extends BaseController
         $_page       = ArrayHelper::getValue($this->paramData,'pageNum');
         $_keyWord  = ArrayHelper::getValue($this->paramData,'keyword');
         $_other    = ArrayHelper::getValue($this->paramData,'other',[]);
-        $_order = $this->_sortOrder(VideoCommentModel::tableName().'.');
-        $data = VideoService::getService()->commentList($_keyWord,$_other,$_order,$_page,$_prePage);
+        $_order = $this->_sortOrder(MediaCommentModel::tableName().'.');
+        $data = MediaService::getService()->commentList($_keyWord,$_other,$_order,$_page,$_prePage);
         return $this->render('comment-list',$data);
     }
 
     public function actionSort(){
-        $videoid = ArrayHelper::getValue($this->paramData,'videoid');
+        $mediaid = ArrayHelper::getValue($this->paramData,'mediaid');
         $sort = ArrayHelper::getValue($this->paramData,'sort');
 
-        $result = VideoService::getService()->editSort($videoid,$sort);
+        $result = MediaService::getService()->editSort($mediaid,$sort);
 
         if($result){
             return $this->returnAjaxSuccess([
                 'message' => '修改成功',
                 'navTabId' => 'album-list',
                 'callbackType' => 'forward',
-                'forwardUrl'  => Url::to(['video/album-list'])
+                'forwardUrl'  => Url::to(['media/media-list'])
             ]);
         }
         return $this->returnAjaxError($result);
