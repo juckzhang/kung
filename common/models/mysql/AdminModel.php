@@ -1,7 +1,6 @@
 <?php
 namespace common\models\mysql;
 
-
 class AdminModel extends ActiveRecord
 {
     public static function tableName()

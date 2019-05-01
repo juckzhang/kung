@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\mysql\UserModel;
 use Yii;
 use common\controllers\CommonController;
 use yii\helpers\ArrayHelper;
@@ -14,11 +15,22 @@ class BaseController extends CommonController
 
     public function beforeAction($action)
     {
-        if (parent::beforeAction($action)) {
-            $this->paramData = $this->parseParam();
-            return true;
+        if(YII_ENV == 'product'){
+            $_GET['user_id'] = null;
+            $_POST['user_id'] = null;
         }
-        return false;
+
+        $accessToken = \Yii::$app->request->headers->get('HTTP_ACCESS_TOKEN');
+        if($accessToken){
+            $model = UserModel::findOne(['access_token' => $accessToken]);
+            if($model instanceof UserModel){
+                $_GET['user_id'] = $model->id;
+                $_POST['user_id'] = $model->id;
+            }
+        }
+        $this->paramData = $this->parseParam();
+
+        return parent::beforeAction($action);
     }
 
     public function getParamData()

@@ -3,6 +3,7 @@ namespace common\services;
 
 use common\constants\CodeConstant;
 use common\events\MediaEvent;
+use common\models\mysql\MediaCategoryModel;
 use common\models\mysql\MediaCommentModel;
 use common\models\mysql\MediaLinesModel;
 use common\models\mysql\MediaModel;
@@ -27,6 +28,28 @@ class MediaService extends OperationService
                 'class' => 'common\behaviors\MediaBehavior',
             ],
         ];
+    }
+
+    //分类接口
+    public function categoryList($sourceType, $page, $count)
+    {
+        list($offset,$limit) = $this->parsePageParam($page,$count);
+        $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
+        $models = MediaCategoryModel::find()
+            ->where(['status' => MediaCategoryModel::STATUS_ACTIVE])
+            ->andFilterWhere(['source_type' => $sourceType]);
+        $data['dataCount'] = $models->count();
+        $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
+
+        if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
+        {
+            $models = $models->orderBy(['sort_order' => SORT_DESC])
+                ->asArray()
+                ->offset($offset)->limit($limit)->all();
+            $data['dataList'] = $models;
+        }
+
+        return $data;
     }
 
     //视频/音频列表
@@ -81,9 +104,15 @@ class MediaService extends OperationService
         list($offset,$limit) = $this->parsePageParam($page, $count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $models = MediaLinesModel::find()
-            ->where(['source_id' => $id, 'lang_type' => ['zh_CN', $lang]])
-            ->andWhere(['status' => MediaLinesModel::STATUS_ACTIVE])
-            ->orderBy(['line_number' => SORT_ASC, 'lang_type' => SORT_ASC])
+            ->where([
+                'source_id' => $id,
+                'lang_type' => ['zh_CN', $lang],
+                'status' => MediaLinesModel::STATUS_ACTIVE,
+            ]);
+        $data['dataCount'] = $models->count();
+        $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
+
+        $models = $models->orderBy(['line_number' => SORT_ASC, 'lang_type' => SORT_ASC])
             ->offset($offset)
             ->limit($limit)
             ->asArray()
@@ -151,8 +180,10 @@ class MediaService extends OperationService
             return $check;
         }
         $model = new MediaCommentModel();
-        $id = $model->add(['user_id' => $userId, 'source_id' => $media, 'content' => $content]);
-        if (is_numeric($id)) return true;
+        $params = ['user_id' => $userId, 'source_id' => $media, 'content' => $content];
+        if($model->load($params, '') and $model->save()){
+            return $model->toArray();
+        }
         return CodeConstant::MEDIA_COMMENT_FAILED;
     }
 

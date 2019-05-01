@@ -3,18 +3,9 @@ namespace common\helpers;
 use \yii\base\InvalidConfigException;
 use \yii\base\InvalidParamException;
 use \yii\helpers\ArrayHelper;
-/**
- * Class CommonHelper
- * @package common\helpers
- */
+
 class CommonHelper {
 
-    /**
-     * @param $file
-     * @param array $configPath
-     * @return array
-     * @throws InvalidConfigException
-     */
     public static function loadConfig($file,$configPath = [])
     {
         $_configPaths = ['@common', '@backend'];
@@ -46,12 +37,6 @@ class CommonHelper {
         return $_config;
     }
 
-    /**
-     * 获取指定长度的随机字符串
-     * @param int $length
-     * @param string $source
-     * @return string
-     */
     public static function randString($length = 6,$source = '')
     {
         $source = is_string($source) && $source !== '' ?
@@ -73,21 +58,11 @@ class CommonHelper {
         return $_str;
     }
 
-    /**
-     * 验证手机号格式
-     *
-     * @param string $mobile
-     * @return bool
-     */
     public static function isMobile($mobile)
     {
         return preg_match('/^1[3|4|5|8|7][0-9]\d{8}$/',$mobile) ? true : false;
     }
 
-    /**
-     * 判断是否是手机客户端
-     * @return bool
-     */
     public static function isMobileClient()
     {
         $_clientType = static::clientType();
@@ -95,10 +70,6 @@ class CommonHelper {
         return false;
     }
 
-    /**
-     * 获取客户端类型
-     * @return int
-     */
     public static function clientType()
     {
         static $CLIENT_TYPE_ANDROID = 1;
@@ -120,11 +91,6 @@ class CommonHelper {
         return $_clientType;
     }
 
-    /*
-     *  获取用户类型
-     * @param int $id
-     * @return string
-     */
     public static function userType($id){
         $type = '';
         switch ($id){
@@ -142,9 +108,6 @@ class CommonHelper {
         return $type;
     }
 
-    /*
-     * 生成唯一订单号
-     */
     public static function getOrderno()
     {
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');

@@ -35,6 +35,7 @@ class SiteController extends BaseController
 
     public function actionContact()
     {
-        return $this->returnSuccess();
+        return $this->render('contact');
+        //return $this->returnSuccess();
     }
 }

@@ -7,6 +7,17 @@ use yii\helpers\ArrayHelper;
 
 class MediaController extends BaseController
 {
+    //分类接口
+    public function actionCategoryList()
+    {
+        $sourceType = ArrayHelper::getValue($this->paramData,'source_type');
+        $page    = ArrayHelper::getValue($this->paramData,'page');
+        $count = ArrayHelper::getValue($this->paramData,'count');
+
+        $ret = MediaService::getService()->categoryList($sourceType,$page,$count);
+
+        return $this->returnSuccess($ret);
+    }
     // 视频/音频列表
     public function actionMediaList()
     {
@@ -65,8 +76,11 @@ class MediaController extends BaseController
         $content = ArrayHelper::getValue($this->paramData,'content');
 
         $ret = MediaService::getService()->mediaComment($videoId, $content, $userId);
-        if($ret === true) return $this->returnSuccess();
-        return $this->returnError($ret);
+        if(is_numeric($ret)){
+            return $this->returnError($ret);
+        }
+
+        return $this->returnSuccess($ret);
     }
 
     // 收藏与取消收藏
