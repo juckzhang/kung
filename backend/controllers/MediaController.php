@@ -147,6 +147,23 @@ class MediaController extends BaseController
         return $this->render('comment-list',$data);
     }
 
+    public function actionDeleteComment()
+    {
+        if(! Yii::$app->request->getIsAjax()) return $this->returnAjaxError(CodeConstant::REQUEST_METHOD_ERROR);
+
+        $ids = ArrayHelper::getValue($this->paramData,'ids');
+
+        $return = MediaService::getService()->deleteComment($ids);
+        if($return === true)
+            return $this->returnAjaxSuccess([
+                'message' => '删除成功',
+                'navTabId' => 'comment-list',
+                'callbackType' => 'forward',
+                'forwardUrl'  => Url::to(['media/comment-list'])
+            ]);
+        return $this->returnAjaxError($return);
+    }
+
     public function actionSort(){
         $mediaid = ArrayHelper::getValue($this->paramData,'mediaid');
         $sort = ArrayHelper::getValue($this->paramData,'sort');

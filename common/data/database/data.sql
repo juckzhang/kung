@@ -40,6 +40,7 @@ CREATE TABLE if NOT EXISTS kung_media(
   title varchar(255) NOT NULL DEFAULT '' comment'标题',
   sub_title varchar(255) NOT NULL DEFAULT '' comment'副标题',
   `desc` varchar(255) NOT NULL DEFAULT '' comment'描述',
+  total_time char(10) NOT NULL DEFAULT '' comment'播放总时长',
   poster_url varchar(255) NOT NULL DEFAULT '' comment'海报图标',
   play_link VARCHAR(255) NOT NULL DEFAULT '' comment'视屏播放地址',
   download_link VARCHAR(255) NOT NULL DEFAULT '' comment'视屏下载地址',

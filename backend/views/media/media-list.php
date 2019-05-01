@@ -13,10 +13,9 @@ $prePage = ArrayHelper::getValue($params, 'numPerPage', '20');
 //查询条件
 $other = ArrayHelper::getValue($params, 'other', []);
 $category = ArrayHelper::getValue($other, 'category');
-$sourceType = ArrayHelper::getValue($other, 'source_type');
+$sourceType = ArrayHelper::getValue($other, 'source_type', 1);
 
-
-$categories = $mediaService->categories();
+$categories = $mediaService->categories($sourceType);
 
 ?>
 <div class="" id="media-list" rel="media-list">
@@ -51,14 +50,6 @@ $categories = $mediaService->categories();
                                 <?php endforeach; ?>
                             </select>
                         </td>
-
-<!--                        <td>推荐筛选-->
-<!--                            <select name="recommend">-->
-<!--                                <option --?//= $recommends===false ?'':'selected'?>-- 全部 --</option>-->
-<!--                                <option value="1" ?//= $recommends ? 'selected':''?>--推荐的</option>-->
-<!--                                <option value="0" ?//= $recommends ? '':'selected'?>--不推荐的</option>-->
-<!--                            </select>-->
-<!--                        </td>-->
                         <td>关键词：<input name="keyword" class="textInput" type="text" alt=""
                                        value="<?= ArrayHelper::getValue($params, 'keyword') ?>"></td>
                     </tr>
@@ -82,7 +73,7 @@ $categories = $mediaService->categories();
         <div class="panelBar">
             <ul class="toolBar">
                 <?php if (\Yii::$app->user->can('media/edit-media')): ?>
-                    <li><a class="add" href="<?= Url::to(['media/edit-media']) ?>" target="navTab"><span>添加</span></a>
+                    <li><a class="add" href="<?= Url::to(['media/edit-media', 'source_type' => $sourceType]) ?>" target="navTab"><span>添加</span></a>
                     </li>
                 <?php endif; ?>
 
@@ -97,7 +88,7 @@ $categories = $mediaService->categories();
                            class="delete"><span>首页推荐</span></a></li>
                     <li><a title="确定要取消推荐记录吗?" target="selectedTodo" rel="ids[]"
                            href="<?= Url::to(['media/recommend-media', 'column' => 'is_recommend', 'value' => 0]) ?>"
-                           class="delete"><span>首页推荐</span></a></li>
+                           class="delete"><span>取消首页推荐</span></a></li>
                 <?php endif; ?>
             </ul>
         </div>

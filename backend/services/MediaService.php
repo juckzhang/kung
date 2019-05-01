@@ -125,6 +125,11 @@ class MediaService extends BackendService
         return $this->deleteInfo($id,MediaCategoryModel::className());
     }
 
+    public function deleteComment($id)
+    {
+        return $this->deleteInfo($id,MediaCommentModel::className());
+    }
+
     //获取分类
     public function categories($sourceType = 1)
     {

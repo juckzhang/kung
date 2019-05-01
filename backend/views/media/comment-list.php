@@ -84,10 +84,6 @@ $search = ArrayHelper::getValue($params,'search');
                     <?php if(\Yii::$app->user->can('media/delete-comment')):?>
                     <a title="删除" target="ajaxTodo" href="<?=Url::to(['media/delete-comment','ids' => $data->id])?>" class="btnDel">删除</a>
                     <?php endif;?>
-
-                    <?php if(\Yii::$app->user->can('media/edit-comment')):?>
-                    <a title="编辑" target="dialog" href="<?=Url::to(['media/edit-comment','id' => $data->id])?>" class="btnEdit">编辑</a>
-                    <?php endif;?>
                 </td>
             </tr>
         <?php endforeach;?>
