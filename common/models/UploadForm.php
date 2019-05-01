@@ -8,8 +8,9 @@ use yii\helpers\ArrayHelper;
 
 class UploadForm extends Model
 {
-
     public $file;
+
+    private $dir = '';
 
     private $path = '';
 
@@ -29,6 +30,7 @@ class UploadForm extends Model
         //获取文件上传路径
         $scenario = $this->getScenario();
         $_conf = ArrayHelper::getValue($this->_conf,$scenario,[]);
+        $this->dir = ArrayHelper::getValue($_conf,'dir','');
         $this->path = ArrayHelper::getValue($_conf,'path','');
         $this->urlPrefix = ArrayHelper::getValue($_conf,'url','');
         $this->remoteUpload = ArrayHelper::getValue($_conf,'remoteUpload',false);
@@ -67,6 +69,11 @@ class UploadForm extends Model
             $_rules[] = $_itemRule;
         }
         return $_rules;
+    }
+
+    public function getDir()
+    {
+        return rtrim($this->dir,'/\\');
     }
 
     public function getPath()

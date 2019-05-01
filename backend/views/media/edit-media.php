@@ -77,7 +77,7 @@ $categories   = $mediaService->categories($sourceType);
                 </dl>
                 <p>
                     <label>海报图片：</label>
-                    <input type="text" name="mediaModel[poster_url]" class='wide-poster' value="<?=ArrayHelper::getValue($album,'poster_url','')?>"/>
+                    <input type="text" name="mediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($album,'poster_url','')?>"/>
                 </p>
                 <p></p>
                 <p>
@@ -105,12 +105,11 @@ $categories   = $mediaService->categories($sourceType);
         //上传图片
         //选择文件之后执行上传
         $('.upload-input').on('change',function(){
-            var name      = $(this).data('name'),
+            var name      = $(this).data('name')
                 id        = $(this).attr('id'),
                 imgObj    = $(this).parent().find('img[class=upload-btn]'),
                 inputText = $('.'+name);
 
-            console.log(id);
             $.ajaxFileUpload({
                 url:'<?=Url::to(['upload/upload-file'])?>',
                 secureuri:false,
@@ -118,7 +117,6 @@ $categories   = $mediaService->categories($sourceType);
                 dataType: 'json',//返回数据的类型
                 data:{type:'poster'},//一同上传的数据
                 success: function (result, status) {
-                    console.log(result);
                     //把图片替换
                     if(result.code == 200){
                         var posterUrl = $.trim(result.data.url),

@@ -10,5 +10,4 @@ return [
     'returnCode'   => 'code',
     'returnDesc'   => 'resultDesc',
     'returnData'   => 'data',
-    'clicktime'            => 100
 ];

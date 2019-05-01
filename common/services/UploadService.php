@@ -11,11 +11,7 @@ use yii\base\Exception;
 class UploadService extends Service
 {
     //上传文件类型
-    const FILE_TYPE_AD   = 'advertisement';  //广告图片
-    const FILE_VIDEO_POSTER = 'poster'; //文章
-    const FILE_USER_ICON = 'avatar'; //头像
-    const FILE_IDCARD_IMG = 'idcard'; //身份证
-
+    const FILE_MEDIA_POSTER = 'poster'; //文章
 
     private $fileScenarios = [];
 
@@ -111,21 +107,21 @@ class UploadService extends Service
         {
             $subDirStr .= $this->createSubDirString($model->recursive);
             //创建子目录
-            mkdir($model->getPath() . DIRECTORY_SEPARATOR .$subDirStr,0755,true);
+            mkdir($model->getDir() . DIRECTORY_SEPARATOR .$model->getPath() . DIRECTORY_SEPARATOR .$subDirStr,0755,true);
         }
         //获取完整文件名
         if($subDirStr !== '') $subDirStr = trim($subDirStr,DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         if($fileName !== null)
         {
-            $relativePath = $model->getPath() . DIRECTORY_SEPARATOR  . $subDirStr .$fileName . '.'.$model->file->extension;
-            $fullFileName = \Yii::getAlias('@webroot/') . $relativePath;
+            $relativePath = $model->getPath() . '/'  . $subDirStr .$fileName . '.'.$model->file->extension;
+            $fullFileName = $relativePath;//\Yii::getAlias('@webroot/') . $relativePath;
         }
         else{
-            $relativePath = $model->getPath() . DIRECTORY_SEPARATOR  . $subDirStr . $model->file->baseName . '.' . $model->file->extension;
-            $fullFileName = \Yii::getAlias('@webroot/') . $relativePath;
+            $relativePath = $model->getPath() . '/'  . $subDirStr . $model->file->baseName . '.' . $model->file->extension;
+            $fullFileName = $relativePath;//\Yii::getAlias('@webroot/') . $relativePath;
         }
 
-        if($model->file->saveAs($fullFileName))
+        if($model->file->saveAs($model->getDir().DIRECTORY_SEPARATOR.$fullFileName, false))
             return [
                 'url' => \Yii::$app->params['imageUrlPrefix'] . $fullFileName,
                 'fullFileName' => $relativePath,
