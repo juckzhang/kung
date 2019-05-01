@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\services\MediaService;
+use frontend\services\UserService;
 use yii\helpers\ArrayHelper;
 
 class UserController extends BaseController{
@@ -42,15 +43,14 @@ class UserController extends BaseController{
     //用户反馈
     public function actionFeedback()
     {
-        $userService = UserService::getService();
         $params = $this->parseParam();
 
-        $ret = $userService->feedback($params);
+        $ret = UserService::getService()->feedback($params);
         if(is_numeric($ret)){
             return $this->returnError($ret);
         }
 
-        return $this->returnSuccess(CodeConstant::SUCCESS, $ret);
+        return $this->returnSuccess($ret);
     }
 
     // 反馈列表

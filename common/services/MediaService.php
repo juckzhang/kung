@@ -44,6 +44,7 @@ class MediaService extends OperationService
         if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
         {
             $models = $models->orderBy([$order => SORT_DESC])
+                ->with('category')
                 ->offset($offset)->limit($limit)->all();
             foreach($models as $item)
                 $data['dataList'][] = $item->toArray();
@@ -155,60 +156,60 @@ class MediaService extends OperationService
     }
 
     //收藏与取消收藏
-    public function collectMedia($media,$userId)
+    public function collectMedia($mediaId,$userId)
     {
-        $return = $this->collect($media,$userId);
+        $return = $this->collect($mediaId,$userId);
         if(is_numeric($return)) return $return;
         //判断是收藏还是取消收藏
         if($return['operation'] == static::POSITIVE_OPERATION)
         {
             if($return['status'] == true){
-                $this->onAfterCollect($return['operationId'],$media,$userId);
+                $this->onAfterCollect($return['operationId'],$mediaId,$userId);
                 return true;
             }
-            return CodeConstant::COLLECT_ALBUM_FAILED;
+            return CodeConstant::COLLECT_MEDIA_FAILED;
         }
 
         if($return['status'] == true){
-            $this->onAfterCancelCollect($return['operationId'],$media,$userId);
+            $this->onAfterCancelCollect($return['operationId'],$mediaId,$userId);
             return true;
         }
-        return CodeConstant::CANCEL_COLLECT_ALBUM_FAILED;
+        return CodeConstant::CANCEL_COLLECT_MEDIA_FAILED;
     }
 
     //下载
-    public function downloadMedia($media,$userId)
+    public function downloadMedia($mediaId,$userId)
     {
-        $return = $this->download($media,$userId);
+        $return = $this->download($mediaId,$userId);
         if($return != true) {
-            $this->onAfterDownload($media, $userId);
+            $this->onAfterDownload($mediaId, $userId);
             return CodeConstant::DOWNLOAD_MEDIA_FAILED;
         }
 
         return true;
     }
 
-    private function onAfterDownload($media,$userId)
+    private function onAfterDownload($mediaId,$userId)
     {
-        $event = new MediaEvent(['mediaId' => $media,'userId' => $userId]);
+        $event = new MediaEvent(['mediaId' => $mediaId,'userId' => $userId]);
         $this->trigger(static::AFTER_DOWNLOAD_MEDIA,$event);
     }
 
-    private function onAfterCollect($operationId,$media,$userId)
+    private function onAfterCollect($operationId,$mediaId,$userId)
     {
-        $event = new MediaEvent(['operationId' => $operationId,'mediaId' => $media,'userId' => $userId]);
+        $event = new MediaEvent(['operationId' => $operationId,'mediaId' => $mediaId,'userId' => $userId]);
         $this->trigger(static::AFTER_COLLECT_MEDIA,$event);
     }
 
-    private function onAfterCancelCollect($operationId,$media,$userId)
+    private function onAfterCancelCollect($operationId,$mediaId,$userId)
     {
-        $event = new MediaEvent(['operationId' => $operationId,'mediaId' => $media,'userId' => $userId]);
+        $event = new MediaEvent(['operationId' => $operationId,'mediaId' => $mediaId,'userId' => $userId]);
         $this->trigger(static::AFTER_CANCEL_COLLECT_MEDIA,$event);
     }
 
-    private function onAfterScannedMedia($media,$userId)
+    private function onAfterScannedMedia($mediaId,$userId)
     {
-        $event = new MediaEvent(['mediaId' => $media,'userId' => $userId]);
+        $event = new MediaEvent(['mediaId' => $mediaId,'userId' => $userId]);
         $this->trigger(static::AFTER_SCANNED_MEDIA,$event);
     }
 }

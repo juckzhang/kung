@@ -11,7 +11,7 @@ $orderDirection = ArrayHelper::getValue($params, 'orderDirection', 'desc');
 $prePage = ArrayHelper::getValue($params, 'numPerPage', '20');
 
 //查询条件
-$other = ArrayHelper::getValue($params, 'other');
+$other = ArrayHelper::getValue($params, 'other', []);
 $category = ArrayHelper::getValue($other, 'category');
 $sourceType = ArrayHelper::getValue($other, 'source_type');
 
@@ -32,6 +32,9 @@ $categories = $mediaService->categories();
     <div class="pageHeader">
         <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<?= Url::to(['media/media-list']) ?>"
               method="post">
+            <?php foreach ($other as $key => $value):?>
+                <input type="hidden" name="other[<?=$key;?>]" value="<?=$value;?>"/>
+            <?php endforeach;?>
             <div class="searchBar">
                 <table class="searchContent">
                     <tbody>
@@ -58,11 +61,6 @@ $categories = $mediaService->categories();
 <!--                        </td>-->
                         <td>关键词：<input name="keyword" class="textInput" type="text" alt=""
                                        value="<?= ArrayHelper::getValue($params, 'keyword') ?>"></td>
-                        <td>
-                            <a class="btnLook" href="<?= Url::to(['media/category-list', 'search' => 1, 'source_type' => $sourceType]) ?>"
-                               lookupgroup="category">查找带回
-                            </a>
-                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -114,11 +112,11 @@ $categories = $mediaService->categories();
                 <th width="80">资源连接</th>
                 <th width="80">海报图片</th>
                 <th width="60">播放数</th>
-                <th class="<?= $orderDirection ?>" tyle="cursor: pointer;" orderfield="play_num" width="60">真实播放数</th>
-                <th class="<?= $orderDirection ?>" tyle="cursor: pointer;" orderfield="real_play_num" width="60">下载数</th>
-                <th class="<?= $orderDirection ?>" tyle="cursor: pointer;" orderfield="real_download_num" width="60">真实下载数</th>
-                <th class="<?= $orderDirection ?>" tyle="cursor: pointer;" orderfield="collection_num" width="60">收藏数</th>
-                <th class="<?= $orderDirection ?>" tyle="cursor: pointer;" orderfield="real_collection_num" width="60">真实收藏数</th>
+                <th width="60">真实播放数</th>
+                <th width="60">下载数</th>
+                <th width="60">真实下载数</th>
+                <th width="60">收藏数</th>
+                <th width="60">真实收藏数</th>
                 <th width="80">首页推荐</th>
                 <th class="<?= $orderDirection ?>" tyle="cursor: pointer;" orderfield="update_time" width="100">建档日期</th>
                 <th width="250">操作</th>
@@ -151,6 +149,10 @@ $categories = $mediaService->categories();
                         <?php if (\Yii::$app->user->can('media/edit-media')): ?>
                             <a title="编辑" target="navTab" href="<?= Url::to(['media/edit-media', 'id' => $data['id']]) ?>"
                                class="btnEdit">编辑</a>
+                        <?php endif; ?>
+                        <?php if (\Yii::$app->user->can('media/comment-list')): ?>
+                            <a title="查看评论" target="navTab" href="<?= Url::to(['media/comment-list','other'  => ['source_id' => $data['id']]]) ?>"
+                               class="btnView">查看评论</a>
                         <?php endif; ?>
                     </td>
                 </tr>

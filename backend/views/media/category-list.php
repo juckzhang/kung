@@ -3,7 +3,7 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use backend\services\MediaService;
 
-$videoService = MediaService::getService();
+$mediaService = MediaService::getService();
 $params = \Yii::$app->request->getPost();
 $page   = ArrayHelper::getValue($params,'pageNum','1');
 $orderFiled = ArrayHelper::getValue($params,'orderFiled','');
@@ -20,11 +20,14 @@ $search = ArrayHelper::getValue($params,'search');
     <input type="hidden" name="orderField" value="<?=$orderFiled?>" />
     <input type="hidden" name="orderDirection" value="<?=$orderDirection?>" />
     <?php foreach ($other as $key => $value):?>
-        <input type="hidden" name="other[<?=$key;?>]" value="<?= $value ?>"/>
+        <input type="hidden" name="other[<?=$key;?>]" value="<?=$value;?>"/>
     <?php endforeach;?>
 </form>
 <div class="pageHeader">
-    <form rel="pagerForm" onsubmit="return <?=$search ? 'dialogSearch' : 'navTabSearch'?>(this);" action="<?=Url::to(['video/category-list','search' => $search])?>" method="post">
+    <form rel="pagerForm" onsubmit="return <?=$search ? 'dialogSearch' : 'navTabSearch'?>(this);" action="<?=Url::to(['media/category-list','search' => $search])?>" method="post">
+        <?php foreach ($other as $key => $value):?>
+            <input type="hidden" name="other[<?=$key;?>]" value="<?=$value;?>"/>
+        <?php endforeach;?>
         <div class="searchBar">
             <table class="searchContent">
                 <tbody>
@@ -47,12 +50,12 @@ $search = ArrayHelper::getValue($params,'search');
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
-            <?php if(\Yii::$app->user->can('video/edit-category')):?>
-            <li><a class="add" href="<?=Url::to(['video/edit-category'])?>" target="dialog"><span>添加</span></a></li>
+            <?php if(\Yii::$app->user->can('media/edit-category')):?>
+            <li><a class="add" href="<?=Url::to(['media/edit-category'])?>" target="dialog"><span>添加</span></a></li>
             <?php endif;?>
 
-            <?php if(\Yii::$app->user->can('video/delete-category')):?>
-            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids[]" href="<?=Url::to(['video/delete-category'])?>" class="delete"><span>批量删除</span></a></li>
+            <?php if(\Yii::$app->user->can('media/delete-category')):?>
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids[]" href="<?=Url::to(['media/delete-category'])?>" class="delete"><span>批量删除</span></a></li>
             <?php endif;?>
         </ul>
     </div>
@@ -62,8 +65,7 @@ $search = ArrayHelper::getValue($params,'search');
             <th width="22"><input type="checkbox" group="ids[]" class="checkboxCtrl"></th>
             <th width="40">分类ID</th>
             <th width="80">分类名称</th>
-            <th width="80">上级分类</th>
-            <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="80">建档日期</th>
+            <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="80">修改时间</th>
             <th width="70">操作</th>
         </tr>
         </thead>
@@ -73,19 +75,14 @@ $search = ArrayHelper::getValue($params,'search');
                 <td><input name="ids[]" value="<?=$search? "{id:$data->id,name:'{$data->name}'}" : $data->id?>" type="checkbox"></td>
                 <td><?=$data->id?></td>
                 <td><?=$data->name?></td>
-                <td><?=$data->parent_id?></td>
-                <td><?=date('Y-m-d H:i:s',$data->create_time)?></td>
+                <td><?=date('Y-m-d H:i:s',$data->update_time)?></td>
                 <td>
-                    <?php if(\Yii::$app->user->can('video/delete-category')):?>
-                    <a title="删除" target="ajaxTodo" href="<?=Url::to(['video/delete-category','ids' => $data->id])?>" class="btnDel">删除</a>
+                    <?php if(\Yii::$app->user->can('media/delete-category')):?>
+                    <a title="删除" target="ajaxTodo" href="<?=Url::to(['media/delete-category','ids' => $data->id])?>" class="btnDel">删除</a>
                     <?php endif;?>
 
-                    <?php if(\Yii::$app->user->can('video/edit-category')):?>
-                    <a title="编辑" target="dialog" href="<?=Url::to(['video/edit-category','id' => $data->id])?>" class="btnEdit">编辑</a>
-                    <?php endif;?>
-
-                    <?php if(\Yii::$app->user->can('video/card-list')):?>
-                        <a title="卡片信息列表" target="navTab" href="<?=Url::to(['video/album-list','other' => ['category' => $data->id]])?>" class="btnView" rel="card-list">专辑信息列表</a>
+                    <?php if(\Yii::$app->user->can('media/edit-category')):?>
+                    <a title="编辑" target="dialog" href="<?=Url::to(['media/edit-category','id' => $data->id])?>" class="btnEdit">编辑</a>
                     <?php endif;?>
                 </td>
             </tr>

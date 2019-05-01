@@ -68,7 +68,7 @@ class MediaController extends BaseController
         return $this->returnAjaxError($return);
     }
 
-    public function actionRecommendVideo()
+    public function actionRecommendMedia()
     {
         if(! Yii::$app->request->getIsAjax()) return $this->returnAjaxError(CodeConstant::REQUEST_METHOD_ERROR);
 
@@ -113,12 +113,9 @@ class MediaController extends BaseController
                 ]);
             return $this->returnAjaxError($result);
         }else{
-            //获取广告id
             $id = ArrayHelper::getValue($this->paramData,'id');
             $model = MediaCategoryModel::find()->where(['id' => $id])->asArray()->one();
-            $categories = MediaCategoryModel::find()->where(['parent_id' => 0,'status' => MediaCategoryModel::STATUS_ACTIVE])
-                ->asArray()->all();
-            return $this->render('edit-category',['model' => $model,'categories' => $categories]);
+            return $this->render('edit-category',['model' => $model]);
         }
     }
 
@@ -146,7 +143,7 @@ class MediaController extends BaseController
         $_keyWord  = ArrayHelper::getValue($this->paramData,'keyword');
         $_other    = ArrayHelper::getValue($this->paramData,'other',[]);
         $_order = $this->_sortOrder(MediaCommentModel::tableName().'.');
-        $data = MediaService::getService()->commentList($_keyWord,$_other,$_order,$_page,$_prePage);
+        $data = MediaService::getService()->commentList($_keyWord,$_page,$_prePage,$_other,$_order);
         return $this->render('comment-list',$data);
     }
 

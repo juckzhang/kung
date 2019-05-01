@@ -20,17 +20,17 @@ class MediaBehavior extends Behavior{
     public function afterScanned($event)
     {
         if(is_numeric($event->userId) AND $event->sender instanceof MediaService)
-            $event->sender->scanned($event->videoId,$event->userId);
+            $event->sender->scanned($event->mediaId,$event->userId);
 
         //将数据添加增加1
-        MediaModel::updateAllCounters(['play_num' => 1, 'real_play_num' => 1],['id' => $event->videoId]);
+        MediaModel::updateAllCounters(['play_num' => 1, 'real_play_num' => 1],['id' => $event->mediaId]);
     }
 
     public function afterCancelCollect($event)
     {
         if(is_numeric($event->userId) AND $event->sender instanceof MediaService){
             //将数据添加增加1
-            MediaModel::updateAllCounters(['collection_num' => -1, 'real_collection_num' => -1],['id' => $event->videoId]);
+            MediaModel::updateAllCounters(['collection_num' => -1, 'real_collection_num' => -1],['id' => $event->mediaId]);
         }
     }
 
@@ -38,7 +38,7 @@ class MediaBehavior extends Behavior{
     {
         if(is_numeric($event->userId) AND $event->sender instanceof MediaService){
             //将数据添加增加1
-            MediaModel::updateAllCounters(['collection_num' => 1, 'real_collection_num' => 1],['id' => $event->videoId]);
+            MediaModel::updateAllCounters(['collection_num' => 1, 'real_collection_num' => 1],['id' => $event->mediaId]);
         }
     }
 
@@ -46,7 +46,7 @@ class MediaBehavior extends Behavior{
     {
         if(is_numeric($event->userId) AND $event->sender instanceof MediaService){
             //将数据添加增加1
-            MediaModel::updateAllCounters(['download_num' => 1, 'real_download_num' => 1],['id' => $event->videoId]);
+            MediaModel::updateAllCounters(['download_num' => 1, 'real_download_num' => 1],['id' => $event->mediaId]);
         }
     }
 }

@@ -11,6 +11,7 @@ class MediaDownloadModel extends ActiveRecord
     public function getMedia()
     {
         return $this->hasOne(MediaModel::className(),['id' => 'source_id'])
-            ->where(['status' => MediaModel::STATUS_ACTIVE]);
+            ->where(['status' => MediaModel::STATUS_ACTIVE])
+            ->with('category');
     }
 }

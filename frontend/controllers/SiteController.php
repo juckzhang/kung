@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 class SiteController extends BaseController
 {
     // 首页推荐
-    public function actionIndex()
+    public function actionRecommendList()
     {
         $page    = ArrayHelper::getValue($this->paramData,'page');
         $count = ArrayHelper::getValue($this->paramData,'count');

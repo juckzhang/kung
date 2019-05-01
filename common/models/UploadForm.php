@@ -6,36 +6,19 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
-/**
- * Login form
- */
 class UploadForm extends Model
 {
 
-    /**
-     * @var 文件对象
-     */
     public $file;
 
-    /**
-     * @var 文件上传目录前缀
-     */
     private $path = '';
 
-    /**
-     * 文件访问url前缀
-     * @var string
-     */
     private $urlPrefix = '';
 
     private $remoteUpload = false;
 
     private $recursive = false;
 
-    /**
-     * 上传文件相关配置
-     * @var array
-     */
     private $_conf = [];
 
     public function init()

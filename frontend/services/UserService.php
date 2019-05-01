@@ -30,8 +30,8 @@ class UserService extends FrontendService{
     public function feedback($params)
     {
         $model = new FeedbackModel();
-        if($model->add($params,'')){
-            return CodeConstant::SUCCESS;
+        if($model->load($params,'') and $model->save()){
+            return $model->toArray();
         }
 
         return CodeConstant::FEED_BACK_FAILED;

@@ -3,13 +3,13 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use backend\services\MediaService;
 
-$videoService = MediaService::getService();
+$mediaService = MediaService::getService();
 $params = \Yii::$app->request->getPost();
 $page   = ArrayHelper::getValue($params,'pageNum','1');
 $orderFiled = ArrayHelper::getValue($params,'orderFiled','');
 $orderDirection = ArrayHelper::getValue($params,'orderDirection','asc');
 $prePage = ArrayHelper::getValue($params,'numPerPage','20');
-
+$other = ArrayHelper::getValue($params, 'other', []);
 $search = ArrayHelper::getValue($params,'search');
 ?>
 <div class="" id="comment-list" rel="comment-list">
@@ -19,9 +19,15 @@ $search = ArrayHelper::getValue($params,'search');
     <input type="hidden" name="numPerPage" value="<?=$prePage?>" />
     <input type="hidden" name="orderField" value="<?=$orderFiled?>" />
     <input type="hidden" name="orderDirection" value="<?=$orderDirection?>" />
+    <?php foreach ($other as $key => $value):?>
+        <input type="hidden" name="other[<?=$key;?>]" value="<?= $value ?>"/>
+    <?php endforeach;?>
 </form>
 <div class="pageHeader">
-    <form rel="pagerForm" onsubmit="return <?=$search ? 'dialogSearch' : 'navTabSearch'?>(this);" action="<?=Url::to(['video/comment-list','search' => $search])?>" method="post">
+    <form rel="pagerForm" onsubmit="return <?=$search ? 'dialogSearch' : 'navTabSearch'?>(this);" action="<?=Url::to(['media/comment-list','search' => $search])?>" method="post">
+        <?php foreach ($other as $key => $value):?>
+            <input type="hidden" name="other[<?=$key;?>]" value="<?= $value ?>"/>
+        <?php endforeach;?>
         <div class="searchBar">
             <table class="searchContent">
                 <tbody>
@@ -44,12 +50,12 @@ $search = ArrayHelper::getValue($params,'search');
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
-            <?php if(\Yii::$app->user->can('video/edit-comment')):?>
-            <li><a class="add" href="<?=Url::to(['video/edit-comment'])?>" target="dialog"><span>添加</span></a></li>
+            <?php if(\Yii::$app->user->can('media/edit-comment')):?>
+            <li><a class="add" href="<?=Url::to(['media/edit-comment'])?>" target="dialog"><span>添加</span></a></li>
             <?php endif;?>
 
-            <?php if(\Yii::$app->user->can('video/delete-comment')):?>
-            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids[]" href="<?=Url::to(['video/delete-comment'])?>" class="delete"><span>批量删除</span></a></li>
+            <?php if(\Yii::$app->user->can('media/delete-comment')):?>
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids[]" href="<?=Url::to(['media/delete-comment'])?>" class="delete"><span>批量删除</span></a></li>
             <?php endif;?>
         </ul>
     </div>
@@ -75,12 +81,12 @@ $search = ArrayHelper::getValue($params,'search');
                 <td><?=$data->content?></td>
                 <td><?=date('Y-m-d H:i:s',$data->create_time)?></td>
                 <td>
-                    <?php if(\Yii::$app->user->can('video/delete-comment')):?>
-                    <a title="删除" target="ajaxTodo" href="<?=Url::to(['video/delete-comment','ids' => $data->id])?>" class="btnDel">删除</a>
+                    <?php if(\Yii::$app->user->can('media/delete-comment')):?>
+                    <a title="删除" target="ajaxTodo" href="<?=Url::to(['media/delete-comment','ids' => $data->id])?>" class="btnDel">删除</a>
                     <?php endif;?>
 
-                    <?php if(\Yii::$app->user->can('video/edit-comment')):?>
-                    <a title="编辑" target="dialog" href="<?=Url::to(['video/edit-comment','id' => $data->id])?>" class="btnEdit">编辑</a>
+                    <?php if(\Yii::$app->user->can('media/edit-comment')):?>
+                    <a title="编辑" target="dialog" href="<?=Url::to(['media/edit-comment','id' => $data->id])?>" class="btnEdit">编辑</a>
                     <?php endif;?>
                 </td>
             </tr>

@@ -30,11 +30,10 @@ class MediaService extends BackendService
         $data = ['pageCount' => 0,'dataList' => [],'dataCount' => 0];
 
         $models = $cardModels = MediaModel::find()
-            ->select(MediaModel::tableName().'.*')
             ->where(['!=','status' , MediaModel::STATUS_DELETED])
             ->andFilterWhere(['like','title',$keyWord])
             ->andFilterWhere(['cate_id' => $_category])
-            ->andFilterWhere(['source_type' => $other['source_type']])
+            ->andFilterWhere(['source_type' => ArrayHelper::getValue($other, 'source_type')])
             ->andFilterWhere(['is_recommend' => $_recommend]);
 
         $data['dataCount'] = $models->count();
@@ -104,7 +103,7 @@ class MediaService extends BackendService
 
         $models = MediaCategoryModel::find()->where(['status' => MediaCategoryModel::STATUS_ACTIVE])
             ->andFilterWhere(['like','name',$keyWord])
-            ->andFilterWhere(['source_type' => $other['source_type']]);
+            ->andFilterWhere(['source_type' => ArrayHelper::getValue($other,'source_type')]);
 
         $data['dataCount'] = $models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
@@ -141,16 +140,15 @@ class MediaService extends BackendService
         return $categories;
     }
 
-    public function commentList($_keyWord,$_other = [],$_order = [],$_page,$_prePage)
+    public function commentList($_keyWord,$_page,$_prePage,$_other = [],$_order = [])
     {
-        $_other['source_id'] = null;
         list($offset,$limit) = $this->parsePageParam($_page,$_prePage);
         $data = ['pageCount' => 0,'dataList' => [],'dataCount' => 0];
 
         $models = $cardModels = MediaCommentModel::find()
             ->where(['!=','status' , MediaCommentModel::STATUS_DELETED])
             ->andFilterWhere(['content','title',$_keyWord])
-            ->andFilterWhere(['source_id' => $_other['source_id']]);
+            ->andFilterWhere(['source_id' => ArrayHelper::getValue($_other, 'source_id')]);
 
         $data['dataCount'] = $models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);

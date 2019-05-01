@@ -19,4 +19,10 @@ class MediaModel extends ActiveRecord
             ->orderBy(['line_number' => SORT_ASC,'lang_type' => SORT_ASC])
             ->asArray();
     }
+
+    public function getCategory()
+    {
+        return $this->hasOne(MediaCategoryModel::className(), ['id' => 'cate_id'])
+            ->select(['id','name']);
+    }
 }
