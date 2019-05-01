@@ -44,17 +44,17 @@ class MediaService extends OperationService
         if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
         {
             $models = $models->orderBy([$order => SORT_DESC])
+                ->asArray()
                 ->with('category')
                 ->offset($offset)->limit($limit)->all();
-            foreach($models as $item)
-                $data['dataList'][] = $item->toArray();
+            $data['dataList'] = $models;
         }
 
         return $data;
     }
 
     //推荐列表
-    public function recommendList($page, $count)
+    public function recommendList($page, $count, $order = 'create_time')
     {
         list($offset,$limit) = $this->parsePageParam($page, $count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
@@ -67,6 +67,7 @@ class MediaService extends OperationService
         {
             $models = $models->orderBy(['sort_order' => SORT_ASC,'create_time' => SORT_DESC])
                 ->asArray()
+                ->with('category')
                 ->offset($offset)->limit($limit)->all();
             $data['dataList'] = $models;
         }

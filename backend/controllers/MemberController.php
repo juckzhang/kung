@@ -56,7 +56,7 @@ class MemberController extends BaseController
 
         if($return === true)
             return $this->returnAjaxSuccess([
-                'message' => '会员编辑成功',
+                'message' => '用户删除成功',
                 'navTabId' => 'member-list',
                 'callbackType' => 'forward',
                 'forwardUrl'  => Url::to(['member/member-list'])

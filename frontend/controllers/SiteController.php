@@ -11,10 +11,11 @@ class SiteController extends BaseController
     // 首页推荐
     public function actionRecommendList()
     {
-        $page    = ArrayHelper::getValue($this->paramData,'page');
+        $page = ArrayHelper::getValue($this->paramData,'page');
         $count = ArrayHelper::getValue($this->paramData,'count');
+        $order = ArrayHelper::getValue($this->paramData,'order', 'create_time');
 
-        $ret = MediaService::getService()->recommendList($page, $count);
+        $ret = MediaService::getService()->recommendList($page, $count, $order);
         return $this->returnSuccess($ret);
     }
 

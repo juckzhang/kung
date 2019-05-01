@@ -73,12 +73,8 @@ $prePage = ArrayHelper::getValue($params,'numPerPage','20');
 <!--                    <td><=$data->credit_num?></td>-->
                     <td><?=date('Y-m-d H:i:s',$data->create_time)?></td>
                     <td>
-                        <?php if (\Yii::$app->user->can('member/edit-member')): ?>
-                            <a title="编辑" target="navTab" href="<?= Url::to(['member/edit-member', 'id' => $data->id]) ?>"
-                               class="btnEdit">编辑</a>
-                        <?php endif; ?>
                         <?php if(\Yii::$app->user->can('member/delete-member')):?>
-                        <a title="删除" target="ajaxTodo" href="<?=Url::to(['member/delete-member', 'ids' => $data->id])?>" class="btnDel">删除</a>
+                            <a title="删除" target="ajaxTodo" href="<?=Url::to(['member/delete-member', 'ids' => $data->id])?>" class="btnDel">删除</a>
                         <?php endif;?>
                     </td>
                 </tr>
