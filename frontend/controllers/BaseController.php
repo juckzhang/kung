@@ -20,7 +20,7 @@ class BaseController extends CommonController
             $_POST['user_id'] = null;
         }
 
-        $accessToken = \Yii::$app->request->headers->get('HTTP_ACCESS_TOKEN');
+        $accessToken = \Yii::$app->request->headers->get('Access-Token');
         if($accessToken){
             $model = UserModel::findOne(['access_token' => $accessToken]);
             if($model instanceof UserModel){
