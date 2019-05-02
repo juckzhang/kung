@@ -24,7 +24,7 @@ use common\models\mysql\AdModel;
                         <?php endif;?>
 
                         <?php if(\Yii::$app->user->can('media/comment-list')):?>
-                            <li><a href="<?=Url::to(['media/comment-list'])?>" target="navTab" rel="comment-list">视频评论列表</a></li>
+                            <li><a href="<?=Url::to(['media/comment-list'])?>" target="navTab" rel="comment-list">评论列表</a></li>
                         <?php endif;?>
                     </ul>
                 </li>
@@ -43,20 +43,42 @@ use common\models\mysql\AdModel;
                             <?php endif;?>
 
                             <?php if(\Yii::$app->user->can('media/comment-list')):?>
-                                <li><a href="<?=Url::to(['media/comment-list'])?>" target="navTab" rel="comment-list">视频评论列表</a></li>
+                                <li><a href="<?=Url::to(['media/comment-list'])?>" target="navTab" rel="comment-list">评论列表</a></li>
+                            <?php endif;?>
+                        </ul>
+                    </li>
+                <?php endif;?>
+
+                <!-- pdf资料管理 -->
+                <?php if(\Yii::$app->user->can('media')):?>
+                    <li><a>pdf文档资料管理</a>
+                        <ul>
+                            <?php if(\Yii::$app->user->can('media/media-list')):?>
+                                <li><a href="<?=Url::to(['media/media-list','other' => ['source_type' => 3]])?>" target="navTab" rel="media-list">PDF文档资料列表</a></li>
+                            <?php endif;?>
+
+                            <?php if(\Yii::$app->user->can('media/category-list')):?>
+                                <li><a href="<?=Url::to(['media/category-list', 'other' => ['source_type' => 3]])?>" target="navTab" rel="category-list">PDF文档资料分类信息列表</a></li>
+                            <?php endif;?>
+
+                            <?php if(\Yii::$app->user->can('media/comment-list')):?>
+                                <li><a href="<?=Url::to(['media/comment-list'])?>" target="navTab" rel="comment-list">评论列表</a></li>
                             <?php endif;?>
                         </ul>
                     </li>
                 <?php endif;?>
 
                 <?php if(\Yii::$app->user->can('member')):?>
-                <li><a>用户信息管理</a>
-                    <ul>
-                        <?php if(\Yii::$app->user->can('member/member-list')):?>
-                            <li><a href="<?=Url::to(['member/member-list'])?>" target="navTab" rel="member-list">全部用户列表</a></li>
-                        <?php endif;?>
-                    </ul>
-                </li>
+                    <li><a>用户信息管理</a>
+                        <ul>
+                            <?php if(\Yii::$app->user->can('member/member-list')):?>
+                                <li><a href="<?=Url::to(['member/member-list'])?>" target="navTab" rel="member-list">全部用户列表</a></li>
+                            <?php endif;?>
+                            <?php if(\Yii::$app->user->can('member/feedback-list')):?>
+                                <li><a href="<?=Url::to(['member/feedback-list'])?>" target="navTab" rel="feedback-list">用户反馈列表</a></li>
+                            <?php endif;?>
+                        </ul>
+                    </li>
                 <?php endif;?>
 
                 <li><a href="<?=Url::to(['site/logout'])?>" target="navTab" rel="logout">退出</a></li>

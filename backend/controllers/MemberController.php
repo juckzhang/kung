@@ -3,6 +3,7 @@ namespace backend\controllers;
 
 use backend\services\MemberService;
 use common\constants\CodeConstant;
+use common\models\mysql\FeedbackModel;
 use common\models\mysql\QualificationModel;
 use common\models\mysql\UserModel;
 use Yii;
@@ -60,6 +61,59 @@ class MemberController extends BaseController
                 'navTabId' => 'member-list',
                 'callbackType' => 'forward',
                 'forwardUrl'  => Url::to(['member/member-list'])
+            ]);
+        return $this->returnAjaxError(-100);
+    }
+
+    public function actionFeedbackList()
+    {
+        $_keyWord = ArrayHelper::getValue($this->paramData,'keyword');
+        $_other   = ArrayHelper::getValue($this->paramData,'other',[]);
+        $_prePage = ArrayHelper::getValue($this->paramData,'numPerPage');
+        $_page    = ArrayHelper::getValue($this->paramData,'pageNum');
+        $_order   = $this->_sortOrder();
+        $data     = MemberService::getService()->feedbackList($_keyWord, $_other, $_order, $_page, $_prePage);
+        return $this->render('feedback-list',$data);
+    }
+
+    public function actionEditFeedback()
+    {
+        $id = ArrayHelper::getValue($this->paramData,'id');
+        if(\Yii::$app->request->getIsPost())
+        {
+            $result = MemberService::getService()->editFeedback($id);
+
+            if($result instanceof FeedbackModel)
+                return $this->returnAjaxSuccess([
+                    'message' => '编辑成功',
+                    'navTabId' => 'feedback-list',
+                    'callbackType' => 'closeCurrent',
+                    'forwardUrl' => Url::to(['member/feedback-list'])
+                ]);
+            return $this->returnAjaxError($result);
+        }else{
+            //
+            $model = UserModel::find()->where(['id' => $id])->asArray()->one();
+
+            return $this->render('edit-feedback',['model' => $model]);
+        }
+    }
+
+    public function actionDeleteFeedback()
+    {
+        if(! Yii::$app->request->getIsAjax()) return $this->returnError(CodeConstant::REQUEST_METHOD_ERROR);
+
+        $ids = ArrayHelper::getValue($this->paramData,'ids');
+
+        //批量删除
+        $return = MemberService::getService()->deleteFeedback($ids);
+
+        if($return === true)
+            return $this->returnAjaxSuccess([
+                'message' => '用户删除成功',
+                'navTabId' => 'feedback-list',
+                'callbackType' => 'forward',
+                'forwardUrl'  => Url::to(['member/feedback-list'])
             ]);
         return $this->returnAjaxError(-100);
     }

@@ -77,22 +77,18 @@ class MediaService extends OperationService
     }
 
     //推荐列表
-    public function recommendList($page, $count, $order = 'create_time')
+    public function recommendList()
     {
-        list($offset,$limit) = $this->parsePageParam($page, $count);
-        $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
-        $models = MediaModel::find()
-            ->where(['status' => MediaModel::STATUS_ACTIVE]);
-        $data['dataCount'] = $models->count();
-        $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
-
-        if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
-        {
-            $models = $models->orderBy(['sort_order' => SORT_ASC,'create_time' => SORT_DESC])
-                ->asArray()
+        $data = [];
+        foreach (['videoList', 'autoList','pdfList'] as $key => $item){
+            $models = MediaModel::find()
+                ->where(['source_type' => $key + 1,'status' => MediaModel::STATUS_ACTIVE])
+                ->orderBy(['sort_order' => SORT_DESC,'create_time' => SORT_DESC,'play_num' => SORT_DESC])
                 ->with('category')
-                ->offset($offset)->limit($limit)->all();
-            $data['dataList'] = $models;
+                ->asArray()
+                ->limit(3)
+                ->all();
+            $data[$item] = $models;
         }
 
         return $data;
@@ -142,7 +138,12 @@ class MediaService extends OperationService
             ->andWhere(['status'=>MediaModel::STATUS_ACTIVE])
             ->asArray()
             ->one();
+        //判断用户是否已下载和已收藏
+        $data['has_collected'] = false;
+        $data['has_download'] = false;
         if($uid){
+            $data['has_collected'] = $this->isCollected($data['id'], $uid);
+            $data['has_download'] = $this->isDownload($data['id'], $uid);
             $this->onAfterScannedMedia($id, $uid);
         }
         return $data;

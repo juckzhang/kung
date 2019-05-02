@@ -85,6 +85,12 @@ $categories   = $mediaService->categories($sourceType);
                     <input id="poster-url" class="upload-input" data-name="poster-url" style="display: none" type="file" name="UploadForm[file]">
                     <img id="upload" class="upload-btn" src="<?= ! empty($album['poster_url']) ? \Yii::$app->params['imageUrlPrefix'] . $album['poster_url'] : '/images/upload.png'?>" width="100px"/>
                 </p>
+                <?php if($sourceType == 3):?>
+                    <p>
+                        <label>&nbsp;</label>
+                        <input id="pdf" class="upload-input" data-name="play_link" style="display: none" type="file" name="UploadForm[file]">
+                    </p>
+                <?php endif;?>
             </div>
         </div>
         <div class="formBar">
