@@ -9,25 +9,20 @@ $page   = ArrayHelper::getValue($params,'pageNum','1');
 $orderFiled = ArrayHelper::getValue($params,'orderFiled','');
 $orderDirection = ArrayHelper::getValue($params,'orderDirection','asc');
 $prePage = ArrayHelper::getValue($params,'numPerPage','20');
-$other = ArrayHelper::getValue($params, 'other', []);
-$search = ArrayHelper::getValue($params,'search');
+$search = 0;
+$sourceId = ArrayHelper::getValue($params, 'source_id');
 ?>
-<div class="" id="comment-list" rel="comment-list">
+<div class="" id="lines-list" rel="lines-list">
 <form id="pagerForm" method="post" action="#rel#">
     <input type="hidden" name="search", value="<?=$search?>">
     <input type="hidden" name="pageNum" value="<?=$page?>" />
+    <input type="hidden" name="sourceId" value="<?=$sourceId?>" />
     <input type="hidden" name="numPerPage" value="<?=$prePage?>" />
     <input type="hidden" name="orderField" value="<?=$orderFiled?>" />
     <input type="hidden" name="orderDirection" value="<?=$orderDirection?>" />
-    <?php foreach ($other as $key => $value):?>
-        <input type="hidden" name="other[<?=$key;?>]" value="<?= $value ?>"/>
-    <?php endforeach;?>
 </form>
 <div class="pageHeader">
-    <form rel="pagerForm" onsubmit="return <?=$search ? 'dialogSearch' : 'navTabSearch'?>(this);" action="<?=Url::to(['media/comment-list','search' => $search])?>" method="post">
-        <?php foreach ($other as $key => $value):?>
-            <input type="hidden" name="other[<?=$key;?>]" value="<?= $value ?>"/>
-        <?php endforeach;?>
+    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<?=Url::to(['media/lines-list'])?>" method="post">
         <div class="searchBar">
             <table class="searchContent">
                 <tbody>
@@ -39,9 +34,6 @@ $search = ArrayHelper::getValue($params,'search');
             <div class="subBar">
                 <ul>
                     <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
-                    <?php if($search):?>
-                    <li><div class="button"><div class="buttonContent"><button type="button" multLookup="ids[]" warn="请选择部门">选择带回</button></div></div></li>
-                    <?php endif;?>
                 </ul>
             </div>
         </div>
@@ -50,8 +42,12 @@ $search = ArrayHelper::getValue($params,'search');
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
-            <?php if(\Yii::$app->user->can('media/delete-comment')):?>
-            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids[]" href="<?=Url::to(['media/delete-comment'])?>" class="delete"><span>批量删除</span></a></li>
+            <?php if(\Yii::$app->user->can('media/edit-lines')):?>
+            <li><a class="add" href="<?=Url::to(['media/edit-lines','source_id' => $sourceId])?>" target="dialog"><span>添加</span></a></li>
+            <?php endif;?>
+
+            <?php if(\Yii::$app->user->can('media/delete-lines')):?>
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids[]" href="<?=Url::to(['media/delete-lines'])?>" class="delete"><span>批量删除</span></a></li>
             <?php endif;?>
         </ul>
     </div>
@@ -59,26 +55,36 @@ $search = ArrayHelper::getValue($params,'search');
         <thead>
         <tr>
             <th width="22"><input type="checkbox" group="ids[]" class="checkboxCtrl"></th>
-            <th width="40">评论ID</th>
-            <th width="80">资源ID</th>
-            <th width="80">用户ID</th>
-            <th width="80">评论内容</th>
-            <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="80">建档日期</th>
+            <th width="40">ID</th>
+            <th width="40">序号</th>
+            <th width="80">媒体资源ID</th>
+            <th width="80">语种</th>
+            <th width="80">台词内容</th>
+            <th width="80">开始时间</th>
+            <th width="80">结束时间</th>
+            <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="80">修改时间</th>
             <th width="70">操作</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach($dataList as $key => $data):?>
             <tr target="card-id" rel="<?=$data->id?>">
-                <td><input name="ids[]" value="<?=$search? "{id:$data->id,name:'{$data->name}'}" : $data->id?>" type="checkbox"></td>
+                <td><input name="ids[]" value="<?=$search? "{id:$data->id,content:'{$data->content}'}" : $data->id?>" type="checkbox"></td>
                 <td><?=$data->id?></td>
+                <td><?=$data->line_number?></td>
                 <td><?=$data->source_id?></td>
-                <td><?=$data->user_id?></td>
+                <td><?=$data->lang_type?></td>
                 <td><?=$data->content?></td>
-                <td><?=date('Y-m-d H:i:s',$data->create_time)?></td>
+                <td><?=$data->start_time?></td>
+                <td><?=$data->end_time?></td>
+                <td><?=date('Y-m-d H:i:s',$data->update_time)?></td>
                 <td>
-                    <?php if(\Yii::$app->user->can('media/delete-comment')):?>
-                    <a title="删除" target="ajaxTodo" href="<?=Url::to(['media/delete-comment','ids' => $data->id])?>" class="btnDel">删除</a>
+                    <?php if(\Yii::$app->user->can('media/delete-lines')):?>
+                    <a title="删除" target="ajaxTodo" href="<?=Url::to(['media/delete-lines','ids' => $data->id])?>" class="btnDel">删除</a>
+                    <?php endif;?>
+
+                    <?php if(\Yii::$app->user->can('media/edit-lines')):?>
+                    <a title="编辑" target="dialog" href="<?=Url::to(['media/edit-lines','id' => $data->id])?>" class="btnEdit">编辑</a>
                     <?php endif;?>
                 </td>
             </tr>

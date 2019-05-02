@@ -145,6 +145,10 @@ $categories = $mediaService->categories($sourceType);
                             <a title="查看评论" target="navTab" href="<?= Url::to(['media/comment-list','other'  => ['source_id' => $data['id']]]) ?>"
                                class="btnView">查看评论</a>
                         <?php endif; ?>
+                        <?php if (\Yii::$app->user->can('media/lines-list') and $sourceType != 3): ?>
+                            <a title="查看台词" target="navTab" href="<?= Url::to(['media/lines-list','source_id' => $data['id']]) ?>"
+                               class="btnView">查看评论</a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

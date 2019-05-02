@@ -3,6 +3,7 @@ namespace backend\services;
 
 use common\events\MediaEvent;
 use common\helpers\TreeHelper;
+use common\models\mysql\MediaLinesModel;
 use common\models\mysql\UserModel;
 use common\models\mysql\MediaCategoryModel;
 use common\models\mysql\MediaCommentModel;
@@ -52,14 +53,55 @@ class MediaService extends BackendService
         $result =  MediaModel::updateAll(['sort_order' => $sort],['id' => $mediaId]);
         return $result;
     }
-    
+
+    public function linesList($sourceId, $lang, $page, $count)
+    {
+        list($offset,$limit) = $this->parsePageParam($page,$count);
+        $data = ['pageCount' => 0,'dataList' => [],'dataCount' => 0];
+
+        $models = $cardModels = MediaLinesModel::find()
+            ->where([
+                'source_id' => $sourceId,
+                'status' =>  MediaLinesModel::STATUS_ACTIVE,
+            ])
+            ->andFilterWhere([])
+            ->andFilterWhere(['lang_type' => $lang]);
+
+        $data['dataCount'] = $models->count();
+        $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
+
+        if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
+            $data['dataList'] = $models->orderBy(['line_number' => SORT_ASC,'lang_type' => SORT_ASC])
+                ->limit($limit)
+                ->offset($offset)
+                ->all();
+
+        return $data;
+    }
+
+    public function editLines($id)
+    {
+        $model = $this->editInfo($id,MediaLinesModel::className());
+        return $model;
+    }
+
+    public function deleteLines($id)
+    {
+        $result = $this->deleteInfo($id,MediaLinesModel::className());
+        return $result;
+    }
 
     //编辑视频 音频
     public function editMedia($id)
     {
-        $return = $this->editInfo($id,MediaModel::className());
+        $model = $this->editInfo($id,MediaModel::className());
+        //判断是否有台词文件
+        $lineFile = \Yii::$app->request->post('lines', '');
+        if($model->source_type != 3 and $lineFile){
+            $lineFile = '';
 
-        return $return;
+        }
+        return $model;
     }
 
     // 删除

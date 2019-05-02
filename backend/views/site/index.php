@@ -40,6 +40,6 @@
     </div>
 
 </div>
-<div id="footer">Copyright &copy; 2016 最影团队 京ICP备15053290号-2</div>
+<div id="footer">Copyright &copy; 2019 Kung团队 京ICP备15053290号-2</div>
 </body>
 </html>

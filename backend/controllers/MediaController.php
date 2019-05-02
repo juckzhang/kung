@@ -4,6 +4,7 @@ namespace backend\controllers;
 use common\constants\CodeConstant;
 use common\models\mysql\MediaCategoryModel;
 use common\models\mysql\MediaCommentModel;
+use common\models\mysql\MediaLinesModel;
 use common\models\mysql\MediaModel;
 use Yii;
 use backend\services\MediaService;
@@ -158,6 +159,54 @@ class MediaController extends BaseController
                 'navTabId' => 'comment-list',
                 'callbackType' => 'forward',
                 'forwardUrl'  => Url::to(['media/comment-list'])
+            ]);
+        return $this->returnAjaxError($return);
+    }
+
+    public function actionLinesList()
+    {
+        $_prePage  = ArrayHelper::getValue($this->paramData,'numPerPage');
+        $_page       = ArrayHelper::getValue($this->paramData,'pageNum');
+        $sourceId  = ArrayHelper::getValue($this->paramData,'source_id');
+        $lang    = ArrayHelper::getValue($this->paramData,'lang');
+        $data = MediaService::getService()->linesList($sourceId, $lang,$_page,$_prePage);
+        return $this->render('lines-list',$data);
+    }
+
+    public function actionEditLines()
+    {
+        if(\Yii::$app->request->getIsPost())
+        {
+            $id = ArrayHelper::getValue($this->paramData,'id');
+            $result = MediaService::getService()->editLines($id);
+            if($result instanceof Model)
+                return $this->returnAjaxSuccess([
+                    'message' => '编辑成功',
+                    'navTabId' => 'lines-list',
+                    'callbackType' => 'closeCurrent',
+                    'forwardUrl' => Url::to(['media/lines-list'])
+                ]);
+            return $this->returnAjaxError($result);
+        }else{
+            $id = ArrayHelper::getValue($this->paramData,'id');
+            $model = MediaLinesModel::find()->where(['id' => $id])->asArray()->one();
+            return $this->render('edit-lines',['model' => $model]);
+        }
+    }
+
+    public function actionDeleteLines()
+    {
+        if(! Yii::$app->request->getIsAjax()) return $this->returnAjaxError(CodeConstant::REQUEST_METHOD_ERROR);
+
+        $ids = ArrayHelper::getValue($this->paramData,'ids');
+        $sourceId = ArrayHelper::getValue($this->paramData, 'source_id');
+        $return = MediaService::getService()->deleteLines($ids);
+        if($return === true)
+            return $this->returnAjaxSuccess([
+                'message' => '删除成功',
+                'navTabId' => 'lines-list',
+                'callbackType' => 'forward',
+                'forwardUrl'  => Url::to(['media/lines-list','source_id' => $sourceId])
             ]);
         return $this->returnAjaxError($return);
     }

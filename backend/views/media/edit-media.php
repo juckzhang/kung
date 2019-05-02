@@ -46,13 +46,13 @@ $categories   = $mediaService->categories($sourceType);
             </p>
             <p>
                 <label>播放时长：</label>
-                <input type="text" name="mediaModel[total_time]" value="<?=ArrayHelper::getValue($model,'total_time')?>">
+                <input type="text" name="MediaModel[total_time]" value="<?=ArrayHelper::getValue($model,'total_time')?>">
             </p>
-            <div class="album">
+<!--            <div class="album">-->
                 <p>
                     <label>媒体分类：</label>
                     <select name="MediaModel[cate_id]" value="<?=ArrayHelper::getValue($model, 'cate_id')?>">
-                        <option>-- 请选择分类 --</option>
+<!--                        <option>-- 请选择分类 --</option>-->
                         <?php foreach($categories as $category):?>
                             <option value="<?=$category['id']?>" <?=ArrayHelper::getValue($model, 'cate_id') == $category['id'] ? 'selected' : ''?>><?=$category['name']?></option>
                             <?php foreach($category['child'] as $child):?>
@@ -87,20 +87,22 @@ $categories   = $mediaService->categories($sourceType);
                     <label>海报图片：</label>
                     <input type="text" name="MediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($model,'poster_url','')?>"/>
                 </p>
-                <p></p>
+                <p>
+                    <?php if($sourceType != 3):?>
+                        <label>台词：</label>
+                        <input type="text" name="lines" class='lines' value=""/>
+                    <?php endif;?>
+                </p>
                 <p>
                     <label>&nbsp;</label>
                     <input id="poster-url" class="upload-input" data-name="poster-url" style="display: none" type="file" data-type="poster" name="UploadForm[file]">
                     <img id="upload" class="upload-btn" src="<?= ! empty($model['poster_url']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
                 </p>
-                <?php if($sourceType == 3):?>
-                    <p>
-                        <label>PDF文档上传:</label>
-                        <input id="pdf" class="upload-input" data-type="poster" data-name="link" style="display: none" type="file" name="UploadForm[file]">
-                        <img id="upload" class="upload-btn" src="<?= ! empty($model['play_link']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
-                    </p>
-                <?php endif;?>
-            </div>
+                <p>
+                    <label><?= $sourceType == 3 ? 'PDF文档上传:' : '&nbsp;';?></label>
+                    <input id="pdf" class="upload-input" data-type="pdf" data-name="<?=$sourceType == 3 ? 'link' : 'lines';?>" style="display: none" type="file" name="UploadForm[file]">
+                    <img id="upload" class="upload-btn" src="<?= ! empty($model['play_link']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
+                </p>
         </div>
         <div class="formBar">
             <ul>
