@@ -2,6 +2,7 @@
 namespace backend\services;
 
 use common\events\MediaEvent;
+use common\helpers\ExcelHelper;
 use common\helpers\TreeHelper;
 use common\models\mysql\MediaLinesModel;
 use common\models\mysql\UserModel;
@@ -91,16 +92,43 @@ class MediaService extends BackendService
         return $result;
     }
 
+    public function addLinesFromExcel($sourceId, $file)
+    {
+        $lines = ExcelHelper::readExcel($file);
+        //删除文件
+//        unlink($file);
+        foreach ($lines as $line){
+            $data = [
+                'line_number' => $line[0],
+                'start_time' => $line[1],
+                'end_time' => $line[2],
+                'lang_type' => $line[3],
+                'source_id' => $sourceId,
+            ];
+            //先删除存在的台词
+            MediaLinesModel::updateAll(['status' => MediaLinesModel::STATUS_DELETED],[
+                'source_id' => $sourceId,
+                'line_number' => $data['line_number'],
+                'lang_type' => $data['lang_type'],
+            ]);
+            //插入新纪录
+            $model = new MediaLinesModel();
+            $model->add($data);
+        }
+    }
+
     //编辑视频 音频
     public function editMedia($id)
     {
         $model = $this->editInfo($id,MediaModel::className());
         //判断是否有台词文件
-        $lineFile = \Yii::$app->request->post('lines', '');
+        $lineFile = \Yii::$app->request->post('lines');
         if($model->source_type != 3 and $lineFile){
-            $lineFile = '';
-
+            $lineFile = __DIR__.'/../../frontend/web/upload/media-pdf/'.basename($lineFile);
+            if(file_exists($lineFile))
+                $this->addLinesFromExcel($model->source_id, $lineFile);
         }
+
         return $model;
     }
 
