@@ -55,27 +55,9 @@ class MediaService extends BackendService
     
 
     //编辑视频 音频
-    public function editMedia($id, $albumId)
+    public function editMedia($id)
     {
-        $bodyParams = \Yii::$app->request->post();
-        $bodyParams['VideoAlbumModel']['name'] = $bodyParams['VideoAlbumModel']['name'] ?: $bodyParams['VideoModel']['title'];
-        \Yii::$app->request->setBodyParams($bodyParams);
-        $newAlbum   = ArrayHelper::getValue($bodyParams,'VideoModel.album_id');
-        //编辑专辑信息
-        $albumModel = $this->editAlbum($newAlbum);
-
-        if($albumModel == false) return CodeConstant::EDIT_VIDEO_FAILED;
-        //设置albumId
-        $bodyParams['VideoModel']['album_id'] = $albumModel->id;
-        \Yii::$app->request->setBodyParams($bodyParams);
-
         $return = $this->editInfo($id,MediaModel::className());
-
-        if($return == false) return $return;
-
-        //判断是否将一个视频转移到一个专辑列表(也可能是将一个视频从一个专辑转移都另一个专辑下)
-        if($albumId != null and $newAlbum != $albumId)
-            $this->onAfterEditVideo($albumId,$newAlbum);
 
         return $return;
     }
@@ -84,7 +66,6 @@ class MediaService extends BackendService
     public function deleteMedia($id)
     {
         $result = $this->deleteInfo($id,MediaModel::className());
-        //if($result == true) $this->onAfterDeleteVideo($id);
         return $result;
     }
 

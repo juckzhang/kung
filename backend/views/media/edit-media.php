@@ -15,34 +15,34 @@ $categories   = $mediaService->categories($sourceType);
 <div class="pageContent">
     <form method="post" action="<?=Url::to(['media/edit-media','id' => ArrayHelper::getValue($model,'id','')])?>" class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)">
         <div class="pageFormContent nowrap" layoutH="97">
-            <input type="hidden" name="mediaModel[source_type]" value="<?=$sourceType?>">
+            <input type="hidden" name="MediaModel[source_type]" value="<?=$sourceType?>">
             <p>
                 <label>名称：</label>
-                <input type="text" name="mediaModel[title]" value="<?=ArrayHelper::getValue($model,'title')?>">
+                <input type="text" name="MediaModel[title]" value="<?=ArrayHelper::getValue($model,'title')?>">
             </p>
             <p>
                 <label>副标题：</label>
-                <input id="vu" type="text" name="mediaModel[sub_title]" value="<?=ArrayHelper::getValue($model,'sub_title')?>">
+                <input id="vu" type="text" name="MediaModel[sub_title]" value="<?=ArrayHelper::getValue($model,'sub_title')?>">
             </p>
             <p>
                 <label>播放连接：</label>
-                <input class="link" type="text" name="mediaModel[play_link]" value="<?=ArrayHelper::getValue($model,'play_link')?>">
+                <input class="link" type="text" name="MediaModel[play_link]" value="<?=ArrayHelper::getValue($model,'play_link')?>">
             </p>
             <p>
                 <label>下载链接：</label>
-                <input type="text" class="link" name="mediaModel[download_link]" value="<?=ArrayHelper::getValue($model,'download_link')?>">
+                <input type="text" class="link" name="MediaModel[download_link]" value="<?=ArrayHelper::getValue($model,'download_link')?>">
             </p>
             <p>
                 <label>播放量：</label>
-                <input type="text" name="mediaModel[play_num]" value="<?=ArrayHelper::getValue($model,'play_num',0)?>">
+                <input type="text" name="MediaModel[play_num]" value="<?=ArrayHelper::getValue($model,'play_num',0)?>">
             </p>
             <p>
                 <label>下载量：</label>
-                <input type="text" name="mediaModel[download_num]" value="<?=ArrayHelper::getValue($model,'download_num',0)?>">
+                <input type="text" name="MediaModel[download_num]" value="<?=ArrayHelper::getValue($model,'download_num',0)?>">
             </p>
             <p>
                 <label>收藏量：</label>
-                <input type="text" name="mediaModel[collection_num]" value="<?=ArrayHelper::getValue($model,'collection_num',0)?>">
+                <input type="text" name="MediaModel[collection_num]" value="<?=ArrayHelper::getValue($model,'collection_num',0)?>">
             </p>
             <p>
                 <label>播放时长：</label>
@@ -51,7 +51,7 @@ $categories   = $mediaService->categories($sourceType);
             <div class="album">
                 <p>
                     <label>媒体分类：</label>
-                    <select name="mediaModel[cate_id]" value="<?=ArrayHelper::getValue($model, 'cate_id')?>">
+                    <select name="MediaModel[cate_id]" value="<?=ArrayHelper::getValue($model, 'cate_id')?>">
                         <option>-- 请选择分类 --</option>
                         <?php foreach($categories as $category):?>
                             <option value="<?=$category['id']?>" <?=ArrayHelper::getValue($model, 'cate_id') == $category['id'] ? 'selected' : ''?>><?=$category['name']?></option>
@@ -63,14 +63,14 @@ $categories   = $mediaService->categories($sourceType);
                 </p>
                 <p>
                     <label>是否首页推荐：</label>
-                    <select name="mediaModel[is_recommend]" value="<?=ArrayHelper::getValue($model,'is_recommend',0)?>">
+                    <select name="MediaModel[is_recommend]" value="<?=ArrayHelper::getValue($model,'is_recommend',0)?>">
                         <option value="0">不推荐</option>
                         <option value="1" <?php if(ArrayHelper::getValue($model,'is_recommend') == 1):?>selected="selected"<?php endif;?>>推荐</option>
                     </select>
                 </p>
                 <p>
                     <label>等级：</label>
-                    <select name="mediaModel[level]" value="<?=ArrayHelper::getValue($model,'level',1)?>">
+                    <select name="MediaModel[level]" value="<?=ArrayHelper::getValue($model,'level',1)?>">
                         <option value="1" <?php if(ArrayHelper::getValue($model,'level') == 1): ?> selected="selected"<?php endif;?>>初级</option>
                         <option value="2" <?php if(ArrayHelper::getValue($model,'level') == 2): ?> selected="selected"<?php endif;?>>中级</option>
                         <option value="3" <?php if(ArrayHelper::getValue($model,'level') == 3): ?> selected="selected"<?php endif;?>>高级</option>
@@ -80,12 +80,12 @@ $categories   = $mediaService->categories($sourceType);
                 <dl>
                     <dt>简介：</dt>
                     <dd>
-                        <textarea style="width: 640px;height: 200px;" name="mediaModel[desc]" value="<?=ArrayHelper::getValue($model,'desc','')?>"><?=ArrayHelper::getValue($album,'introduction','')?></textarea>
+                        <textarea style="width: 640px;height: 200px;" name="MediaModel[desc]" value="<?=ArrayHelper::getValue($model,'desc','')?>"><?=ArrayHelper::getValue($model,'desc','')?></textarea>
                     </dd>
                 </dl>
                 <p>
                     <label>海报图片：</label>
-                    <input type="text" name="mediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($model,'poster_url','')?>"/>
+                    <input type="text" name="MediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($model,'poster_url','')?>"/>
                 </p>
                 <p></p>
                 <p>

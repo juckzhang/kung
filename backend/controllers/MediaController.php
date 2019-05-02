@@ -31,23 +31,21 @@ class MediaController extends BaseController
         if(\Yii::$app->request->getIsPost())
         {
             $id = ArrayHelper::getValue($this->paramData,'id');
-            $albumId = ArrayHelper::getValue($this->paramData,'albumId');
-            $result = MediaService::getService()->editMedia($id,$albumId);
+            $sourceType = ArrayHelper::getValue($this->paramData, 'MediaModel.source_type', 1);
+            $result = MediaService::getService()->editMedia($id);
             if($result instanceof Model)
                 return $this->returnAjaxSuccess([
                     'message' => '编辑成功',
                     'navTabId' => 'media-list',
-                    'callbackType' => 'closeCurrent',
-                    'forwardUrl' => Url::to(['media/media-list'])
+                    'callbackType' => 'forward',
+                    'forwardUrl' => Url::to(['media/media-list','other' => ['source_type' => $sourceType]])
                 ]);
             return $this->returnAjaxError($result);
         }else{
             $id = ArrayHelper::getValue($this->paramData,'id');
             $model = MediaModel::find()->where(['id' => $id])->asArray()->one();
-            $album = [];
-            if(! empty($model)) $album = VideoAlbumModel::find()
-                ->where(['id' => $model['album_id'],'status' => VideoAlbumModel::STATUS_ACTIVE])->asArray()->one();
-            return $this->render('edit-media',['model' => $model,'album' => $album]);
+
+            return $this->render('edit-media',['model' => $model]);
         }
     }
 
