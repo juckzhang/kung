@@ -26,11 +26,11 @@ $categories   = $mediaService->categories($sourceType);
             </p>
             <p>
                 <label>播放连接：</label>
-                <input id="media_id" type="text" name="mediaModel[play_link]" value="<?=ArrayHelper::getValue($model,'play_link')?>">
+                <input class="link" type="text" name="mediaModel[play_link]" value="<?=ArrayHelper::getValue($model,'play_link')?>">
             </p>
             <p>
                 <label>下载链接：</label>
-                <input type="text" name="mediaModel[download_link]" value="<?=ArrayHelper::getValue($model,'download_link')?>">
+                <input type="text" class="link" name="mediaModel[download_link]" value="<?=ArrayHelper::getValue($model,'download_link')?>">
             </p>
             <p>
                 <label>播放量：</label>
@@ -52,7 +52,7 @@ $categories   = $mediaService->categories($sourceType);
                 <p>
                     <label>媒体分类：</label>
                     <select name="mediaModel[cate_id]" value="<?=ArrayHelper::getValue($model, 'cate_id')?>">
-                        <option selected>-- 请选择分类 --</option>
+                        <option>-- 请选择分类 --</option>
                         <?php foreach($categories as $category):?>
                             <option value="<?=$category['id']?>" <?=ArrayHelper::getValue($model, 'cate_id') == $category['id'] ? 'selected' : ''?>><?=$category['name']?></option>
                             <?php foreach($category['child'] as $child):?>
@@ -65,7 +65,15 @@ $categories   = $mediaService->categories($sourceType);
                     <label>是否首页推荐：</label>
                     <select name="mediaModel[is_recommend]" value="<?=ArrayHelper::getValue($model,'is_recommend',0)?>">
                         <option value="0">不推荐</option>
-                        <option value="1" <?php if(ArrayHelper::getValue($album,'is_recommend') == 1):?>selected="selected"<?php endif;?>>推荐</option>
+                        <option value="1" <?php if(ArrayHelper::getValue($model,'is_recommend') == 1):?>selected="selected"<?php endif;?>>推荐</option>
+                    </select>
+                </p>
+                <p>
+                    <label>等级：</label>
+                    <select name="mediaModel[level]" value="<?=ArrayHelper::getValue($model,'level',1)?>">
+                        <option value="1" <?php if(ArrayHelper::getValue($model,'level') == 1): ?> selected="selected"<?php endif;?>>初级</option>
+                        <option value="2" <?php if(ArrayHelper::getValue($model,'level') == 2): ?> selected="selected"<?php endif;?>>中级</option>
+                        <option value="3" <?php if(ArrayHelper::getValue($model,'level') == 3): ?> selected="selected"<?php endif;?>>高级</option>
                     </select>
                 </p>
                 <p>
@@ -77,18 +85,19 @@ $categories   = $mediaService->categories($sourceType);
                 </dl>
                 <p>
                     <label>海报图片：</label>
-                    <input type="text" name="mediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($album,'poster_url','')?>"/>
+                    <input type="text" name="mediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($model,'poster_url','')?>"/>
                 </p>
                 <p></p>
                 <p>
                     <label>&nbsp;</label>
-                    <input id="poster-url" class="upload-input" data-name="poster-url" style="display: none" type="file" name="UploadForm[file]">
-                    <img id="upload" class="upload-btn" src="<?= ! empty($album['poster_url']) ? \Yii::$app->params['imageUrlPrefix'] . $album['poster_url'] : '/images/upload.png'?>" width="100px"/>
+                    <input id="poster-url" class="upload-input" data-name="poster-url" style="display: none" type="file" data-type="poster" name="UploadForm[file]">
+                    <img id="upload" class="upload-btn" src="<?= ! empty($model['poster_url']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
                 </p>
                 <?php if($sourceType == 3):?>
                     <p>
-                        <label>&nbsp;</label>
-                        <input id="pdf" class="upload-input" data-name="play_link" style="display: none" type="file" name="UploadForm[file]">
+                        <label>PDF文档上传:</label>
+                        <input id="pdf" class="upload-input" data-type="poster" data-name="link" style="display: none" type="file" name="UploadForm[file]">
+                        <img id="upload" class="upload-btn" src="<?= ! empty($model['play_link']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
                     </p>
                 <?php endif;?>
             </div>
@@ -111,7 +120,8 @@ $categories   = $mediaService->categories($sourceType);
         //上传图片
         //选择文件之后执行上传
         $('.upload-input').on('change',function(){
-            var name      = $(this).data('name')
+            var name      = $(this).data('name'),
+                type      = $(this).data('type'),
                 id        = $(this).attr('id'),
                 imgObj    = $(this).parent().find('img[class=upload-btn]'),
                 inputText = $('.'+name);
@@ -121,14 +131,14 @@ $categories   = $mediaService->categories($sourceType);
                 secureuri:false,
                 fileElementId:id,//file标签的id
                 dataType: 'json',//返回数据的类型
-                data:{type:'poster'},//一同上传的数据
+                data:{type: type},//一同上传的数据
                 success: function (result, status) {
                     //把图片替换
                     if(result.code == 200){
-                        var posterUrl = $.trim(result.data.url),
-                            fullName  = result.data.fullFileName;
+                        var posterUrl = $.trim(result.data.url);
+                            //fullName  = result.data.fullFileName;
                         imgObj.attr("src", posterUrl);
-                        inputText.val(fullName);
+                        inputText.val(posterUrl);
                     }else {
                         alert(result.resultDesc);
                     }
