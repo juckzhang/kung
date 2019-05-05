@@ -185,12 +185,9 @@ class MediaService extends OperationService
 
         if($data['pageCount'] > 0 AND $page < $data['pageCount'])
         {
-            $models = $models->with('user')->orderBy(['create_time' => SORT_DESC])->offset($offset)->limit($limit)->all();
-            foreach($models as $item){
-                $album = $item->toArray();
-                $album['user'] = $item->user->toArray();
-                $data['dataList'][] = $album;
-            }
+            $models = $models->with('user')->orderBy(['create_time' => SORT_DESC])
+                ->offset($offset)->asArray()->limit($limit)->all();
+            $data['dataList'] = $models;
         }
 
         return $data;
