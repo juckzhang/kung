@@ -16,16 +16,14 @@ class BaseController extends CommonController
     public function beforeAction($action)
     {
         if(YII_ENV == 'product'){
-            $_GET['user_id'] = null;
-            $_POST['user_id'] = null;
+            $_GET['user_id'] = $_POST['user_id'] = null;
         }
 
         $accessToken = \Yii::$app->request->headers->get('Access-Token');
         if($accessToken){
             $model = UserModel::findOne(['access_token' => $accessToken]);
             if($model instanceof UserModel){
-                $_GET['user_id'] = $model->id;
-                $_POST['user_id'] = $model->id;
+                $_GET['user_id'] = $_POST['user_id'] = $model->id;
             }
         }
         $this->paramData = $this->parseParam();
