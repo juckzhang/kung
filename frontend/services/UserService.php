@@ -18,7 +18,7 @@ class UserService extends FrontendService{
         if(!($model instanceof UserModel)){
             $model = new UserModel();
         }
-        $params['access_token'] = md5('token-'.time().'-'.mt_rand(1000,9999));
+        $params['access_token'] = md5($params['third_account'] .'-'.$params['account_type'].'-'.time().'-'.mt_rand());
         if($model->load($params, '') and $model->save()){
             $model->id = (string)$model->id;
             return $model->toArray();
