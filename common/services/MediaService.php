@@ -36,6 +36,7 @@ class MediaService extends OperationService
         list($offset,$limit) = $this->parsePageParam($page,$count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $models = MediaCategoryModel::find()
+//            ->select(['id','source_type','name'])
             ->where(['status' => MediaCategoryModel::STATUS_ACTIVE])
             ->andFilterWhere(['source_type' => $sourceType]);
         $data['dataCount'] = $models->count();
@@ -58,6 +59,12 @@ class MediaService extends OperationService
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $models = MediaModel::find()
+//            ->select([
+//                'id','cate_id','source_type','title',
+//                'sub_title','desc','total_time','level','poster_url',
+//                'play_link','download_link','play_num','collection_num',
+//                'download_num','create_time'
+//            ])
             ->where(['status' => MediaModel::STATUS_ACTIVE])
             ->andFilterWhere(['source_type' => $sourceType])
             ->andFilterWhere(['cate_id' => $cateId]);
@@ -82,6 +89,12 @@ class MediaService extends OperationService
         $data = [];
         foreach (['videoList', 'autoList','pdfList'] as $key => $item){
             $models = MediaModel::find()
+ //            ->select([
+//                'id','cate_id','source_type','title',
+//                'sub_title','desc','total_time','level','poster_url',
+//                'play_link','download_link','play_num','collection_num',
+//                'download_num','create_time'
+//            ])
                 ->where(['source_type' => $key + 1,'status' => MediaModel::STATUS_ACTIVE])
                 ->orderBy(['sort_order' => SORT_DESC,'create_time' => SORT_DESC,'play_num' => SORT_DESC])
                 ->with('category')
@@ -100,6 +113,10 @@ class MediaService extends OperationService
         list($offset,$limit) = $this->parsePageParam($page, $count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $models = MediaLinesModel::find()
+//            ->select([
+//                'id','line_number','lang_type','source_id',
+//                'start_time','end_time','content',
+//            ])
             ->where([
                 'source_id' => $id,
                 'lang_type' => ['zh_CN', $lang],
@@ -134,6 +151,12 @@ class MediaService extends OperationService
     //视频音频资源详情
     public function mediaDetails($id, $uid){
         $data = MediaModel::find()
+//            ->select([
+//                'id','cate_id','source_type','title',
+//                'sub_title','desc','total_time','level','poster_url',
+//                'play_link','download_link','play_num','collection_num',
+//                'download_num','create_time'
+//            ])
             ->where(['id' => $id])
             ->andWhere(['status'=>MediaModel::STATUS_ACTIVE])
             ->asArray()

@@ -8,6 +8,7 @@ $parent_id = ArrayHelper::getValue($params, 'parent_id', 0);
 <h2 class="contentTitle">用户反馈回复</h2>
 <div class="pageContent">
     <form method="post" action="<?=Url::to(['member/edit-feedback','id' => ArrayHelper::getValue($model,'id','')])?>" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
+        <input type="hidden" name="FeedbackModel[user_id]" value="1"/>
         <div class="pageFormContent nowrap" layoutH="97">
             <dl>
                 <dt>回复ID：</dt>

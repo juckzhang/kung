@@ -12,6 +12,7 @@ class FeedbackModel extends ActiveRecord
     public function getFeedback()
     {
         return $this->hasOne(FeedbackModel::className(), ['parent_id' => 'id'])
+            ->select(['id','parent_id','user_id','content','create_time'])
             ->where(['status' => FeedbackModel::STATUS_ACTIVE])
             ->asArray();
     }

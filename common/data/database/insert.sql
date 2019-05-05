@@ -1,5 +1,7 @@
 use kung;
 
+insert into kung_user(id,account_type,nick_name,third_account,icon_url) values(1,1,'官方账号','admin','');
+
 insert into kung_media_category(source_type,`name`,create_time,update_time) values(1,'Life',484703478,1484703478),
 (1,'Business',484703478,1484703478),
 (1,'Movie',484703478,1484703478),
