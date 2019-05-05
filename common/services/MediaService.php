@@ -39,7 +39,7 @@ class MediaService extends OperationService
 //            ->select(['id','source_type','name'])
             ->where(['status' => MediaCategoryModel::STATUS_ACTIVE])
             ->andFilterWhere(['source_type' => $sourceType]);
-        $data['dataCount'] = $models->count();
+        $data['dataCount'] = (int)$models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
 
         if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
@@ -59,16 +59,16 @@ class MediaService extends OperationService
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $models = MediaModel::find()
-//            ->select([
-//                'id','cate_id','source_type','title',
-//                'sub_title','desc','total_time','level','poster_url',
-//                'play_link','download_link','play_num','collection_num',
-//                'download_num','create_time'
-//            ])
+            ->select([
+                'id','cate_id','source_type','title',
+                'sub_title','desc','total_time','level','poster_url',
+                'play_link','download_link','play_num','collection_num',
+                'download_num','create_time'
+            ])
             ->where(['status' => MediaModel::STATUS_ACTIVE])
             ->andFilterWhere(['source_type' => $sourceType])
             ->andFilterWhere(['cate_id' => $cateId]);
-        $data['dataCount'] = $models->count();
+        $data['dataCount'] = (int)$models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
 
         if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
@@ -122,7 +122,7 @@ class MediaService extends OperationService
                 'lang_type' => ['zh_CN', $lang],
                 'status' => MediaLinesModel::STATUS_ACTIVE,
             ]);
-        $data['dataCount'] = $models->count();
+        $data['dataCount'] = (int)$models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
 
         $models = $models->orderBy(['line_number' => SORT_ASC, 'lang_type' => SORT_ASC])
@@ -180,7 +180,7 @@ class MediaService extends OperationService
         $models = MediaCommentModel::find()
             ->select(['id','user_id','content','create_time'])
             ->where(['source_id' => $media,'status' => MediaCommentModel::STATUS_ACTIVE]);
-        $data['dataCount'] = $models->count();
+        $data['dataCount'] = (int)$models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
 
         if($data['pageCount'] > 0 AND $page < $data['pageCount'])

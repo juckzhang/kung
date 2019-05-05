@@ -56,7 +56,7 @@ class OperationService extends Service
     private function userNum($id,$opModel)
     {
         $model = $opModel::find()->where(['source_id' => $id,'status' => $opModel::STATUS_ACTIVE]);
-        return $model->count();
+        return (int)$model->count();
     }
 
     protected function download($id,$userId)
@@ -141,7 +141,7 @@ class OperationService extends Service
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $models = $model::find()
             ->where(['user_id' => $uid, 'status' => $model::STATUS_ACTIVE]);
-        $data['dataCount'] = $models->count();
+        $data['dataCount'] = (int)$models->count();
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
 
         if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
