@@ -44,7 +44,7 @@ class MediaService extends OperationService
 
         if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
         {
-            $models = $models->orderBy(['sort_order' => SORT_DESC])
+            $models = $models->orderBy(['sort_order' => SORT_DESC,'create_time' => SORT_ASC])
                 ->asArray()
                 ->offset($offset)->limit($limit)->all();
             $data['dataList'] = $models;
@@ -206,6 +206,7 @@ class MediaService extends OperationService
         $model = new MediaCommentModel();
         $params = ['user_id' => $userId, 'source_id' => $media, 'content' => $content];
         if($model->load($params, '') and $model->save()){
+            $model->id = (string)$model->id;
             return $model->toArray();
         }
         return CodeConstant::MEDIA_COMMENT_FAILED;

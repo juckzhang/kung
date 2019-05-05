@@ -31,6 +31,7 @@ class UserService extends FrontendService{
     {
         $model = new FeedbackModel();
         if($model->load($params,'') and $model->save()){
+            $model->id = (string)$model->id;
             return $model->toArray();
         }
 
