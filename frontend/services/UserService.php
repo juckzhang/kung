@@ -20,6 +20,7 @@ class UserService extends FrontendService{
         }
         $params['access_token'] = md5('token-'.time().'-'.mt_rand(1000,9999));
         if($model->load($params, '') and $model->save()){
+            $model->id = (string)$model->id;
             return $model->toArray();
         }
 
