@@ -10,6 +10,9 @@ use common\constants\CodeConstant;
 class UserService extends FrontendService{
 
     public function login(array $params){
+        if(empty($params['third_account'] or empty($params['account_type']))){
+            return CodeConstant::PARAM_ERROR;
+        }
         //判断账号是否存在
         $model = UserModel::find(['id','nick_name','icon_url'])
             ->where(['third_account' => $params['third_account'], 'account_type' => $params['account_type']])
