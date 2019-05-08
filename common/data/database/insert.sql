@@ -11,20 +11,11 @@ insert into kung_media_category(source_type,`name`,create_time,update_time) valu
 (2,'Song',484703478,1484703478),
 (2,'Story',484703478,1484703478),
 (2,'Movie',484703478,1484703478),
-(2,'Others',484703478,1484703478);
+(2,'Others',484703478,1484703478),
+(3,'HSK',484703478,1484703478),
+(3,'YCT',484703478,1484703478),
+(3,'BCT',484703478,1484703478),
+(3,'Others',484703478,1484703478);
 
-insert into kung_media(`cate_id`, `source_type`, `is_recommend`,`title`,`sub_title`,`create_time`,`update_time`) values(1,1,1,'Life','Life描述',484703478,1484703478),
-(2,1,1,'Business','Business描述',484703478,1484703478),
-(3,1,1,'Movie','Movie描述',484703478,1484703478),
-(4,1,1,'Lesson','Lesson描述',484703478,1484703478),
-(5,1,1,'Others','Others描述',484703478,1484703478),
-(6,2,1,'News','News描述',484703478,1484703478),
-(7,2,1,'Song','Song描述',484703478,1484703478),
-(8,2,1,'Story','Story描述',484703478,1484703478),
-(9,2,1,'Movie','Movie描述',484703478,1484703478),
-(10,2,1,'Others','Others描述',484703478,1484703478);
-
-insert into kung_media_lines(source_id,lang_type,line_number,content,start_time,end_time) values (1,'zh_CN',1,'content','1:2:1','1:2:2'),
-(1,'en_US',1,'content','1:2:1','1:2:2'),
-(1,'zh_CN',2,'content2','3:2:1','3:2:2'),
-(1,'en_US',2,'content2','3:2:1','3:2:2');
+INSERT INTO `kung_admin` VALUES ('1', '0', 'admin', '$2y$13$7nQGKhoDJznB.jLwASXsSOURqV7hIO8JFKqpcCqhGXgy0TcVjF6dO', '500', '1556639635', '1556672519', '0');
+INSERT INTO `kung_admin` VALUES ('2', '0', 'root', '$2y$13$wKm0i4VNSozQM263.d1hLugyHnzU3ReUD5cs94wzYw8nAQLIdwY9e', '500', '1556639721', '1556639721', '0');
