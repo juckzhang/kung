@@ -1,4 +1,8 @@
 #!/bin/bash
+# 添加web用户
+useradd -ms /bin/bash nobody
+groupadd nobody
+
 # 更新源
 apt-get update
 
@@ -16,29 +20,29 @@ apt-get install -y php7.0 php7.0-cli php7.0-curl php7.0-gd php7.0-json php7.0-my
 
 # 修改目录权限
 mkdir -p /data1/openresty/htdocs
-mkdir /data1/openresty/logs && chmod a+w /data1/openresty/logs
+mkdir /data1/openresty/logs && chmod 0777 /data1/openresty/logs
 
 # 下载项目代码
 cd /data1/openresty/htdocs
-git clone https://github.com/juckzhang/kung.git
-cd kung
-chmod a+x frontend/runtime && chmod backend/runtime && chmod console/runtime
+git clone https://github.com/juckzhang/kung.git kung
+
+# 创建文件上传目录
+mkdir -p kung/frontend/web/upload/media-poster
+mkdir -p kung/frontend/web/upload/media-pdf
 
 # 添加项目入口文件
-mv frontend/web/index frontend/web/index.php
-mv backend/web/index backend/web/index.php
-mv -f console/yii console/yii.php
+cp -f kung/frontend/web/index kung/frontend/web/index.php
+cp -f kung/backend/web/index kung/backend/web/index.php
+cp -f kung/console/yii kung/console/yii.php
 
 # 拷贝配置文件
-cp -f conf/nginx.conf /data1/openresty/nginx/conf/nginx.conf
-cp -f conf/php.ini /etc/php/7.0/fpm/php.ini
-cp -f conf/php-fpm.conf /etc/php/7.0/fpm/php-fpm.conf
-cp -f conf/php-fpm.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf
+cp -f kung/conf/nginx.conf /data1/openresty/nginx/conf/nginx.conf
+cp -f kung/conf/php.ini /etc/php/7.0/fpm/php.ini
+cp -f kung/conf/php-fpm.conf /etc/php/7.0/fpm/php-fpm.conf
+cp -f kung/conf/php-fpm.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf
 
-# 添加web用户
-useradd -ms /bin/bash nobody
-groupadd nobody
-
+# 修改目录所属人
+chown -R nobody.nobody kung
 # 启动服务
 php-fpm7.0
 /data1/openresty/nginx/sbin/nginx
