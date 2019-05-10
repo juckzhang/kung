@@ -48,64 +48,65 @@ $categories   = $mediaService->categories($sourceType);
                 <label>播放时长：</label>
                 <input type="text" placeholder="格式: 00:00:00" name="MediaModel[total_time]" value="<?=ArrayHelper::getValue($model,'total_time')?>">
             </p>
-<!--            <div class="album">-->
-                <p>
-                    <label>媒体分类：</label>
-                    <select name="MediaModel[cate_id]" value="<?=ArrayHelper::getValue($model, 'cate_id')?>">
-<!--                        <option>-- 请选择分类 --</option>-->
-                        <?php foreach($categories as $category):?>
-                            <option value="<?=$category['id']?>" <?=ArrayHelper::getValue($model, 'cate_id') == $category['id'] ? 'selected' : ''?>><?=$category['name']?></option>
-                            <?php foreach($category['child'] as $child):?>
-                                <option value="<?=$child['id']?>" <?=ArrayHelper::getValue($model, 'cate_id') == $child['id'] ? 'selected' : ''?>>&nbsp;&nbsp;&nbsp;&nbsp;<?=$child['name']?></option>
-                            <?php endforeach;?>
+            <p>
+                <label>媒体分类：</label>
+                <select name="MediaModel[cate_id]" value="<?=ArrayHelper::getValue($model, 'cate_id')?>">
+                    <?php foreach($categories as $category):?>
+                        <option value="<?=$category['id']?>" <?=ArrayHelper::getValue($model, 'cate_id') == $category['id'] ? 'selected' : ''?>><?=$category['name']?></option>
+                        <?php foreach($category['child'] as $child):?>
+                            <option value="<?=$child['id']?>" <?=ArrayHelper::getValue($model, 'cate_id') == $child['id'] ? 'selected' : ''?>>&nbsp;&nbsp;&nbsp;&nbsp;<?=$child['name']?></option>
                         <?php endforeach;?>
-                    </select>
-                </p>
+                    <?php endforeach;?>
+                </select>
+        </p>
+            <p>
+                <label>是否首页推荐：</label>
+                <select name="MediaModel[is_recommend]" value="<?=ArrayHelper::getValue($model,'is_recommend',0)?>">
+                    <option value="0">不推荐</option>
+                    <option value="1" <?php if(ArrayHelper::getValue($model,'is_recommend') == 1):?>selected="selected"<?php endif;?>>推荐</option>
+                </select>
+            </p>
+            <p>
+                <label>等级：</label>
+                <select name="MediaModel[level]" value="<?=ArrayHelper::getValue($model,'level',1)?>">
+                    <option value="1" <?php if(ArrayHelper::getValue($model,'level') == 1): ?> selected="selected"<?php endif;?>>初级</option>
+                    <option value="2" <?php if(ArrayHelper::getValue($model,'level') == 2): ?> selected="selected"<?php endif;?>>中级</option>
+                    <option value="3" <?php if(ArrayHelper::getValue($model,'level') == 3): ?> selected="selected"<?php endif;?>>高级</option>
+                </select>
+            </p>
+            <?php if($sourceType != 3):?>
                 <p>
-                    <label>是否首页推荐：</label>
-                    <select name="MediaModel[is_recommend]" value="<?=ArrayHelper::getValue($model,'is_recommend',0)?>">
-                        <option value="0">不推荐</option>
-                        <option value="1" <?php if(ArrayHelper::getValue($model,'is_recommend') == 1):?>selected="selected"<?php endif;?>>推荐</option>
-                    </select>
+                    <label>
+                        <a href="/download/lines_template.xls">台词下载模板</a>
+                    </label>
                 </p>
-                <p>
-                    <label>等级：</label>
-                    <select name="MediaModel[level]" value="<?=ArrayHelper::getValue($model,'level',1)?>">
-                        <option value="1" <?php if(ArrayHelper::getValue($model,'level') == 1): ?> selected="selected"<?php endif;?>>初级</option>
-                        <option value="2" <?php if(ArrayHelper::getValue($model,'level') == 2): ?> selected="selected"<?php endif;?>>中级</option>
-                        <option value="3" <?php if(ArrayHelper::getValue($model,'level') == 3): ?> selected="selected"<?php endif;?>>高级</option>
-                    </select>
-                </p>
-                <p>
-                    <a href="/download/lines_template.xls">台词下载模板</a>
-                </p>
-                <p>
-                <dl>
-                    <dt>简介：</dt>
-                    <dd>
-                        <textarea style="width: 640px;height: 200px;" name="MediaModel[desc]" value="<?=ArrayHelper::getValue($model,'desc','')?>"><?=ArrayHelper::getValue($model,'desc','')?></textarea>
-                    </dd>
-                </dl>
-                <p>
-                    <label>海报图片：</label>
-                    <input type="text" name="MediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($model,'poster_url','')?>"/>
-                </p>
-                <p>
-                    <?php if($sourceType != 3):?>
-                        <label>台词：</label>
-                        <input type="text" name="lines" class='lines' value=""/>
-                    <?php endif;?>
-                </p>
-                <p>
-                    <label>&nbsp;</label>
-                    <input id="poster-url" class="upload-input" data-name="poster-url" style="display: none" type="file" data-type="poster" name="UploadForm[file]">
-                    <img id="upload" class="upload-btn" src="<?= ! empty($model['poster_url']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
-                </p>
-                <p>
-                    <label><?= $sourceType == 3 ? 'PDF文档上传:' : '&nbsp;';?></label>
-                    <input id="pdf" class="upload-input" data-type="pdf" data-name="<?=$sourceType == 3 ? 'link' : 'lines';?>" style="display: none" type="file" name="UploadForm[file]">
-                    <img id="upload" class="upload-btn" src="<?= ! empty($model['play_link']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
-                </p>
+            <?php endif;?>
+            <dl>
+                <dt>简介：</dt>
+                <dd>
+                    <textarea style="width: 640px;height: 200px;" name="MediaModel[desc]" value="<?=ArrayHelper::getValue($model,'desc','')?>"><?=ArrayHelper::getValue($model,'desc','')?></textarea>
+                </dd>
+            </dl>
+            <p>
+                <label>海报图片：</label>
+                <input type="text" name="MediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($model,'poster_url','')?>"/>
+            </p>
+            <p>
+                <?php if($sourceType != 3):?>
+                    <label>台词：</label>
+                    <input type="text" name="lines" class='lines' value=""/>
+                <?php endif;?>
+            </p>
+            <p>
+                <label>&nbsp;</label>
+                <input id="poster-url" class="upload-input" data-name="poster-url" style="display: none" type="file" data-type="poster" name="UploadForm[file]">
+                <img id="upload" class="upload-btn" src="<?= ! empty($model['poster_url']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
+            </p>
+            <p>
+                <label><?= $sourceType == 3 ? 'PDF文档上传:' : '&nbsp;';?></label>
+                <input id="pdf" class="upload-input" data-type="pdf" data-name="<?=$sourceType == 3 ? 'link' : 'lines';?>" style="display: none" type="file" name="UploadForm[file]">
+                <img id="upload" class="upload-btn" src="<?= ! empty($model['play_link']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
+            </p>
         </div>
         <div class="formBar">
             <ul>
