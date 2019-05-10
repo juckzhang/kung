@@ -25,14 +25,14 @@ $sourceId = ArrayHelper::getValue($model, 'source_id', $defaultSourceId);
             <dl>
                 <dt>开始时间：</dt>
                 <dd>
-                    <input type="text" placeholder="格式:00:00:00" name="MediaLinesModel[start_time]" maxlength="20" class="required" value="<?=ArrayHelper::getValue($model,'start_time','')?>"/>
+                    <input type="text" placeholder="格式: 00:00:00" name="MediaLinesModel[start_time]" maxlength="20" class="required" value="<?=ArrayHelper::getValue($model,'start_time','')?>"/>
                     <span class="info">开始时间不能为空</span>
                 </dd>
             </dl>
             <dl>
                 <dt>结束时间：</dt>
                 <dd>
-                    <input type="text" placeholder="格式:00:00:00" name="MediaLinesModel[end_time]" maxlength="20" class="required" value="<?=ArrayHelper::getValue($model,'end_time','')?>"/>
+                    <input type="text" placeholder="格式: 00:00:00" name="MediaLinesModel[end_time]" maxlength="20" class="required" value="<?=ArrayHelper::getValue($model,'end_time','')?>"/>
                     <span class="info">结束时间不能为空</span>
                 </dd>
             </dl>
