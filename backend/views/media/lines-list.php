@@ -16,7 +16,7 @@ $sourceId = ArrayHelper::getValue($params, 'source_id');
 <form id="pagerForm" method="post" action="#rel#">
     <input type="hidden" name="search", value="<?=$search?>">
     <input type="hidden" name="pageNum" value="<?=$page?>" />
-    <input type="hidden" name="sourceId" value="<?=$sourceId?>" />
+    <input type="hidden" name="source_id" value="<?=$sourceId?>" />
     <input type="hidden" name="numPerPage" value="<?=$prePage?>" />
     <input type="hidden" name="orderField" value="<?=$orderFiled?>" />
     <input type="hidden" name="orderDirection" value="<?=$orderDirection?>" />
