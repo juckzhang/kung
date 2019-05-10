@@ -12,9 +12,9 @@ use yii\helpers\Url;
 <body>
 <div id="login">
     <div id="login_header">
-        <h1 class="login_logo">
-            <a href="http://demo.dwzjs.com"><img src="/images/logo.png" width="240"> <!--img src="/themes/default/images/login_logo.gif" /--></a>
-        </h1>
+<!--        <h1 class="login_logo">-->
+<!--            <a href="http://demo.dwzjs.com"><img src="/images/logo.png" width="240"> <!--img src="/themes/default/images/login_logo.gif" /></a>-->
+<!--        </h1>-->
         <div class="login_headerContent">
             <div class="navList">
                 <ul>
@@ -23,7 +23,9 @@ use yii\helpers\Url;
                     <li><a href="#" target="_blank">帮助</a></li>
                 </ul>
             </div>
-            <h2 class="login_title"><!--img src="/themes/default/images/login_title.png" /--></h2>
+            <h2 class="login_title">
+                <img src="/themes/default/images/login_title.png" />
+            </h2>
         </div>
     </div>
     <div id="login_content">
@@ -54,7 +56,9 @@ use yii\helpers\Url;
                 </div>
             </form>
         </div>
-        <div class="login_banner"><!--img src="/themes/default/images/login_banner.jpg" /--></div>
+        <div class="login_banner">
+            <img src="/themes/default/images/login_banner.jpg" />
+        </div>
         <div class="login_main">
             <ul class="helpList">
                 <li><a href="#">网站首页入口</a></li>
@@ -70,7 +74,7 @@ use yii\helpers\Url;
         </div>
     </div>
     <div id="login_footer">
-        Copyright &copy; 2009 www.dwzjs.com Inc. All Rights Reserved.
+        Copyright &copy; 2009 Kung Inc. All Rights Reserved.
     </div>
 </div>
 </body>
