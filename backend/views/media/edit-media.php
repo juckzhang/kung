@@ -46,7 +46,7 @@ $categories   = $mediaService->categories($sourceType);
             </p>
             <p>
                 <label>播放时长：</label>
-                <input type="text" name="MediaModel[total_time]" value="<?=ArrayHelper::getValue($model,'total_time')?>">
+                <input type="text" placeholder="00:00:00" name="MediaModel[total_time]" value="<?=ArrayHelper::getValue($model,'total_time')?>">
             </p>
 <!--            <div class="album">-->
                 <p>
@@ -75,6 +75,9 @@ $categories   = $mediaService->categories($sourceType);
                         <option value="2" <?php if(ArrayHelper::getValue($model,'level') == 2): ?> selected="selected"<?php endif;?>>中级</option>
                         <option value="3" <?php if(ArrayHelper::getValue($model,'level') == 3): ?> selected="selected"<?php endif;?>>高级</option>
                     </select>
+                </p>
+                <p>
+                    <a href="/download/lines_template.xls">台词下载模板</a>
                 </p>
                 <p>
                 <dl>

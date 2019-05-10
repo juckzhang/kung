@@ -97,7 +97,8 @@ class MediaService extends BackendService
         $lines = ExcelHelper::readExcel($file);
         //删除文件
 //        unlink($file);
-        foreach ($lines as $line){
+        foreach ($lines as $key => $line){
+            if($key == 0) continue;
             $data = [
                 'line_number' => $line[0],
                 'start_time' => $line[1],
@@ -125,9 +126,9 @@ class MediaService extends BackendService
         //判断是否有台词文件
         $lineFile = \Yii::$app->request->post('lines');
         if($model->source_type != 3 and $lineFile){
-            $lineFile = __DIR__.'/../../frontend/web/upload/media-pdf/'.basename($lineFile);
+            $lineFile = realpath(__DIR__.'/../../frontend/web/upload/media-pdf/'.basename($lineFile));
             if(file_exists($lineFile))
-                $this->addLinesFromExcel($model->source_id, $lineFile);
+                $this->addLinesFromExcel($model->id, $lineFile);
         }
 
         return $model;
