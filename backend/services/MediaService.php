@@ -103,6 +103,7 @@ class MediaService extends BackendService
                 'start_time' => $line[1],
                 'end_time' => $line[2],
                 'lang_type' => $line[3],
+                'content' => $line[4],
                 'source_id' => $sourceId,
             ];
             //先删除存在的台词
