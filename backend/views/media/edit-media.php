@@ -46,7 +46,7 @@ $categories   = $mediaService->categories($sourceType);
             </p>
             <p>
                 <label>播放时长：</label>
-                <input type="text" placeholder="00:00:00" name="MediaModel[total_time]" value="<?=ArrayHelper::getValue($model,'total_time')?>">
+                <input type="text" placeholder="格式:00:00:00" name="MediaModel[total_time]" value="<?=ArrayHelper::getValue($model,'total_time')?>">
             </p>
 <!--            <div class="album">-->
                 <p>
