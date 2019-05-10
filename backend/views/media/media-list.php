@@ -122,7 +122,7 @@ $categories = $mediaService->categories($sourceType);
                     <td><?= $data['title']?></td>
                     <td><?= $data['sub_title']?></td>
                     <td><?= $data['play_link']?></td>
-                    <td><?= $data['poster_url']?></td>
+                    <td><img width="50" height="50" src="<?= $data['poster_url']?>"/></td>
                     <td align="center"><?= $data['play_num']?></td>
                     <td align="center"><?= $data['real_play_num']?></td>
                     <td align="center"><?= $data['download_num']?></td>
