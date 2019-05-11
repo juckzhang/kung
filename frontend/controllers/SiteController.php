@@ -28,10 +28,4 @@ class SiteController extends BaseController
 
         return $this->returnSuccess(CodeConstant::SUCCESS, $ret);
     }
-
-    public function actionContact()
-    {
-        return $this->render('contact');
-        //return $this->returnSuccess();
-    }
 }
