@@ -12,7 +12,7 @@ class ExcelHelper {
         /** 循环读取每个单元格的数据 */
         for ($row = 1; $row <= $highestRow; $row++){//行数是以第1行开始
             for ($column = 'A'; $column <= $highestColumm; $column++) {//列数是以A列开始
-                $dataset[$row - 1][] = (string)$sheet->getCell($column.$row)->getValue();
+                $dataset[$row - 1][] = $sheet->getCell($column.$row)->getFormattedValue();
             }
         }
         return array_filter($dataset,function($item){
