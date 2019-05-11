@@ -77,7 +77,7 @@ $categories   = $mediaService->categories($sourceType);
             <?php if($sourceType != 3):?>
                 <p>
                     <label>
-                        <a href="/download/lines_template.xls">台词下载模板</a>
+                        <a href="/download/lines-template.xls">台词下载模板</a>
                     </label>
                 </p>
             <?php endif;?>
