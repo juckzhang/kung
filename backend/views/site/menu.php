@@ -81,13 +81,13 @@ use common\models\mysql\AdModel;
                     </li>
                 <?php endif;?>
 
-                <li><a href="<?=Url::to(['site/logout'])?>" target="navTab" rel="logout">退出</a></li>
+<!--                <li><a href="--><=Url::to(['site/logout'])?><!--" target="navTab" rel="logout">退出</a></li>-->
             </ul>
         </div>
 
         <?php if(\Yii::$app->user->can('system')):?>
         <div class="accordionHeader">
-            <h2><span>Folder</span>系统与日志管理</h2>
+            <h2><span>Folder</span>系统设置</h2>
         </div>
         <div class="accordionContent">
             <ul class="tree treeFolder">
