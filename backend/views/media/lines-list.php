@@ -49,6 +49,8 @@ $sourceId = ArrayHelper::getValue($params, 'source_id');
             <?php if(\Yii::$app->user->can('media/delete-lines')):?>
             <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids[]" href="<?=Url::to(['media/delete-lines'])?>" class="delete"><span>批量删除</span></a></li>
             <?php endif;?>
+
+            <li><a title="查看台词" target="navTab" href="<?=Url::to(['media/lines-list','source_id'=>$sourceId])?>" class="delete"><span>刷新</span></a></li>
         </ul>
     </div>
     <table class="table" width="1200" layoutH="138">
