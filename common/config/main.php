@@ -16,6 +16,11 @@ return [
             'ConfigPaths' => ['@common'],
         ],
 
+        'trans' => [
+            'class' => 'common\components\Translation',
+            'projectId' => 'kung-240507',
+        ],
+
         'lang' => [
             'class' => 'common\components\Lang',
         ],

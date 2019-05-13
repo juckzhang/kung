@@ -2,8 +2,9 @@
 namespace common\components;
 
 use Google\Cloud\Translate\TranslateClient;
+use yii\base\Component;
 
-class Translation
+class Translation extends Component
 {
     public $projectId;
     private $_client;

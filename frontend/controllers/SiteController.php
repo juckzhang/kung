@@ -28,4 +28,12 @@ class SiteController extends BaseController
 
         return $this->returnSuccess(CodeConstant::SUCCESS, $ret);
     }
+
+    public function actionTranslate()
+    {
+        $text = ArrayHelper::getValue($this->paramData,'text');
+        $target  = ArrayHelper::getValue($this->paramData,'target');
+        $ret = \Yii::$app->get('trans')->translate($text, $target);
+        return $this->returnSuccess();
+    }
 }
