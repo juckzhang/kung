@@ -1,45 +1,24 @@
 <?php
 namespace common\components;
-use yii\helpers\Json;
-use yii\helpers\Html;
+
+use Google\Cloud\Translate\TranslateClient;
 
 class Translation
 {
-    public $key;
+    public $projectId;
+    private $_client;
 
-    const API_URL = 'https://www.googleapis.com/language/translate/v2';
-
-    public function translate($source, $target, $text)
+    public function init()
     {
-        return $this->getResponse($this->getRequest('', $text, $source, $target));
+        if(!($this->_client instanceof TranslateClient)){
+            $this->_client = new TranslateClient(['projectId' => $this->projectId]);
+        }
     }
 
-    public function discover()
+    public function translate($text, $target)
     {
-        return $this->getResponse($this->getRequest('languages'));
-    }
-
-    public function detect($text)
-    {
-        return $this->getResponse($this->getRequest('detect', $text));
-    }
-
-    protected function getRequest($method, $text = '', $source = '', $target = '')
-    {
-        $request = self::API_URL . '/' . $method . '?' . http_build_query(
-                [
-                    'key' => $this->key,
-                    'source' => $source,
-                    'target' => $target,
-                    'q' => Html::encode($text),
-                ]
-            );
-        return $request;
-    }
-
-    protected function getResponse($request)
-    {
-        $response = file_get_contents($request);
-        return Json::decode($response, true);
+        return $this->_client->translate($text, [
+            'target' => $target
+        ]);
     }
 }

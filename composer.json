@@ -19,7 +19,8 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "PHPOffice/PHPExcel": "^1.8",
-        "crazydb/yii2-ueditor": "*"
+        "crazydb/yii2-ueditor": "*",
+        "google/cloud-translate": "^1.2"
     },
     "require-dev": {
     },
