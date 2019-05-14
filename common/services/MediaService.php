@@ -8,6 +8,7 @@ use common\models\mysql\MediaCommentModel;
 use common\models\mysql\MediaLinesModel;
 use common\models\mysql\MediaModel;
 use common\services\base\OperationService;
+use yii\log\EmailTarget;
 
 class MediaService extends OperationService
 {
@@ -31,12 +32,15 @@ class MediaService extends OperationService
     }
 
     //分类接口
-    public function categoryList($sourceType, $page, $count)
+    public function categoryList($sourceType, $lang, $page, $count)
     {
         list($offset,$limit) = $this->parsePageParam($page,$count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
+        $column = ['id','source_type','name'];
+        if($lang == 'en_US')$column['name'] = 'name_en';
+        else $column[] = 'name';
         $models = MediaCategoryModel::find()
-//            ->select(['id','source_type','name'])
+            ->select($column)
             ->where(['status' => MediaCategoryModel::STATUS_ACTIVE])
             ->andFilterWhere(['source_type' => $sourceType]);
         $data['dataCount'] = (int)$models->count();
@@ -54,18 +58,20 @@ class MediaService extends OperationService
     }
 
     //视频/音频列表
-    public function mediaList($cateId,$page,$prePage,$sourceType = null, $order = 'create_time')
+    public function mediaList($cateId,$lang,$page,$prePage,$sourceType = null, $order = 'create_time')
     {
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
+        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num'];
+        if($lang == 'en_US') $column['title']  = 'title_en';
+        else $column[] = 'title';
+        $where = ['status' => MediaModel::STATUS_ACTIVE];
+        if($sourceType == 3 and empty($cateId)){
+            $where['lang_type'] = $lang;
+        }
         $models = MediaModel::find()
-            ->select([
-                'id','cate_id','source_type','title',
-                'sub_title','desc','total_time','level','poster_url',
-                'play_link','download_link','play_num','collection_num',
-                'download_num','create_time'
-            ])
-            ->where(['status' => MediaModel::STATUS_ACTIVE])
+            ->select($column)
+            ->where($where)
             ->andFilterWhere(['source_type' => $sourceType])
             ->andFilterWhere(['cate_id' => $cateId]);
         $data['dataCount'] = (int)$models->count();
@@ -77,6 +83,13 @@ class MediaService extends OperationService
                 ->asArray()
                 ->with('category')
                 ->offset($offset)->limit($limit)->all();
+            foreach ($models as $key => $model){
+                if($lang == 'en_US'){
+                    $model['category']['name'] = $model['category']['name_en'];
+                    unset($model['category']['name_en']);
+                    $models[$key] = $model;
+                }
+            }
             $data['dataList'] = $models;
         }
 
@@ -84,23 +97,30 @@ class MediaService extends OperationService
     }
 
     //推荐列表
-    public function recommendList()
+    public function recommendList($lang)
     {
         $data = [];
+        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num'];
+        if($lang == 'en_US') $column['title']  = 'title_en';
+        else $column[] = 'title';
         foreach (['videoList', 'autoList','pdfList'] as $key => $item){
+            $where = ['source_type' => $key + 1,'status' => MediaModel::STATUS_ACTIVE];
+            if($key == 2) $where['lang_type'] = $lang;
             $models = MediaModel::find()
- //            ->select([
-//                'id','cate_id','source_type','title',
-//                'sub_title','desc','total_time','level','poster_url',
-//                'play_link','download_link','play_num','collection_num',
-//                'download_num','create_time'
-//            ])
-                ->where(['source_type' => $key + 1,'status' => MediaModel::STATUS_ACTIVE])
+                ->select($column)
+                ->where($where)
                 ->orderBy(['sort_order' => SORT_DESC,'create_time' => SORT_DESC,'play_num' => SORT_DESC])
                 ->with('category')
                 ->asArray()
                 ->limit(3)
                 ->all();
+            foreach ($models as $key => $model){
+                if($lang == 'en_US'){
+                    $model['category']['name'] = $model['category']['name_en'];
+                    unset($model['category']['name_en']);
+                    $models[$key] = $model;
+                }
+            }
             $data[$item] = $models;
         }
 
@@ -113,10 +133,10 @@ class MediaService extends OperationService
         list($offset,$limit) = $this->parsePageParam($page, $count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $models = MediaLinesModel::find()
-//            ->select([
-//                'id','line_number','lang_type','source_id',
-//                'start_time','end_time','content',
-//            ])
+            ->select([
+                'id','line_number','lang_type','source_id',
+                'start_time','end_time','content',
+            ])
             ->where([
                 'source_id' => $id,
                 'lang_type' => ['zh_CN', $lang],
@@ -151,12 +171,12 @@ class MediaService extends OperationService
     //视频音频资源详情
     public function mediaDetails($id, $uid){
         $data = MediaModel::find()
-//            ->select([
-//                'id','cate_id','source_type','title',
-//                'sub_title','desc','total_time','level','poster_url',
-//                'play_link','download_link','play_num','collection_num',
-//                'download_num','create_time'
-//            ])
+            ->select([
+                'id','cate_id','source_type','title',
+                'total_time','level','poster_url',
+                'play_link','download_link','play_num','collection_num',
+                'download_num','create_time'
+            ])
             ->where(['id' => $id])
             ->andWhere(['status'=>MediaModel::STATUS_ACTIVE])
             ->asArray()

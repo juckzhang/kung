@@ -11,7 +11,8 @@ class SiteController extends BaseController
     // 首页推荐
     public function actionRecommendList()
     {
-        $ret = MediaService::getService()->recommendList();
+        $lang = ArrayHelper::getValue($this->paramData,'lang');
+        $ret = MediaService::getService()->recommendList($lang);
         return $this->returnSuccess($ret);
     }
 

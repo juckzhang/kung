@@ -12,9 +12,10 @@ class UserController extends BaseController{
     {
         $userId  = ArrayHelper::getValue($this->paramData,'user_id');
         $page    = ArrayHelper::getValue($this->paramData,'page');
+        $lang = ArrayHelper::getValue($this->paramData,'lang');
         $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $ret = MediaService::getService()->collectionList($userId, $page, $count);
+        $ret = MediaService::getService()->collectionList($userId, $lang,$page, $count);
         return $this->returnSuccess($ret);
     }
 
@@ -23,9 +24,10 @@ class UserController extends BaseController{
     {
         $userId  = ArrayHelper::getValue($this->paramData,'user_id');
         $page    = ArrayHelper::getValue($this->paramData,'page');
+        $lang = ArrayHelper::getValue($this->paramData,'lang');
         $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $ret = MediaService::getService()->collectionList($userId, $page, $count);
+        $ret = MediaService::getService()->collectionList($userId, $lang,$page, $count);
         return $this->returnSuccess($ret);
     }
 
@@ -34,9 +36,10 @@ class UserController extends BaseController{
     {
         $userId  = ArrayHelper::getValue($this->paramData,'user_id');
         $page    = ArrayHelper::getValue($this->paramData,'page');
+        $lang = ArrayHelper::getValue($this->paramData,'lang');
         $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $ret = MediaService::getService()->downloadList($userId, $page, $count);
+        $ret = MediaService::getService()->downloadList($userId, $lang,$page, $count);
         return $this->returnSuccess($ret);
     }
 

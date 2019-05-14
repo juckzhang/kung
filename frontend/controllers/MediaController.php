@@ -11,10 +11,11 @@ class MediaController extends BaseController
     public function actionCategoryList()
     {
         $sourceType = ArrayHelper::getValue($this->paramData,'source_type');
+        $lang = ArrayHelper::getValue($this->paramData,'lang');
         $page    = ArrayHelper::getValue($this->paramData,'page');
         $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $ret = MediaService::getService()->categoryList($sourceType,$page,$count);
+        $ret = MediaService::getService()->categoryList($sourceType,$lang,$page,$count);
 
         return $this->returnSuccess($ret);
     }
@@ -23,11 +24,12 @@ class MediaController extends BaseController
     {
         $cateId = ArrayHelper::getValue($this->paramData,'cate_id');
         $sourceType = ArrayHelper::getValue($this->paramData,'source_type');
+        $lang = ArrayHelper::getValue($this->paramData,'lang');
         $page    = ArrayHelper::getValue($this->paramData,'page');
         $count = ArrayHelper::getValue($this->paramData,'count');
         $order = ArrayHelper::getValue($this->paramData,'order', 'create_time');
 
-        $ret = MediaService::getService()->mediaList($cateId,$page,$count,$sourceType, $order);
+        $ret = MediaService::getService()->mediaList($cateId,$lang,$page,$count,$sourceType, $order);
 
         return $this->returnSuccess($ret);
     }

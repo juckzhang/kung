@@ -117,25 +117,25 @@ class OperationService extends Service
     }
 
     //收藏列表
-    public function collectionList($uid, $page, $count, $order = null)
+    public function collectionList($uid, $lang,$page, $count, $order = null)
     {
-        return $this->sourceList($this->collectModel,$uid, $page, $count, $order);
+        return $this->sourceList($this->collectModel,$lang,$uid, $page, $count, $order);
     }
 
     //浏览列表
-    public function lookList($uid, $page, $count, $order = null)
+    public function lookList($uid, $lang, $page, $count, $order = null)
     {
-        return $this->sourceList($this->scanModel,$uid, $page, $count, $order);
+        return $this->sourceList($this->scanModel, $lang,$uid, $page, $count, $order);
     }
 
     //下载列表
-    public function downloadList($uid, $page, $count, $order = null)
+    public function downloadList($uid, $lang, $page, $count, $order = null)
     {
-        return $this->sourceList($this->downloadModel,$uid, $page, $count, $order);
+        return $this->sourceList($this->downloadModel,$lang,$uid, $page, $count, $order);
     }
 
     // 资源列表
-    protected function sourceList($model,$uid, $page, $count, $order)
+    protected function sourceList($model,$lang,$uid, $page, $count, $order)
     {
         list($offset,$limit) = $this->parsePageParam($page, $count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
@@ -153,7 +153,13 @@ class OperationService extends Service
             //$data['dataList'] = $models;
             foreach ($models as $model){
                 if($model['media']){
-                    $data['dataList'][] = $model['media'];
+                    $model = $model['media'];
+                    if($lang == 'en_US'){
+                        $model['title'] = $model['title_en'];
+                        $model['category']['name'] = $model['category']['name_en'];
+                        unset($model['title_en'],$model['category']['name_en']);
+                    }
+                    $data['dataList'][] = $model;
                 }
             }
         }
