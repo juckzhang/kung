@@ -64,7 +64,8 @@ $search = ArrayHelper::getValue($params,'search');
         <tr>
             <th width="22"><input type="checkbox" group="ids[]" class="checkboxCtrl"></th>
             <th width="40">分类ID</th>
-            <th width="80">分类名称</th>
+            <th width="80">中文名称</th>
+            <th width="80">英文名称</th>
             <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="80">修改时间</th>
             <th width="70">操作</th>
         </tr>
@@ -75,6 +76,7 @@ $search = ArrayHelper::getValue($params,'search');
                 <td><input name="ids[]" value="<?=$search? "{id:$data->id,name:'{$data->name}'}" : $data->id?>" type="checkbox"></td>
                 <td><?=$data->id?></td>
                 <td><?=$data->name?></td>
+                <td><?=$data->name_en?></td>
                 <td><?=date('Y-m-d H:i:s',$data->update_time)?></td>
                 <td>
                     <?php if(\Yii::$app->user->can('media/delete-category')):?>

@@ -98,8 +98,8 @@ $categories = $mediaService->categories($sourceType);
                 <th width="30"><input type="checkbox" group="ids[]" class="checkboxCtrl"></th>
                 <th width="80">ID</th>
                 <th width="80">分类名称</th>
-                <th width="80">名称</th>
-                <th width="80">描述</th>
+                <th width="80">中文标题</th>
+                <th width="80">英文标题</th>
                 <th width="80">资源连接</th>
                 <th width="80">海报图片</th>
                 <th width="60">播放数</th>
@@ -120,7 +120,7 @@ $categories = $mediaService->categories($sourceType);
                     <td><?= $data['id']?></td>
                     <td><?= $data['cate_id']?></td>
                     <td><?= $data['title']?></td>
-                    <td><?= $data['sub_title']?></td>
+                    <td><?= $data['title_en']?></td>
                     <td><?= $data['play_link']?></td>
                     <td><img width="50" height="50" src="<?= $data['poster_url']?>"/></td>
                     <td align="center"><?= $data['play_num']?></td>

@@ -12,9 +12,16 @@ $categories = [
     <form method="post" action="<?=Url::to(['media/edit-category','id' => ArrayHelper::getValue($model,'id','')])?>" class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)">
         <div class="pageFormContent nowrap" layoutH="97">
             <dl>
-                <dt>分类名称：</dt>
+                <dt>中文名称：</dt>
                 <dd>
                     <input type="text" name="MediaCategoryModel[name]" maxlength="20" class="required" value="<?=ArrayHelper::getValue($model,'name','')?>"/>
+                    <span class="info">分类名称不能为空</span>
+                </dd>
+            </dl>
+            <dl>
+                <dt>英文名称：</dt>
+                <dd>
+                    <input type="text" name="MediaCategoryModel[name_en]" maxlength="20" class="required" value="<?=ArrayHelper::getValue($model,'name_en','')?>"/>
                     <span class="info">分类名称不能为空</span>
                 </dd>
             </dl>

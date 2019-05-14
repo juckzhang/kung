@@ -9,7 +9,6 @@ $mediaService = MediaService::getService();
 $defaultSourceType = ArrayHelper::getValue($param,'source_type', 1);
 $sourceType = ArrayHelper::getValue($model, 'source_type', $defaultSourceType);
 $categories   = $mediaService->categories($sourceType);
-
 ?>
 <h2 class="contentTitle">媒体编辑</h2>
 <div class="pageContent">
@@ -17,12 +16,12 @@ $categories   = $mediaService->categories($sourceType);
         <div class="pageFormContent nowrap" layoutH="97">
             <input type="hidden" name="MediaModel[source_type]" value="<?=$sourceType?>">
             <p>
-                <label>名称：</label>
+                <label>中文标题：</label>
                 <input type="text" name="MediaModel[title]" value="<?=ArrayHelper::getValue($model,'title')?>">
             </p>
             <p>
-                <label>副标题：</label>
-                <input id="vu" type="text" name="MediaModel[sub_title]" value="<?=ArrayHelper::getValue($model,'sub_title')?>">
+                <label>英文标题：</label>
+                <input type="text" name="MediaModel[title_en]" value="<?=ArrayHelper::getValue($model,'title_en')?>">
             </p>
             <p>
                 <label>播放连接：</label>
@@ -58,7 +57,16 @@ $categories   = $mediaService->categories($sourceType);
                         <?php endforeach;?>
                     <?php endforeach;?>
                 </select>
-        </p>
+            </p>
+            <?php if($sourceType == 3):?>
+                <p>
+                    <label>语言类型：</label>
+                    <select name="MediaModel[lang_type]" value="<?=ArrayHelper::getValue($model, 'lang_type')?>">
+                        <option value="zh_CN" selected="selected">中文</option>
+                        <option value="en_US" <?=ArrayHelper::getValue($model, 'lang_type') == 'en_US' ? 'selected' : ''?>>英语</option>
+                    </select>
+                </p>
+            <?php endif;?>
             <p>
                 <label>是否首页推荐：</label>
                 <select name="MediaModel[is_recommend]" value="<?=ArrayHelper::getValue($model,'is_recommend',0)?>">
@@ -81,12 +89,6 @@ $categories   = $mediaService->categories($sourceType);
                     </label>
                 </p>
             <?php endif;?>
-            <dl>
-                <dt>简介：</dt>
-                <dd>
-                    <textarea style="width: 640px;height: 200px;" name="MediaModel[desc]" value="<?=ArrayHelper::getValue($model,'desc','')?>"><?=ArrayHelper::getValue($model,'desc','')?></textarea>
-                </dd>
-            </dl>
             <p>
                 <label>海报图片：</label>
                 <input type="text" name="MediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($model,'poster_url','')?>"/>
