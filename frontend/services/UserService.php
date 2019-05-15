@@ -14,7 +14,8 @@ class UserService extends FrontendService{
             return CodeConstant::PARAM_ERROR;
         }
         //判断账号是否存在
-        $model = UserModel::find(['id','nick_name','icon_url'])
+        $model = UserModel::find()
+            ->select(['id','nick_name','icon_url','third_account','account_type'])
             ->where(['third_account' => $params['third_account'], 'account_type' => $params['account_type']])
             ->one();
 
