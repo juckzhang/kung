@@ -159,8 +159,8 @@ class OperationService extends Service
                     if($lang == 'en_US'){
                         $model['title'] = $model['title_en'];
                         $model['category']['name'] = $model['category']['name_en'];
-                        unset($model['title_en'],$model['category']['name_en']);
                     }
+                    unset($model['title_en'],$model['category']['name_en']);
                     $data['dataList'][] = $model;
                 }
             }

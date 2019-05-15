@@ -120,8 +120,8 @@ class MediaService extends OperationService
                 $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
                 if($lang == 'en_US'){
                     $model['category']['name'] = $model['category']['name_en'];
-                    unset($model['category']['name_en']);
                 }
+                unset($model['category']['name_en']);
                 $models[$key] = $model;
             }
             $data[$item] = $models;
