@@ -4,7 +4,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'language' => 'zh-CN',
+    'language' => 'zh_CN',
 
     //百度编辑器
     'controllerMap' => [

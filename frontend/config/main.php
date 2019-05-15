@@ -4,7 +4,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'frontend\controllers',
     'bootstrap' => ['log'],
-    'language' => 'zh-CN',
+    'language' => 'zh_CN',
     'layout' => false,
     'components' => [
         'log' => [
