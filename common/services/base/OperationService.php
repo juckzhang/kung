@@ -2,6 +2,7 @@
 namespace common\services\base;
 
 use common\constants\CodeConstant;
+use common\helpers\CommonHelper;
 use common\models\mysql\UserModel;
 
 class OperationService extends Service
@@ -154,6 +155,7 @@ class OperationService extends Service
             foreach ($models as $model){
                 if($model['media']){
                     $model = $model['media'];
+                    $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
                     if($lang == 'en_US'){
                         $model['title'] = $model['title_en'];
                         $model['category']['name'] = $model['category']['name_en'];

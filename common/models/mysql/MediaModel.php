@@ -23,6 +23,6 @@ class MediaModel extends ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(MediaCategoryModel::className(), ['id' => 'cate_id'])
-            ->select(['id','name']);
+            ->select(['id','name','name_en']);
     }
 }

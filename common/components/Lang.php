@@ -60,9 +60,9 @@ class Lang extends Object{
 
         $langfile = str_replace('.php', '', $langfile) . '_lang.php';
 
-        if (empty($idiom) OR ! preg_match('/^[a-z_-]+$/i', $idiom))
+        if (empty($idiom) OR ! preg_match('/^[a-zA-Z_-]+$/i', $idiom))
         {
-            $idiom = \yii::$app->language ?: 'zh_cn';
+            $idiom = \yii::$app->language ?: 'zh_CN';
         }
 
         if ($return === FALSE && isset($this->is_loaded[$langfile]) && $this->is_loaded[$langfile] === $idiom)

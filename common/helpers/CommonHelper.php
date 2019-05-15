@@ -58,61 +58,11 @@ class CommonHelper {
         return $_str;
     }
 
-    public static function isMobile($mobile)
-    {
-        return preg_match('/^1[3|4|5|8|7][0-9]\d{8}$/',$mobile) ? true : false;
-    }
+    public static function t($category, $message){
+        $lang = \Yii::$app->request->getPost('lang', 'zh_CN');
+        \Yii::$app->lang->load($category, $lang);
+        $message = \Yii::$app->lang->line($message);
 
-    public static function isMobileClient()
-    {
-        $_clientType = static::clientType();
-        if($_clientType !== 3) return true;
-        return false;
-    }
-
-    public static function clientType()
-    {
-        static $CLIENT_TYPE_ANDROID = 1;
-        static $CLIENT_TYPE_IOS     = 2;
-        static $CLIENT_TYPE_PC      = 3;
-        $_clientType = $CLIENT_TYPE_PC;
-
-        $header = \Yii::$app->request->headers;
-        $userAgent = strtolower($header->get('user-agent'));
-
-        //判断是否是安卓
-        if(strpos($userAgent,'android'))
-            $_clientType = $CLIENT_TYPE_ANDROID;
-
-        //判断是否是ios
-        if(strpos($userAgent,'iphone'))
-            $_clientType = $CLIENT_TYPE_IOS;
-
-        return $_clientType;
-    }
-
-    public static function userType($id){
-        $type = '';
-        switch ($id){
-            case 1:
-                $type = '普通会员';
-                break;
-            case 2:
-                $type = '认证会员';
-                break;
-            case 3:
-                $type = '合作会员';
-                break;
-            default;break;
-        }
-        return $type;
-    }
-
-    public static function getOrderno()
-    {
-        $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
-        $orderSn = $yCode[intval(date('Y')) - 2011] . strtoupper(dechex(date('m'))) . date('d') . substr(time(), -5) . substr(microtime(), 2, 5) . sprintf('%02d', rand(0, 99));
-
-        return 'zuiying'.$orderSn;
+        return $message;
     }
 }

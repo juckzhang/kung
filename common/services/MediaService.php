@@ -3,6 +3,7 @@ namespace common\services;
 
 use common\constants\CodeConstant;
 use common\events\MediaEvent;
+use common\helpers\CommonHelper;
 use common\models\mysql\MediaCategoryModel;
 use common\models\mysql\MediaCommentModel;
 use common\models\mysql\MediaLinesModel;
@@ -84,6 +85,7 @@ class MediaService extends OperationService
                 ->with('category')
                 ->offset($offset)->limit($limit)->all();
             foreach ($models as $key => $model){
+                $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
                 if($lang == 'en_US'){
                     $model['category']['name'] = $model['category']['name_en'];
                     unset($model['category']['name_en']);
@@ -115,11 +117,12 @@ class MediaService extends OperationService
                 ->limit(3)
                 ->all();
             foreach ($models as $key => $model){
+                $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
                 if($lang == 'en_US'){
                     $model['category']['name'] = $model['category']['name_en'];
                     unset($model['category']['name_en']);
-                    $models[$key] = $model;
                 }
+                $models[$key] = $model;
             }
             $data[$item] = $models;
         }
