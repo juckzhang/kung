@@ -16,7 +16,7 @@ create table if NOT EXISTS kung_user(
   status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：禁用 2：删除',
   key account(third_account,account_type),
   key access_token(access_token)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1000000000;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 auto_increment=1000000000;
 
 -- 资源分类表
 CREATE TABLE if NOT EXISTS kung_media_category(
@@ -31,7 +31,7 @@ CREATE TABLE if NOT EXISTS kung_media_category(
   status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除',
   key source_type(source_type),
   key parent_id(parent_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 auto_increment=1;
 
 CREATE TABLE if NOT EXISTS kung_media(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
@@ -59,7 +59,7 @@ CREATE TABLE if NOT EXISTS kung_media(
   key source_type(source_type),
   key cate_id(cate_id),
   key is_recommend(is_recommend)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'资源列表';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 auto_increment=1 comment'资源列表';
 
 CREATE TABLE if NOT EXISTS kung_media_lines(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
@@ -76,7 +76,7 @@ CREATE TABLE if NOT EXISTS kung_media_lines(
   key source_id(source_id),
   key lang_type(lang_type),
   key line_number(line_number)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'资源台词列表';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 auto_increment=1 comment'资源台词列表';
 
 CREATE TABLE if NOT EXISTS kung_media_collection(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
@@ -122,7 +122,7 @@ CREATE TABLE if NOT EXISTS kung_media_comment(
   update_time bigint unsigned  NOT NULL DEFAULT 0 comment'修改时间',
   status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：有效 1：删除',
   key source(source_id,user_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'评论列表';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 auto_increment=1 comment'评论列表';
 
 CREATE TABLE IF NOT EXISTS kung_feedback(
   id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS kung_feedback(
   status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：1：删除',
   key user_id(user_id),
   key parent_id(parent_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 auto_increment=1 comment'用户反馈列表';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 auto_increment=1 comment'用户反馈列表';
 
 CREATE TABLE IF NOT EXISTS kung_role(
   `id` int unsigned NOT NULL PRIMARY  key AUTO_INCREMENT COMMENT '自增ID，主键',
