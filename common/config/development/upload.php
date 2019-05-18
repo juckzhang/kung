@@ -1,9 +1,9 @@
 <?php
 return [
     'poster' => [
-        'url'   => 'http://omk0vzy4i.bkt.clouddn.com/',
+        'url'   => 'http://106.12.72.118/',
     ],
     'pdf' => [
-        'url'   => 'http://omk0vzy4i.bkt.clouddn.com/',
+        'url'   => 'http://106.12.72.118/',
     ],
 ];

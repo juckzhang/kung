@@ -123,7 +123,7 @@ class UploadService extends Service
 
         if($model->file->saveAs($model->getDir().DIRECTORY_SEPARATOR.$fullFileName, false))
             return [
-                'url' => \Yii::$app->params['imageUrlPrefix'] . $fullFileName,
+                'url' => $model->getUrlPrefix().'/'.$fullFileName,//\Yii::$app->params['imageUrlPrefix'] . $fullFileName,
                 'fullFileName' => $relativePath,
                 'type' => $model->file->type,
                 'size' => $model->file->size,
