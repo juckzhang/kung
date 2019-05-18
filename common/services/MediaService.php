@@ -89,8 +89,8 @@ class MediaService extends OperationService
                 if($lang == 'en_US'){
                     $model['category']['name'] = $model['category']['name_en'];
                     unset($model['category']['name_en']);
-                    $models[$key] = $model;
                 }
+                $models[$key] = $model;
             }
             $data['dataList'] = $models;
         }
