@@ -58,15 +58,13 @@ $categories   = $mediaService->categories($sourceType);
                     <?php endforeach;?>
                 </select>
             </p>
-            <?php if($sourceType == 3):?>
-                <p>
-                    <label>语言类型：</label>
-                    <select name="MediaModel[lang_type]" value="<?=ArrayHelper::getValue($model, 'lang_type')?>">
-                        <option value="zh_CN" selected="selected">中文</option>
-                        <option value="en_US" <?=ArrayHelper::getValue($model, 'lang_type') == 'en_US' ? 'selected' : ''?>>英语</option>
-                    </select>
-                </p>
-            <?php endif;?>
+            <p>
+                <label>语言类型：</label>
+                <select name="MediaModel[lang_type]" value="<?=ArrayHelper::getValue($model, 'lang_type')?>">
+                    <option value="zh_CN" selected="selected">中文</option>
+                    <option value="en_US" <?=ArrayHelper::getValue($model, 'lang_type') == 'en_US' ? 'selected' : ''?>>英语</option>
+                </select>
+            </p>
             <p>
                 <label>是否首页推荐：</label>
                 <select name="MediaModel[is_recommend]" value="<?=ArrayHelper::getValue($model,'is_recommend',0)?>">
@@ -82,13 +80,7 @@ $categories   = $mediaService->categories($sourceType);
                     <option value="3" <?php if(ArrayHelper::getValue($model,'level') == 3): ?> selected="selected"<?php endif;?>>高级</option>
                 </select>
             </p>
-            <?php if($sourceType != 3):?>
-                <p>
-                    <label>
-                        <a href="/download/lines-template.xls">台词下载模板</a>
-                    </label>
-                </p>
-            <?php endif;?>
+
             <p>
                 <label>海报图片：</label>
                 <input type="text" name="MediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($model,'poster_url','')?>"/>

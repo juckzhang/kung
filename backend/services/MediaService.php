@@ -119,16 +119,50 @@ class MediaService extends BackendService
         }
     }
 
+    public function addLinesFromFile($sourceId, $lang, $file){
+        $lines = explode("\n", file_get_contents($file));
+        $item = ['source_id' => $sourceId];
+        foreach ($lines as $key => $value){
+            $index = $key % 5;
+            if(!$index and !trim($value)) break;
+
+            switch ($index){
+                case 0: $item['line_number'] = trim($value); break;
+                case 1:
+                    $time = explode('-->', $value);
+                    $item['start_time'] = trim($time[0]);
+                    $item['end_time'] = trim($time[1]);
+                    break;
+                case 2: //处理中文
+                case 3: //处理其他语言
+                    $item['lang_type'] = $index == 2 ? 'zh_CN' : $lang;
+                    $item['content'] = trim($value);
+                    //先删除存在的台词
+                    MediaLinesModel::deleteAll([
+                        'source_id' => $sourceId,
+                        'line_number' => $item['line_number'],
+                        'lang_type' => $item['lang_type'],
+                    ]);
+                    //插入新纪录
+                    $model = new MediaLinesModel();
+                    $model->add($item);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     //编辑视频 音频
     public function editMedia($id)
     {
         $model = $this->editInfo($id,MediaModel::className());
         //判断是否有台词文件
         $lineFile = \Yii::$app->request->post('lines');
+        $lang = \Yii::$app->request->post('MediaModel')['lang_type'];
         if($model->source_type != 3 and $lineFile){
             $lineFile = realpath(__DIR__.'/../../frontend/web/upload/media-pdf/'.basename($lineFile));
             if(file_exists($lineFile))
-                $this->addLinesFromExcel($model->id, $lineFile);
+                $this->addLinesFromFile($model->id, $lang, $lineFile);
         }
 
         return $model;

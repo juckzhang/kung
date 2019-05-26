@@ -66,13 +66,12 @@ class MediaService extends OperationService
         $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num'];
         if($lang == 'en_US') $column['title']  = 'title_en';
         else $column[] = 'title';
-        $where = ['status' => MediaModel::STATUS_ACTIVE];
-        if($sourceType == 3 and empty($cateId)){
-            $where['lang_type'] = $lang;
-        }
         $models = MediaModel::find()
             ->select($column)
-            ->where($where)
+            ->where(['and',
+                ['status' => MediaModel::STATUS_ACTIVE],
+                ['like', 'lang_type', $lang],
+            ])
             ->andFilterWhere(['source_type' => $sourceType])
             ->andFilterWhere(['cate_id' => $cateId]);
         $data['dataCount'] = (int)$models->count();
@@ -106,11 +105,13 @@ class MediaService extends OperationService
         if($lang == 'en_US') $column['title']  = 'title_en';
         else $column[] = 'title';
         foreach (['videoList', 'autoList','pdfList'] as $key => $item){
-            $where = ['source_type' => $key + 1,'status' => MediaModel::STATUS_ACTIVE];
-            if($key == 2) $where['lang_type'] = $lang;
             $models = MediaModel::find()
                 ->select($column)
-                ->where($where)
+                ->where(['and',
+                    ['source_type' => $key + 1],
+                    ['status' => MediaModel::STATUS_ACTIVE],
+                    ['like','lang_type',$lang],
+                ])
                 ->orderBy(['sort_order' => SORT_DESC,'create_time' => SORT_DESC,'play_num' => SORT_DESC])
                 ->with('category')
                 ->asArray()

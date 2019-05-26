@@ -40,7 +40,7 @@ CREATE TABLE if NOT EXISTS kung_media(
   is_recommend tinyint(1) unsigned NOT NULL DEFAULT 0 comment'是否首页推荐 1:推荐 0：不推荐',
   title varchar(255) NOT NULL DEFAULT '' comment'标题',
   title_en varchar(255) NOT NULL DEFAULT '' comment'标题',
-  lang_type char(15) not null DEFAULT 'zh_CN' comment'语言类型 中文:zh_CN 英文: en_US',
+  lang_type varchar(255) not null DEFAULT 'zh_CN' comment'语言类型 中文:zh_CN 英文: en_US',
   total_time char(10) NOT NULL DEFAULT '' comment'播放总时长',
   `level` tinyint(1) NOT NULL DEFAULT 1 comment'等级',
   poster_url varchar(255) NOT NULL DEFAULT '' comment'海报图标',
