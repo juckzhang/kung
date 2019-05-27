@@ -18,7 +18,7 @@ return [
 
         'trans' => [
             'class' => 'common\components\Translation',
-            'projectId' => 'kung-240507',
+            'key' => 'AIzaSyC0caXMqhMV0Fg51x9mJMxOjVpLhhrK2lo',
         ],
 
         'lang' => [

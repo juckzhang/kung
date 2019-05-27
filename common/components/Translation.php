@@ -6,13 +6,13 @@ use yii\base\Component;
 
 class Translation extends Component
 {
-    public $projectId;
+    public $key;
     private $_client;
 
     public function init()
     {
         if(!($this->_client instanceof TranslateClient)){
-            $this->_client = new TranslateClient(['projectId' => $this->projectId]);
+            $this->_client = new TranslateClient(['key' => $this->key]);
         }
     }
 
