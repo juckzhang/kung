@@ -50,8 +50,7 @@ class MediaService extends OperationService
         if($data['pageCount'] > 0 AND $page <= $data['pageCount'])
         {
             $models = $models->orderBy(['sort_order' => SORT_DESC,'create_time' => SORT_ASC])
-                ->asArray()
-                ->offset($offset)->limit($limit)->all();
+                ->asArray()->all();
             $data['dataList'] = $models;
         }
 

@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\constants\CodeConstant;
+use common\helpers\CommonHelper;
 use common\services\MediaService;
 use frontend\services\UserService;
 use yii\helpers\ArrayHelper;
@@ -33,8 +34,15 @@ class SiteController extends BaseController
     public function actionTranslate()
     {
         $text = ArrayHelper::getValue($this->paramData,'text');
-        $target  = ArrayHelper::getValue($this->paramData,'target');
-        $ret = \Yii::$app->get('trans')->translate($text, $target);
-        return $this->returnSuccess();
+        $target  = 'zh_CN';
+        $res = \Yii::$app->get('trans')->translate($text, $target);
+        $ret = [
+            'source_lang' => \Yii::$app->get('trans')->lang($res['source']),
+            'source_text' => $res['input'],
+            'target_lang' => 'zh_CN',//\Yii::$app->get('trans')->lang($target),
+            'target_text' => $res['text'],
+        ];
+
+        return $this->returnSuccess($ret);
     }
 }

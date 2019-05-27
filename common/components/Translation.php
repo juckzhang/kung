@@ -8,12 +8,22 @@ class Translation extends Component
 {
     public $key;
     private $_client;
+    private $_lang = [
+        'en' => 'en_US',
+        'zh-CN' => 'zh_CN',
+    ];
 
     public function init()
     {
         if(!($this->_client instanceof TranslateClient)){
             $this->_client = new TranslateClient(['key' => $this->key]);
         }
+    }
+
+    public function lang($lang, $flip = false){
+        $_lang = $flip ? array_flip($this->_lang) : $this->_lang;
+
+        return isset($_lang[$lang]) ? $_lang[$lang] : $lang;
     }
 
     public function translate($text, $target)
