@@ -37,10 +37,10 @@ class SiteController extends BaseController
         $target  = 'zh_CN';
         $res = \Yii::$app->get('trans')->translate($text, $target);
         $ret = [
-            'source_lang' => \Yii::$app->get('trans')->lang($res['source']),
-            'source_text' => $res['input'],
-            'target_lang' => 'zh_CN',//\Yii::$app->get('trans')->lang($target),
-            'target_text' => $res['text'],
+            'from_lang' => \Yii::$app->get('trans')->lang($res['source']),
+            'from_text' => $res['input'],
+            'to_lang' => 'zh_CN',//\Yii::$app->get('trans')->lang($target),
+            'to_text' => $res['text'],
         ];
 
         return $this->returnSuccess($ret);
