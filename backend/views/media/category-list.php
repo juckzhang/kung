@@ -102,7 +102,7 @@ $search = ArrayHelper::getValue($params,'search');
             </select>
             <span>条，共<?=$dataCount?>条</span>
         </div>
-        <div class="pagination" rel='product-list' targetType="<?=$search?'dialog':'navTab'?>" totalCount="<?=$dataCount?>" numPerPage="<?=$prePage?>" pageNumShown="10" currentPage="<?=$page?>"></div>
+        <div class="pagination" rel='category-list' targetType="<?=$search?'dialog':'navTab'?>" totalCount="<?=$dataCount?>" numPerPage="<?=$prePage?>" pageNumShown="10" currentPage="<?=$page?>"></div>
     </div>
 </div>
 </div>
