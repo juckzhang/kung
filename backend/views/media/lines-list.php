@@ -21,8 +21,8 @@ $sourceId = ArrayHelper::getValue($params, 'source_id');
     <input type="hidden" name="orderField" value="<?=$orderFiled?>" />
     <input type="hidden" name="orderDirection" value="<?=$orderDirection?>" />
 </form>
-<!--<div class="pageHeader">-->
-<!--    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<=Url::to(['media/lines-list'])?>" method="post">-->
+<div class="pageHeader">
+    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<?=Url::to(['media/lines-list'])?>" method="post">
 <!--        <div class="searchBar">-->
 <!--            <table class="searchContent">-->
 <!--                <tbody>-->
@@ -37,8 +37,8 @@ $sourceId = ArrayHelper::getValue($params, 'source_id');
 <!--                </ul>-->
 <!--            </div>-->
 <!--        </div>-->
-<!--    </form>-->
-<!--</div>-->
+    </form>
+</div>
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
