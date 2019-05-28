@@ -57,9 +57,7 @@ $sourceId = ArrayHelper::getValue($params, 'source_id');
         <thead>
         <tr>
             <th width="22"><input type="checkbox" group="ids[]" class="checkboxCtrl"></th>
-            <th width="40">ID</th>
             <th width="40">序号</th>
-            <th width="80">媒体资源ID</th>
             <th width="80">语种</th>
             <th width="80">台词内容</th>
             <th width="80">开始时间</th>
@@ -72,9 +70,7 @@ $sourceId = ArrayHelper::getValue($params, 'source_id');
         <?php foreach($dataList as $key => $data):?>
             <tr target="card-id" rel="<?=$data->id?>">
                 <td><input name="ids[]" value="<?=$search? "{id:$data->id,content:'{$data->content}'}" : $data->id?>" type="checkbox"></td>
-                <td><?=$data->id?></td>
                 <td><?=$data->line_number?></td>
-                <td><?=$data->source_id?></td>
                 <td><?=$data->lang_type?></td>
                 <td><?=$data->content?></td>
                 <td><?=$data->start_time?></td>
