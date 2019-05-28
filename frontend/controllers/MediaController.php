@@ -85,6 +85,19 @@ class MediaController extends BaseController
         return $this->returnSuccess($ret);
     }
 
+    // 用户完成查看记录
+    public function actionCompleteView(){
+        $videoId = ArrayHelper::getValue($this->paramData,'source_id');
+        $userId = ArrayHelper::getValue($this->paramData,'user_id');
+        $ret = MediaService::getService()->completeView($videoId, $userId);
+
+        if(is_numeric($ret)){
+            return $this->returnError($ret);
+        }
+
+        return $this->returnSuccess();
+    }
+
     // 收藏与取消收藏
     public function actionCollectMedia()
     {

@@ -105,6 +105,7 @@ $categories = $mediaService->categories($sourceType);
                 <th width="80">海报图片</th>
                 <th width="60">播放数</th>
                 <th width="60">真实播放数</th>
+                <th width="60">完整播放数</th>
                 <th width="60">下载数</th>
                 <th width="60">真实下载数</th>
                 <th width="60">收藏数</th>
@@ -127,6 +128,7 @@ $categories = $mediaService->categories($sourceType);
                     <td><img width="50" height="50" src="<?= $data['poster_url']?>"/></td>
                     <td align="center"><?= $data['play_num']?></td>
                     <td align="center"><?= $data['real_play_num']?></td>
+                    <td align="center"><?= $data['complete_play_num']?></td>
                     <td align="center"><?= $data['download_num']?></td>
                     <td align="center"><?= $data['real_download_num']?></td>
                     <td align="center"><?= $data['collection_num']?></td>

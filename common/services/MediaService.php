@@ -57,6 +57,19 @@ class MediaService extends OperationService
         return $data;
     }
 
+    // 完整播放次数
+    public function completeView($videoId, $userId){
+        //检查资源是否存在
+        $check = $this->check($videoId, $userId);
+
+        if($check !== true){
+            return $check;
+        }
+
+        MediaModel::updateAllCounters(['complete_play_num' => 1], ['id' => $videoId]);
+        return true;
+    }
+
     //视频/音频列表
     public function mediaList($cateId,$lang,$page,$prePage,$sourceType = null, $order = 'create_time')
     {
