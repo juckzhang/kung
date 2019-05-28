@@ -21,28 +21,6 @@ $roles = SystemService::getService()->roleAll();
 </form>
 <div class="pageHeader">
     <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<?=Url::to(['system/user-list'])?>" method="post">
-        <div class="searchBar">
-            <table class="searchContent">
-                <tbody>
-                <tr>
-                    <td>文章标题：<input name="keyword" class="textInput" type="text" value="<?=ArrayHelper::getValue($params,'keyWord','')?>" alt="文章标题"></td>
-                    <td>
-                        <select class="combox" name="positionId">
-                            <?php foreach($roles as $role):?>
-                                <option value="<?=$role['id']?>" <?=$roleId == $role['id'] ? 'selected' :''?>><?=$role['name']?></option>
-                            <?php endforeach;?>
-                        </select>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="subBar">
-                <ul>
-                    <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
-<!--                    <li><a class="button" href="demo_page6.html" target="dialog" mask="true" title="查询框"><span>高级检索</span></a></li>-->
-                </ul>
-            </div>
-        </div>
     </form>
 </div>
 <div class="pageContent">
@@ -105,7 +83,7 @@ $roles = SystemService::getService()->roleAll();
             </select>
             <span>条，共<?=$dataCount?>条</span>
         </div>
-        <div class="pagination" rel='card-list' targetType="navTab" totalCount="<?=$dataCount?>" numPerPage="<?=$prePage?>" pageNumShown="10" currentPage="<?=$page?>"></div>
+        <div class="pagination" rel='user-list' targetType="navTab" totalCount="<?=$dataCount?>" numPerPage="<?=$prePage?>" pageNumShown="10" currentPage="<?=$page?>"></div>
     </div>
 </div>
 </div>

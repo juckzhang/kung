@@ -17,21 +17,6 @@ $prePage = ArrayHelper::getValue($params,'numPerPage','20');
 </form>
 <div class="pageHeader">
     <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<?=Url::to(['system/role-list'])?>" method="post">
-        <div class="searchBar">
-            <table class="searchContent">
-                <tbody>
-                <tr>
-                    <td>文章标题：<input name="keyword" class="textInput" type="text" value="<?=ArrayHelper::getValue($params,'keyWord','')?>" alt="文章标题"></td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="subBar">
-                <ul>
-                    <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
-<!--                    <li><a class="button" href="demo_page6.html" target="dialog" mask="true" title="查询框"><span>高级检索</span></a></li>-->
-                </ul>
-            </div>
-        </div>
     </form>
 </div>
 <div class="pageContent">
@@ -92,7 +77,7 @@ $prePage = ArrayHelper::getValue($params,'numPerPage','20');
             </select>
             <span>条，共<?=$dataCount?>条</span>
         </div>
-        <div class="pagination" rel='card-list' targetType="navTab" totalCount="<?=$dataCount?>" numPerPage="<?=$prePage?>" pageNumShown="10" currentPage="<?=$page?>"></div>
+        <div class="pagination" rel='role-list' targetType="navTab" totalCount="<?=$dataCount?>" numPerPage="<?=$prePage?>" pageNumShown="10" currentPage="<?=$page?>"></div>
     </div>
 </div>
 </div>

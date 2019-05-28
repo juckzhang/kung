@@ -18,25 +18,20 @@ $prePage = ArrayHelper::getValue($params,'numPerPage','20');
     </form>
     <div class="pageHeader">
         <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<?=Url::to(['member/member-list'])?>" method="post">
-            <div class="searchBar">
-                <ul class="searchContent">
-                    <li>
-                        <label>搜索关键词：</label>
-                        <input type="text" name="keyword" value="<?=ArrayHelper::getValue($params,'keyword','')?>" alt="关键词"/>
-                    </li>
-                </ul>
-            </div>
-            <div class="subBar">
-                <ul>
-                    <li>
-                        <div class="buttonActive">
-                            <div class="buttonContent">
-                                <button type="submit">检索</button>
-                            </div>
+                    <div class="searchBar">
+                        <table class="searchContent">
+                            <tbody>
+                            <tr>
+                                <td>关键词：<input name="keyword" class="textInput" type="text" alt="" value="<?=ArrayHelper::getValue($params,'keyword')?>"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="subBar">
+                            <ul>
+                                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+                            </ul>
                         </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
         </form>
     </div>
     <div class="pageContent">
@@ -92,7 +87,7 @@ $prePage = ArrayHelper::getValue($params,'numPerPage','20');
                 </select>
                 <span>条，共<?=$dataCount?>条</span>
             </div>
-            <div class="pagination" rel='card-list' targetType="navTab" totalCount="<?=$dataCount?>" numPerPage="<?=$prePage?>" pageNumShown="10" currentPage="<?=$page?>"></div>
+            <div class="pagination" rel='member-list' targetType="navTab" totalCount="<?=$dataCount?>" numPerPage="<?=$prePage?>" pageNumShown="10" currentPage="<?=$page?>"></div>
         </div>
     </div>
 </div>
