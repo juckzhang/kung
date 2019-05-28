@@ -21,24 +21,24 @@ $sourceId = ArrayHelper::getValue($params, 'source_id');
     <input type="hidden" name="orderField" value="<?=$orderFiled?>" />
     <input type="hidden" name="orderDirection" value="<?=$orderDirection?>" />
 </form>
-<div class="pageHeader">
-    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<?=Url::to(['media/lines-list'])?>" method="post">
-        <div class="searchBar">
-            <table class="searchContent">
-                <tbody>
-                <tr>
-                    <td>关键词：<input name="keyword" class="textInput" type="text" alt="" value="<?=ArrayHelper::getValue($params,'keyword')?>"></td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="subBar">
-                <ul>
-                    <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
-                </ul>
-            </div>
-        </div>
-    </form>
-</div>
+<!--<div class="pageHeader">-->
+<!--    <form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<=Url::to(['media/lines-list'])?>" method="post">-->
+<!--        <div class="searchBar">-->
+<!--            <table class="searchContent">-->
+<!--                <tbody>-->
+<!--                <tr>-->
+<!--                    <td>关键词：<input name="keyword" class="textInput" type="text" alt="" value="<=ArrayHelper::getValue($params,'keyword')?>"></td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--            <div class="subBar">-->
+<!--                <ul>-->
+<!--                    <li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
