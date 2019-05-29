@@ -25,6 +25,10 @@ return [
             'class' => 'common\components\Lang',
         ],
 
+        'pinyin' => [
+            'class' => 'common\components\Pin',
+        ],
+
         'uploadTool' => [
             'class' => 'common\components\uploadRemote\UploadTool',
         ],
