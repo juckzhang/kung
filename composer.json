@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "*",
         "PHPOffice/PHPExcel": "^1.8",
         "crazydb/yii2-ueditor": "*",
-        "google/cloud-translate": "^1.2"
+        "google/cloud-translate": "^1.2",
+        "overtrue/pinyin": "~4.0"
     },
     "require-dev": {
     },

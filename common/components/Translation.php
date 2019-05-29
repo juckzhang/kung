@@ -32,4 +32,9 @@ class Translation extends Component
             'target' => $target
         ]);
     }
+
+    public function __call($name, $params)
+    {
+        return call_user_func_array([$this->_client, $name], $params);
+    }
 }

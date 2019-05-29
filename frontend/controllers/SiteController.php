@@ -36,11 +36,16 @@ class SiteController extends BaseController
         $text = ArrayHelper::getValue($this->paramData,'text');
         $target  = 'zh_CN';
         $res = \Yii::$app->get('trans')->translate($text, $target);
+        $toText = $res['text'];
+        if($target == 'zh_CN'){
+            $pinyin = \Yii::$app->get('pinyin')->sentence($toText, PINYIN_TONE);
+            $toText .= ' [' . $pinyin . ']';
+        }
         $ret = [
             'from_lang' => \Yii::$app->get('trans')->lang($res['source']),
             'from_text' => $res['input'],
             'to_lang' => 'zh_CN',//\Yii::$app->get('trans')->lang($target),
-            'to_text' => $res['text'],
+            'to_text' => $toText,
         ];
 
         return $this->returnSuccess($ret);

@@ -51,6 +51,7 @@ class MediaService extends OperationService
         {
             $models = $models->orderBy(['sort_order' => SORT_DESC,'create_time' => SORT_ASC])
                 ->asArray()->all();
+            array_unshift($models, ['id' => '', 'source_type' => $sourceType, 'name' => CommonHelper::t('app', 'all')]);
             $data['dataList'] = $models;
         }
 

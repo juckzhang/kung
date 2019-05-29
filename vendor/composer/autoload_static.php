@@ -17,6 +17,7 @@ class ComposerStaticInit4962ae51e50881a944bba6815b9a50c3
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
+        'dc1275c308c5b416beb314b6317daca2' => __DIR__ . '/..' . '/overtrue/pinyin/src/const.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -45,6 +46,10 @@ class ComposerStaticInit4962ae51e50881a944bba6815b9a50c3
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Cache\\' => 10,
+        ),
+        'O' => 
+        array (
+            'Overtrue\\Pinyin\\' => 16,
         ),
         'M' => 
         array (
@@ -125,6 +130,10 @@ class ComposerStaticInit4962ae51e50881a944bba6815b9a50c3
         'Psr\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
+        'Overtrue\\Pinyin\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/overtrue/pinyin/src',
         ),
         'Monolog\\' => 
         array (
