@@ -74,7 +74,7 @@ class MediaService extends OperationService
     //视频/音频列表
     public function mediaList($cateId,$lang,$page,$prePage,$sourceType = null, $order = 'create_time')
     {
-        !empty($sourceType) && $sourceType = null;
+        !$sourceType && $sourceType = null;
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num'];
