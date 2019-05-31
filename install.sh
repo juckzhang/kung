@@ -43,6 +43,7 @@ cp -f kung/conf/php-fpm.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf
 
 # 修改目录所属人
 chown -R nobody.nobody kung
+
 # 启动服务
 `which php-fpm7.0`
 /data1/openresty/nginx/sbin/nginx

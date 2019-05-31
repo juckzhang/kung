@@ -5,7 +5,7 @@ return [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=127.0.0.1;dbname=kung', // MySQL, MariaDB
             'username' => 'root',
-            'password' => 'root',
+            'password' => 'admin123',
             'charset' => 'utf8',
             'tablePrefix' => 'kung_',
         ],

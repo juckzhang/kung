@@ -10,7 +10,7 @@ use common\constants\CodeConstant;
 class UserService extends FrontendService{
 
     public function login(array $params){
-        if(empty($params['third_account']) or empty($params['account_type'])){
+        if(empty($params['third_account']) or ! in_array($params['account_type'], ['1', '2'])){
             return CodeConstant::PARAM_ERROR;
         }
         //判断账号是否存在

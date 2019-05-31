@@ -10,9 +10,11 @@ return [
                 ],
             ],
         ],
+
         'request' => [
             'class' => 'common\components\Request',
         ],
+
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

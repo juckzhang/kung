@@ -6,13 +6,15 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error'],
                 ],
             ],
         ],
+
         'request' => [
             'class' => 'common\components\Request',
         ],
+
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
