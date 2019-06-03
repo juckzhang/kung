@@ -13,6 +13,9 @@ return [
 
         'request' => [
             'class' => 'common\components\Request',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
         ],
 
         'errorHandler' => [
