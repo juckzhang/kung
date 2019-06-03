@@ -6,7 +6,7 @@ create table if NOT EXISTS kung_user(
   id int unsigned NOT null primary key auto_increment comment'用户id',
   account_type tinyint unsigned NOT NULL DEFAULT 1 comment'用户类型 1：facebook 2：google',
   nick_name char(15) NOT null default '' comment'用户昵称',
-  third_account char(15) NOT NULL default '' comment'第三方appid',
+  third_account varchar(255) NOT NULL default '' comment'第三方appid',
   icon_url varchar(255) NOT NULL DEFAULT '' comment'用户头像',
   password char(125) NOT null default'' comment'用户密码',
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
