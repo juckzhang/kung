@@ -20,10 +20,7 @@ class SiteController extends BaseController
     // 登陆
     public function actionLogin()
     {
-        $userService = UserService::getService();
-        $params = $this->parseParam();
-
-        $ret = $userService->login($params);
+        $ret = UserService::getService()->login($this->paramData);
         if(is_numeric($ret)){
             return $this->returnError($ret);
         }
@@ -39,13 +36,13 @@ class SiteController extends BaseController
         $toText = $res['text'];
         if($target == 'zh_CN'){
             $pinyin = \Yii::$app->get('pinyin')->sentence($toText, PINYIN_TONE);
-            $toText .= ' [' . $pinyin . ']';
         }
         $ret = [
             'from_lang' => \Yii::$app->get('trans')->lang($res['source']),
             'from_text' => $res['input'],
             'to_lang' => 'zh_CN',//\Yii::$app->get('trans')->lang($target),
             'to_text' => $toText,
+            'to_text_pinyin' => $pinyin,
         ];
 
         return $this->returnSuccess($ret);
