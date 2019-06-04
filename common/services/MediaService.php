@@ -147,7 +147,7 @@ class MediaService extends OperationService
 
     // 台词列表
     public function mediaLines($id, $lang, $page, $count){
-        $count *= 2;
+        $count = $count ? $count * 2 : static::DEFAULT_PRE_PAGE * 2;
         list($offset,$limit) = $this->parsePageParam($page, $count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $models = MediaLinesModel::find()
