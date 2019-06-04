@@ -38,9 +38,10 @@ class MediaController extends BaseController
     public function actionMediaDetails()
     {
         $videoId = ArrayHelper::getValue($this->paramData,'source_id');
+        $lang = ArrayHelper::getValue($this->paramData,'lang');
         $userId  = ArrayHelper::getValue($this->paramData,'user_id');
 
-        $ret = MediaService::getService()->mediaDetails($videoId, $userId);
+        $ret = MediaService::getService()->mediaDetails($videoId, $lang, $userId);
 
         return $this->returnSuccess($ret);
     }

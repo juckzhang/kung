@@ -37,8 +37,11 @@ class MediaService extends OperationService
     {
         list($offset,$limit) = $this->parsePageParam($page,$count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
-        $column = ['id','source_type','name'];
-        if($lang == 'en_US')$column['name'] = 'name_en';
+        $lang = $this->changeLang($lang);
+        $column = ['id','source_type','name' => 'name'];
+        if($lang){
+            $column['name'] = 'name_'.$lang;
+        }
         else $column[] = 'name';
         $models = MediaCategoryModel::find()
             ->select($column)
@@ -77,9 +80,9 @@ class MediaService extends OperationService
         $order != 'play_num' && $order = 'create_time';
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
-        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num'];
-        if($lang == 'en_US') $column['title']  = 'title_en';
-        else $column[] = 'title';
+        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num','title' => 'title'];
+        $formatLang = $this->changeLang($lang);
+        if($formatLang) $column['title']  = 'title_'.$formatLang;
         $models = MediaModel::find()
             ->select($column)
             ->where(['and',
@@ -115,9 +118,9 @@ class MediaService extends OperationService
     public function recommendList($lang)
     {
         $data = [];
-        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num'];
-        if($lang == 'en_US') $column['title']  = 'title_en';
-        else $column[] = 'title';
+        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num','title' => 'title'];
+        $formatLang = $this->changeLang($lang);
+        if($formatLang) $column['title']  = 'title_'.$formatLang;
         foreach (['videoList', 'autoList','pdfList'] as $key => $item){
             $models = MediaModel::find()
                 ->select($column)
@@ -133,10 +136,9 @@ class MediaService extends OperationService
                 ->all();
             foreach ($models as $key => $model){
                 $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
-                if($lang == 'en_US'){
-                    $model['category']['name'] = $model['category']['name_en'];
+                if($formatLang){
+                    $model['category']['name'] = $model['category']['name_'.$formatLang];
                 }
-                unset($model['category']['name_en']);
                 $models[$key] = $model;
             }
             $data[$item] = $models;
@@ -187,14 +189,19 @@ class MediaService extends OperationService
     }
 
     //视频音频资源详情
-    public function mediaDetails($id, $uid){
+    public function mediaDetails($id, $lang, $uid){
+        $column = [
+            'id','cate_id','source_type','title' => 'title',
+            'total_time','level','poster_url',
+            'play_link','download_link','play_num','collection_num',
+            'download_num','create_time'
+        ];
+        $lang = $this->changeLang($lang);
+        if($lang){
+            $column['title'] = 'title_'.$lang;
+        }
         $data = MediaModel::find()
-            ->select([
-                'id','cate_id','source_type','title',
-                'total_time','level','poster_url',
-                'play_link','download_link','play_num','collection_num',
-                'download_num','create_time'
-            ])
+            ->select($column)
             ->where(['id' => $id])
             ->andWhere(['status'=>MediaModel::STATUS_ACTIVE])
             ->asArray()

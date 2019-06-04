@@ -152,15 +152,15 @@ class OperationService extends Service
                 ->with('media')
                 ->offset($offset)->limit($limit)->all();
             //$data['dataList'] = $models;
+            $lang = $this->changeLang($lang);
             foreach ($models as $model){
                 if($model['media']){
                     $model = $model['media'];
                     $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
-                    if($lang == 'en_US'){
-                        $model['title'] = $model['title_en'];
-                        $model['category']['name'] = $model['category']['name_en'];
+                    if($lang){
+                        $model['title'] = $model['title_'.$lang];
+                        $model['category']['name'] = $model['category']['name_'.$lang];
                     }
-                    unset($model['title_en'],$model['category']['name_en']);
                     $data['dataList'][] = $model;
                 }
             }

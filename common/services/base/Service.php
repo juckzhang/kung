@@ -7,6 +7,10 @@ class Service extends Model
     const DEFAULT_PAGE = 0;  //默认显示页
     const DEFAULT_PRE_PAGE = 20; //默认每页显示数量
 
+    protected $lang = [
+        'en_US' => 'en',
+    ];
+
     public $redis = null;
     public $cache = NULL;
 
@@ -89,5 +93,9 @@ class Service extends Model
         }
 
         return $data;
+    }
+
+    protected function changeLang($lang){
+        return isset($this->lang[$lang]) ? $this->lang[$lang] : null;
     }
 }
