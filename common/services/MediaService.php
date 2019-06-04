@@ -74,6 +74,7 @@ class MediaService extends OperationService
     //视频/音频列表
     public function mediaList($cateId,$lang,$page,$prePage,$sourceType = null, $order = 'create_time')
     {
+        $order != 'play_num' && $order = 'create_time';
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num'];
@@ -181,7 +182,7 @@ class MediaService extends OperationService
                 ];
             }
         }
-        $data['dataList'] = $lines;
+        $data['dataList'] = array_values($lines);
         return $data;
     }
 
