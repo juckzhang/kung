@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\constants\CodeConstant;
 use common\services\MediaService;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -53,7 +54,10 @@ class MediaController extends BaseController
         $lang  = ArrayHelper::getValue($this->paramData,'lang');
         $page = ArrayHelper::getValue($this->paramData,'page');
         $count = ArrayHelper::getValue($this->paramData,'count');
-
+        $userId = ArrayHelper::getValue($this->paramData, 'user_id');
+        if(empty($userId)){
+            return $this->returnError(CodeConstant::USER_TOKEN_NOT_EXISTS);
+        }
         $ret = MediaService::getService()->mediaLines($mediaId, $lang, $page, $count);
 
         return $this->returnSuccess($ret);

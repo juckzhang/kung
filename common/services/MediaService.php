@@ -174,13 +174,13 @@ class MediaService extends OperationService
         foreach($models as $line){
             $lineNumber = $line['line_number'];
             if(! empty($lines[$lineNumber])){
-                $lines[$lineNumber]['content'][$line['lang_type']] = $line['content'];
+                $lines[$lineNumber]['content_'.$line['lang_type']] = $line['content'];
             }else{
                 $lines[$lineNumber] = [
                     'start_time' => $line['start_time'],
                     'end_time' => $line['end_time'],
                     'line' => $line['line_number'],
-                    'content' => [$line['lang_type'] => $line['content']]
+                    'content_'.$line['lang_type'] => $line['content']
                 ];
             }
         }

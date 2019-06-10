@@ -34,6 +34,9 @@ class UserService extends FrontendService{
     // 用户反馈
     public function feedback($params)
     {
+        if(empty($params['user_id'])){
+            return CodeConstant::USER_TOKEN_NOT_EXISTS;
+        }
         $model = new FeedbackModel();
         if($model->load($params,'') and $model->save()){
             $model->id = (string)$model->id;
@@ -46,6 +49,9 @@ class UserService extends FrontendService{
     // 我的反馈列表
     public function feedbackList($userId, $page, $count)
     {
+        if(empty($userId)){
+            return CodeConstant::USER_TOKEN_NOT_EXISTS;
+        }
         list($offset,$limit) = $this->parsePageParam($page, $count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $models = FeedbackModel::find()

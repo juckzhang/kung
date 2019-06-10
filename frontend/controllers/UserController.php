@@ -64,6 +64,9 @@ class UserController extends BaseController{
         $count = ArrayHelper::getValue($this->paramData,'count');
 
         $ret = UserService::getService()->feedbackList($userId, $page, $count);
+        if(is_numeric($ret)){
+            return $this->returnError($ret);
+        }
         return $this->returnSuccess($ret);
     }
 }
