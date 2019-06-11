@@ -210,8 +210,8 @@ class MediaService extends OperationService
         $data['has_collected'] = false;
         $data['has_download'] = false;
         if($uid){
-            $data['has_collected'] = $this->isCollected($data['id'], $uid);
-            $data['has_download'] = $this->isDownload($data['id'], $uid);
+            $data['has_collected'] = (bool)$this->isCollected($data['id'], $uid);
+            $data['has_download'] = (bool)$this->isDownload($data['id'], $uid);
             $this->onAfterScannedMedia($id, $uid);
         }
         return $data;
