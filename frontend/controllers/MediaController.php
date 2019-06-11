@@ -1,9 +1,7 @@
 <?php
 namespace frontend\controllers;
 
-use common\constants\CodeConstant;
 use common\services\MediaService;
-use Yii;
 use yii\helpers\ArrayHelper;
 
 class MediaController extends BaseController
