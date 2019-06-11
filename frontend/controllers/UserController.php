@@ -27,7 +27,7 @@ class UserController extends BaseController{
         $lang = ArrayHelper::getValue($this->paramData,'lang');
         $count = ArrayHelper::getValue($this->paramData,'count');
 
-        $ret = MediaService::getService()->collectionList($userId, $lang,$page, $count);
+        $ret = MediaService::getService()->lookList($userId, $lang,$page, $count);
         return $this->returnSuccess($ret);
     }
 
