@@ -12,13 +12,13 @@ class UserService extends FrontendService{
 
     public function login(array $params){
         $data = [
-            'third_account' => ArrayHelper::getValue($this->paramData, 'third_account'),
-            'account_type' => ArrayHelper::getValue($this-$this->paramData, 'account_type'),
-            'nick_name' => ArrayHelper::getValue($this->paramData, 'nick_name'),
-            'icon_url' => ArrayHelper::getValue($this->paramData,'icon_url', \Yii::$app->params['domain'].'upload/default_icon_url.jpg'),
+            'third_account' => ArrayHelper::getValue($params, 'third_account'),
+            'account_type' => ArrayHelper::getValue($params, 'account_type'),
+            'nick_name' => ArrayHelper::getValue($params, 'nick_name'),
+            'icon_url' => ArrayHelper::getValue($params,'icon_url', \Yii::$app->params['domain'].'upload/default_icon_url.jpg'),
 
         ];
-        $userId      = ArrayHelper::getValue($this->paramData, 'user_id');
+        $userId      = ArrayHelper::getValue($params, 'user_id');
         if(!$data['third_account'] or ! in_array($data['account_type'], ['1', '2', '3'])){
             return CodeConstant::PARAM_ERROR;
         }
