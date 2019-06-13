@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\constants\CodeConstant;
 use common\models\mysql\UserModel;
 use Yii;
 use common\controllers\CommonController;
@@ -19,6 +20,7 @@ class BaseController extends CommonController
     {
         if(YII_ENV == 'product'){
             $_GET['user_id'] = $_POST['user_id'] = null;
+            $_GET['user_info'] = $_POST['user_info'] = null;
         }
 
         $accessToken = \Yii::$app->request->headers->get('Access-Token');
@@ -29,10 +31,15 @@ class BaseController extends CommonController
             $model = UserModel::findOne(['access_token' => $accessToken]);
             if($model instanceof UserModel){
                 $_GET['user_id'] = $_POST['user_id'] = $model->id;
+                $_GET['user_info'] = $model->toArray();
             }
         }
-        $this->paramData = $this->parseParam();
 
+        $this->paramData = $this->parseParam();
+        $checkAuth = $this->auth($action);
+        if($checkAuth !== true){
+            return false;
+        }
         return parent::beforeAction($action);
     }
 
@@ -68,5 +75,26 @@ class BaseController extends CommonController
         $desc = SORT_DESC;
         if($orderDesc == 'asc')  $desc = SORT_ASC;
         return [$orderFiled => $desc];
+    }
+
+    protected function auth($action){
+        if(! in_array($action, $this->actionFilter())){
+            return true;
+        }
+
+        //用户未登陆
+        $userId = ArrayHelper::getValue($this->paramData, 'user_id');
+        $accountType = ArrayHelper::getValue($this->paramData, 'user_info.account_type');
+        if(!$userId or ! in_array($accountType, ['1', '2'])){
+            $ret = $this->returnError(CodeConstant::USER_TOKEN_NOT_EXISTS);
+            Yii::$app->getResponse()->data = $ret;
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function actionFilter(){
+        return [];
     }
 }

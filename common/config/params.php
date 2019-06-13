@@ -10,4 +10,5 @@ return [
     'returnCode'   => 'code',
     'returnDesc'   => 'resultDesc',
     'returnData'   => 'data',
+    'domain'       => 'http://localhost/',
 ];
