@@ -36,7 +36,7 @@ class BaseController extends CommonController
         }
 
         $this->paramData = $this->parseParam();
-        $checkAuth = $this->auth($action);
+        $checkAuth = $this->auth();
         if($checkAuth !== true){
             return false;
         }
@@ -77,8 +77,8 @@ class BaseController extends CommonController
         return [$orderFiled => $desc];
     }
 
-    protected function auth($action){
-        if(! in_array($action, $this->actionFilter())){
+    protected function auth(){
+        if(! in_array(Yii::$app->controller->action->id, $this->actionFilter())){
             return true;
         }
 

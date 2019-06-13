@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 class MediaController extends BaseController
 {
     protected function actionFilter(){
-        return ['commentMedia','downloadMedia','CollectMedia'];
+        return ['comment-media','download-media','collect-media'];
     }
     //分类接口
     public function actionCategoryList()
