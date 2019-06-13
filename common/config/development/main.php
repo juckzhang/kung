@@ -6,7 +6,7 @@ return [
              'dsn' => 'mysql:host=127.0.0.1;dbname=kung', // MySQL, MariaDB
              'username' => 'root',
              'password' => 'admin123',
-            'charset' => 'utf8',
+            'charset' => 'utf8mb4',
             'tablePrefix' => 'kung_',
         ],
 
