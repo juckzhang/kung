@@ -101,7 +101,9 @@ $categories = $mediaService->categories($sourceType);
                 <th width="80">语言</th>
                 <th width="80">中文标题</th>
                 <th width="80">英文标题</th>
-                <th width="80">资源连接</th>
+                <th width="80">播放连接</th>
+                <th width="80">下载连接</th>
+                <th width="80">其它资源连接</th>
                 <th width="80">海报图片</th>
                 <th width="60">播放数</th>
                 <th width="60">真实播放数</th>
@@ -125,6 +127,8 @@ $categories = $mediaService->categories($sourceType);
                     <td><?= $data['title']?></td>
                     <td><?= $data['title_en']?></td>
                     <td><?= $data['play_link']?></td>
+                    <td><?= $data['download_link']?></td>
+                    <td><?= $data['other_link']?></td>
                     <td><img width="50" height="50" src="<?= $data['poster_url']?>"/></td>
                     <td align="center"><?= $data['play_num']?></td>
                     <td align="center"><?= $data['real_play_num']?></td>

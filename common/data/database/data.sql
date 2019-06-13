@@ -46,6 +46,7 @@ CREATE TABLE if NOT EXISTS kung_media(
   poster_url varchar(255) NOT NULL DEFAULT '' comment'海报图标',
   play_link VARCHAR(255) NOT NULL DEFAULT '' comment'播放地址',
   download_link VARCHAR(255) NOT NULL DEFAULT '' comment'下载地址',
+  other_link VARCHAR(255) NOT NULL DEFAULT '' comment'其它资源地址',
   play_num int unsigned NOT NULL DEFAULT 0 comment'播放次数',
   complete_play_num int unsigned NOT NULL DEFAULT 0 comment'完整播放次数',
   real_play_num int unsigned NOT NULL DEFAULT 0 comment'真实播放次数',
