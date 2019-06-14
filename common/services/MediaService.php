@@ -193,7 +193,7 @@ class MediaService extends OperationService
         $column = [
             'id','cate_id','source_type','title' => 'title',
             'total_time','level','poster_url',
-            'play_link','download_link','other_link','play_num','collection_num',
+            'play_link','download_link','play_num','collection_num',
             'download_num','create_time'
         ];
         $lang = $this->changeLang($lang);

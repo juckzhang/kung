@@ -14,7 +14,7 @@ class UserService extends FrontendService{
         $data = [
             'third_account' => ArrayHelper::getValue($params, 'third_account'),
             'account_type' => ArrayHelper::getValue($params, 'account_type'),
-            'nick_name' => ArrayHelper::getValue($params, 'nick_name'),
+            'nick_name' => ArrayHelper::getValue($params, 'nick_name', 'guest'),
             'icon_url' => ArrayHelper::getValue($params,'icon_url', \Yii::$app->params['domain'].'upload/default_icon_url.jpg'),
 
         ];
