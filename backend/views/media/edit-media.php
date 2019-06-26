@@ -29,7 +29,7 @@ $categories   = $mediaService->categories($sourceType);
             </p>
             <p>
                 <label>下载链接：</label>
-                <input type="text" class="link" name="MediaModel[download_link]" value="<?=ArrayHelper::getValue($model,'download_link')?>">
+                <input type="text" class="link" size="60" name="MediaModel[download_link]" value="<?=ArrayHelper::getValue($model,'download_link')?>">
             </p>
             <p>
                 <label>播放量：</label>
