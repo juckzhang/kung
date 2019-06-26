@@ -246,7 +246,7 @@ class MediaService extends BackendService
         $data['pageCount'] = $this->reckonPageCount($data['dataCount'],$limit);
 
         if($data['pageCount'] > 0 AND $_page <= $data['pageCount'])
-            $data['dataList'] = $models->orderBy($_order)->limit($limit)->offset($offset)->all();
+            $data['dataList'] = $models->with('media')->orderBy($_order)->limit($limit)->offset($offset)->all();
 
         return $data;
     }

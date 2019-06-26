@@ -10,22 +10,22 @@ $defaultSourceType = ArrayHelper::getValue($param,'source_type', 1);
 $sourceType = ArrayHelper::getValue($model, 'source_type', $defaultSourceType);
 $categories   = $mediaService->categories($sourceType);
 ?>
-<h2 class="contentTitle">媒体编辑</h2>
+<h2 class="contentTitle">资源编辑</h2>
 <div class="pageContent">
     <form method="post" action="<?=Url::to(['media/edit-media','id' => ArrayHelper::getValue($model,'id','')])?>" class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)">
         <div class="pageFormContent nowrap" layoutH="97">
             <input type="hidden" name="MediaModel[source_type]" value="<?=$sourceType?>">
             <p>
                 <label>中文标题：</label>
-                <input type="text" name="MediaModel[title]" value="<?=ArrayHelper::getValue($model,'title')?>">
+                <input type="text" size="60" name="MediaModel[title]" value="<?=ArrayHelper::getValue($model,'title')?>">
             </p>
             <p>
                 <label>英文标题：</label>
-                <input type="text" name="MediaModel[title_en]" value="<?=ArrayHelper::getValue($model,'title_en')?>">
+                <input type="text" size="60" name="MediaModel[title_en]" value="<?=ArrayHelper::getValue($model,'title_en')?>">
             </p>
             <p>
-                <label>播放连接：</label>
-                <input class="link" type="text" name="MediaModel[play_link]" value="<?=ArrayHelper::getValue($model,'play_link')?>">
+                <label>播放链接：</label>
+                <input class="link" type="text"  size="60" name="MediaModel[play_link]" value="<?=ArrayHelper::getValue($model,'play_link')?>">
             </p>
             <p>
                 <label>下载链接：</label>
@@ -33,22 +33,22 @@ $categories   = $mediaService->categories($sourceType);
             </p>
             <p>
                 <label>播放量：</label>
-                <input type="text" name="MediaModel[play_num]" value="<?=ArrayHelper::getValue($model,'play_num',0)?>">
+                <input type="text" name="MediaModel[play_num]" value="<?=ArrayHelper::getValue($model,'play_num',100)?>">
             </p>
             <p>
                 <label>下载量：</label>
-                <input type="text" name="MediaModel[download_num]" value="<?=ArrayHelper::getValue($model,'download_num',0)?>">
+                <input type="text" name="MediaModel[download_num]" value="<?=ArrayHelper::getValue($model,'download_num',20)?>">
             </p>
             <p>
                 <label>收藏量：</label>
-                <input type="text" name="MediaModel[collection_num]" value="<?=ArrayHelper::getValue($model,'collection_num',0)?>">
+                <input type="text" name="MediaModel[collection_num]" value="<?=ArrayHelper::getValue($model,'collection_num',20)?>">
             </p>
             <p>
-                <label>播放时长：</label>
+                <label>播放总时长：</label>
                 <input type="text" placeholder="格式: 00:00:00" name="MediaModel[total_time]" value="<?=ArrayHelper::getValue($model,'total_time')?>">
             </p>
             <p>
-                <label>媒体分类：</label>
+                <label>资源分类：</label>
                 <select name="MediaModel[cate_id]" value="<?=ArrayHelper::getValue($model, 'cate_id')?>">
                     <?php foreach($categories as $category):?>
                         <option value="<?=$category['id']?>" <?=ArrayHelper::getValue($model, 'cate_id') == $category['id'] ? 'selected' : ''?>><?=$category['name']?></option>
@@ -87,7 +87,7 @@ $categories   = $mediaService->categories($sourceType);
             </p>
             <p>
                 <?php if($sourceType != 3):?>
-                    <label>台词：</label>
+                    <label>字幕：</label>
                     <input type="text" name="lines" class='lines' value=""/>
                 <?php endif;?>
             </p>

@@ -101,8 +101,8 @@ $categories = $mediaService->categories($sourceType);
                 <th width="80">语言</th>
                 <th width="80">中文标题</th>
                 <th width="80">英文标题</th>
-                <th width="80">播放连接</th>
-                <th width="80">下载连接</th>
+                <th width="80">播放链接</th>
+                <th width="80">下载链接</th>
                 <th width="80">海报图片</th>
                 <th width="60">播放数</th>
                 <th width="60">真实播放数</th>
@@ -152,7 +152,7 @@ $categories = $mediaService->categories($sourceType);
                                class="btnView">查看评论</a>
                         <?php endif; ?>
                         <?php if (\Yii::$app->user->can('media/lines-list') and $sourceType != 3): ?>
-                            <a title="查看台词" target="navTab" href="<?= Url::to(['media/lines-list','source_id' => $data['id']]) ?>"
+                            <a title="查看字幕" target="navTab" href="<?= Url::to(['media/lines-list','source_id' => $data['id']]) ?>"
                                class="btnView">查看评论</a>
                         <?php endif; ?>
                     </td>

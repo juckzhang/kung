@@ -44,6 +44,7 @@ $search = ArrayHelper::getValue($params,'search');
             <th width="22"><input type="checkbox" group="ids[]" class="checkboxCtrl"></th>
             <th width="40">评论ID</th>
             <th width="80">资源ID</th>
+            <th width="80">资源名称</th>
             <th width="80">用户ID</th>
             <th width="80">评论内容</th>
             <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="80">建档日期</th>
@@ -56,6 +57,7 @@ $search = ArrayHelper::getValue($params,'search');
                 <td><input name="ids[]" value="<?=$search? "{id:$data->id,name:'{$data->name}'}" : $data->id?>" type="checkbox"></td>
                 <td><?=$data->id?></td>
                 <td><?=$data->source_id?></td>
+                <td><?=$data->media->title?></td>
                 <td><?=$data->user_id?></td>
                 <td><?=$data->content?></td>
                 <td><?=date('Y-m-d H:i:s',$data->create_time)?></td>
