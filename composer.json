@@ -21,7 +21,8 @@
         "PHPOffice/PHPExcel": "^1.8",
         "crazydb/yii2-ueditor": "*",
         "google/cloud-translate": "^1.2",
-        "overtrue/pinyin": "~4.0"
+        "overtrue/pinyin": "~4.0",
+        "aliyuncs/oss-sdk-php": "~2.0"
     },
     "require-dev": {
     },

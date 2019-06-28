@@ -50,6 +50,7 @@ class ComposerStaticInit4962ae51e50881a944bba6815b9a50c3
         'O' => 
         array (
             'Overtrue\\Pinyin\\' => 16,
+            'OSS\\' => 4,
         ),
         'M' => 
         array (
@@ -71,6 +72,10 @@ class ComposerStaticInit4962ae51e50881a944bba6815b9a50c3
         'E' => 
         array (
             'Egulias\\EmailValidator\\' => 23,
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Lexer\\' => 22,
         ),
     );
 
@@ -135,6 +140,10 @@ class ComposerStaticInit4962ae51e50881a944bba6815b9a50c3
         array (
             0 => __DIR__ . '/..' . '/overtrue/pinyin/src',
         ),
+        'OSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -171,6 +180,10 @@ class ComposerStaticInit4962ae51e50881a944bba6815b9a50c3
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator',
         ),
+        'Doctrine\\Common\\Lexer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/lexer/lib/Doctrine/Common/Lexer',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -200,13 +213,6 @@ class ComposerStaticInit4962ae51e50881a944bba6815b9a50c3
             'HTMLPurifier' => 
             array (
                 0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
-            ),
-        ),
-        'D' => 
-        array (
-            'Doctrine\\Common\\Lexer\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
             ),
         ),
     );
