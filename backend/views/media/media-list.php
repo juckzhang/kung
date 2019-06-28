@@ -127,7 +127,7 @@ $categories = $mediaService->categories($sourceType);
                     <td><?= $data['title_en']?></td>
                     <td><?= $data['play_link']?></td>
                     <td><?= $data['download_link']?></td>
-                    <td><img width="50" height="50" src="<?= $data['poster_url']?>"/></td>
+                    <td><img width="50" height="50" src="<?= \Yii::$app->params['imageUrlPrefix'].$data['poster_url']?>"/></td>
                     <td align="center"><?= $data['play_num']?></td>
                     <td align="center"><?= $data['real_play_num']?></td>
                     <td align="center"><?= $data['complete_play_num']?></td>

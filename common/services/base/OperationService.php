@@ -161,11 +161,20 @@ class OperationService extends Service
                         $model['title'] = $model['title_'.$lang];
                         $model['category']['name'] = $model['category']['name_'.$lang];
                     }
+                    $model['poster_url'] = $this->formatLink($model['poster_url']);
+                    if($model['source_type'] != 1){
+                        $model['play_link'] = $this->formatLink($model['play_link']);
+                        $model['download_link'] = $this->formatLink($model['download_link']);
+                    }
                     $data['dataList'][] = $model;
                 }
             }
         }
 
         return $data;
+    }
+
+    protected function formatLink($link){
+        return \Yii::$app->params['imageUrlPrefix'].$link;
     }
 }

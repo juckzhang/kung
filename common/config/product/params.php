@@ -1,5 +1,5 @@
 <?php
 return [
-    'imageUrlPrefix' => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
+    'imageUrlPrefix' => 'http://kongchinese1.oss-cn-hongkong.aliyuncs.com/',
     'domain'       => 'http://localhost/'
 ];

@@ -106,6 +106,11 @@ class MediaService extends OperationService
                     $model['category']['name'] = $model['category']['name_en'];
                 }
                 unset($model['category']['name_en']);
+                $model['poster_url'] = $this->formatLink($model['poster_url']);
+                if($model['source_type'] != 1){
+                    $model['play_link'] = $this->formatLink($model['play_link']);
+                    $model['download_link'] = $this->formatLink($model['download_link']);
+                }
                 $models[$key] = $model;
             }
             $data['dataList'] = $models;
@@ -138,6 +143,11 @@ class MediaService extends OperationService
                 $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
                 if($formatLang){
                     $model['category']['name'] = $model['category']['name_'.$formatLang];
+                }
+                $model['poster_url'] = $this->formatLink($model['poster_url']);
+                if($model['source_type'] != 1){
+                    $model['play_link'] = $this->formatLink($model['play_link']);
+                    $model['download_link'] = $this->formatLink($model['download_link']);
                 }
                 $models[$key] = $model;
             }
@@ -213,6 +223,11 @@ class MediaService extends OperationService
             $data['has_collected'] = (bool)$this->isCollected($data['id'], $uid);
             $data['has_download'] = (bool)$this->isDownload($data['id'], $uid);
             $this->onAfterScannedMedia($id, $uid);
+        }
+        $data['poster_url'] = $this->formatLink($data['poster_url']);
+        if($data['source_type'] != 1){
+            $data['play_link'] = $this->formatLink($data['play_link']);
+            $data['download_link'] = $this->formatLink($data['download_link']);
         }
         return $data;
     }

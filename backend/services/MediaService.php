@@ -92,35 +92,8 @@ class MediaService extends BackendService
         return $result;
     }
 
-    public function addLinesFromExcel($sourceId, $file)
-    {
-        $lines = ExcelHelper::readExcel($file);
-        //删除文件
-//        unlink($file);
-        foreach ($lines as $key => $line){
-            if($key == 0) continue;
-            $data = [
-                'line_number' => $line[0],
-                'start_time' => $line[1],
-                'end_time' => $line[2],
-                'lang_type' => $line[3],
-                'content' => $line[4],
-                'source_id' => $sourceId,
-            ];
-            //先删除存在的台词
-            MediaLinesModel::updateAll(['status' => MediaLinesModel::STATUS_DELETED],[
-                'source_id' => $sourceId,
-                'line_number' => $data['line_number'],
-                'lang_type' => $data['lang_type'],
-            ]);
-            //插入新纪录
-            $model = new MediaLinesModel();
-            $model->add($data);
-        }
-    }
-
     public function addLinesFromFile($sourceId, $lang, $file){
-        $lines = explode("\n", file_get_contents($file));
+        $lines = explode("\n", file_get_contents(\Yii::$app->params['imageUrlPrefix'].$file));
         $item = ['source_id' => $sourceId];
         foreach ($lines as $key => $value){
             $index = $key % 5;
