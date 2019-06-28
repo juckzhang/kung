@@ -93,12 +93,12 @@ $categories   = $mediaService->categories($sourceType);
             </p>
             <p>
                 <label>&nbsp;</label>
-                <input id="poster-url" class="upload-input" data-name="poster-url" style="display: none" type="file" data-type="picture" name="UploadForm[file]">
+                <input id="poster-url" size="60" class="upload-input" data-name="poster-url" style="display: none" type="file" data-type="picture" name="UploadForm[file]">
                 <img id="upload" class="upload-btn" src="<?= ! empty($model['poster_url']) ? \Yii::$app->params['imageUrlPrefix'] .$model['poster_url'] : '/images/upload.png'?>" width="100px"/>
             </p>
             <p>
                 <label><?= $sourceType == 3 ? 'PDF文档上传:' : '&nbsp;';?></label>
-                <input id="pdf" class="upload-input" data-type="pdf" data-name="<?=$sourceType == 3 ? 'link' : 'lines';?>" style="display: none" type="file" name="UploadForm[file]">
+                <input id="pdf" size="60" class="upload-input" data-type="pdf" data-name="<?=$sourceType == 3 ? 'link' : 'lines';?>" style="display: none" type="file" name="UploadForm[file]">
                 <img id="upload" class="upload-btn" src="<?= ! empty($model['play_link']) ? \Yii::$app->params['imageUrlPrefix'] .$model['play_link'] : '/images/upload.png'?>" width="100px"/>
             </p>
         </div>

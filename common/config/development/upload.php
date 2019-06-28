@@ -23,7 +23,7 @@ return [
     ],
     'pdf' => [
         'extensions' => null,
-        'path'  => 'picture',
+        'path'  => 'pdf',
         'url'   => 'http://kongchinese1.oss-cn-hongkong.aliyuncs.com/',
         'remoteUpload' => true,
         'recursive' => false,
