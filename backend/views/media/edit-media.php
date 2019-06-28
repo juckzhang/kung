@@ -93,13 +93,13 @@ $categories   = $mediaService->categories($sourceType);
             </p>
             <p>
                 <label>&nbsp;</label>
-                <input id="poster-url" class="upload-input" data-name="poster-url" style="display: none" type="file" data-type="poster" name="UploadForm[file]">
-                <img id="upload" class="upload-btn" src="<?= ! empty($model['poster_url']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
+                <input id="poster-url" class="upload-input" data-name="poster-url" style="display: none" type="file" data-type="picture" name="UploadForm[file]">
+                <img id="upload" class="upload-btn" src="<?= ! empty($model['poster_url']) ? \Yii::$app->params['imageUrlPrefix'] .$model['poster_url'] : '/images/upload.png'?>" width="100px"/>
             </p>
             <p>
                 <label><?= $sourceType == 3 ? 'PDF文档上传:' : '&nbsp;';?></label>
                 <input id="pdf" class="upload-input" data-type="pdf" data-name="<?=$sourceType == 3 ? 'link' : 'lines';?>" style="display: none" type="file" name="UploadForm[file]">
-                <img id="upload" class="upload-btn" src="<?= ! empty($model['play_link']) ? $model['poster_url'] : '/images/upload.png'?>" width="100px"/>
+                <img id="upload" class="upload-btn" src="<?= ! empty($model['play_link']) ? \Yii::$app->params['imageUrlPrefix'] .$model['play_link'] : '/images/upload.png'?>" width="100px"/>
             </p>
         </div>
         <div class="formBar">
@@ -135,10 +135,10 @@ $categories   = $mediaService->categories($sourceType);
                 success: function (result, status) {
                     //把图片替换
                     if(result.code == 200){
-                        var posterUrl = $.trim(result.data.url);
-                            //fullName  = result.data.fullFileName;
+                        var posterUrl = $.trim(result.data.url),
+                            fullName  = result.data.fullFileName;
                         imgObj.attr("src", posterUrl);
-                        inputText.val(posterUrl);
+                        inputText.val(fullName);
                     }else {
                         alert(result.resultDesc);
                     }

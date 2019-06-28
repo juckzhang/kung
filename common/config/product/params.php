@@ -1,5 +1,5 @@
 <?php
 return [
-    'imageUrlPrefix' => 'http://img.moviest.com/',//http://test-zaizaitv-upload.oss-cn-beijing.aliyuncs.com/',
+    'imageUrlPrefix' => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
     'domain'       => 'http://localhost/'
 ];

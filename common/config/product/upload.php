@@ -1,9 +1,31 @@
 <?php
 return [
-    'poster' => [
-        'url'   => 'http://localhost/',
+    'audio' => [
+        'extensions' => null,
+        'path'  => 'audio',
+        'url'   => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
+        'remoteUpload' => true,
+        'recursive' => false,
+    ],
+    'video' => [
+        'extensions' => null,
+        'path'  => 'video',
+        'url'   => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
+        'remoteUpload' => true,
+        'recursive' => false,
+    ],
+    'picture' => [
+        'extensions' => null,
+        'path'  => 'picture',
+        'url'   => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
+        'remoteUpload' => true,
+        'recursive' => false,
     ],
     'pdf' => [
-        'url'   => 'http://localhost/',
+        'extensions' => null,
+        'path'  => 'pdf',
+        'url'   => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
+        'remoteUpload' => true,
+        'recursive' => false,
     ],
 ];
