@@ -12,9 +12,9 @@ return [
 
         'uploadTool' => [
             'uploadTool' => [
-                'class' => 'juckzhang\drivers\UploadTool',
+                'class' => 'common\components\uploadRemote\UploadTool',
                 'handler' => [
-                    'class' => 'juckzhang\drivers\UploadAliYun',
+                    'class' => 'common\components\uploadRemote\UploadAliYun',
                     'accessKeyId' => 'LTAIhqAEiHvZxEs3',
                     'accessKeySecret' => 'HZnqx1EnrjLv4WZCUNNOoqx4NjHRkS',
                     'bucket' => 'kongchinese1',

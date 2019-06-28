@@ -7,7 +7,6 @@ use common\models\UploadForm;
 use common\components\UploadedFile;
 use common\constants\CodeConstant;
 use yii\base\Exception;
-use yii\helpers\ArrayHelper;
 
 /**
  * 文件上传服务
