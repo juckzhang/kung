@@ -18,7 +18,7 @@ return [
                     'accessKeyId' => 'LTAIhqAEiHvZxEs3',
                     'accessKeySecret' => 'HZnqx1EnrjLv4WZCUNNOoqx4NjHRkS',
                     'bucket' => 'kongchinese1',
-                    'endPoint' => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
+                    'endPoint' => 'oss-cn-hongkong.aliyuncs.com',
                 ],
             ],
         ],

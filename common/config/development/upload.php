@@ -3,14 +3,14 @@ return [
     'audio' => [
         'extensions' => null,
         'path'  => 'audio',
-        'url'   => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
+        'url'   => 'http://kongchinese1.oss-cn-hongkong.aliyuncs.com/',
         'remoteUpload' => true,
         'recursive' => false,
     ],
     'video' => [
         'extensions' => null,
         'path'  => 'video',
-        'url'   => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
+        'url'   => 'http://kongchinese1.oss-cn-hongkong.aliyuncs.com/',
         'remoteUpload' => true,
         'recursive' => false,
     ],
@@ -24,7 +24,7 @@ return [
     'pdf' => [
         'extensions' => null,
         'path'  => 'picture',
-        'url'   => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
+        'url'   => 'http://kongchinese1.oss-cn-hongkong.aliyuncs.com/',
         'remoteUpload' => true,
         'recursive' => false,
     ],
