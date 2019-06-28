@@ -4,8 +4,8 @@ return [
     'audio' => [
         'extensions' => null,
         'mimeTypes'  => null,
-        'minSize' => 1024,
-        'maxSize' => 10 * 1048576,
+        'minSize' => null,
+        'maxSize' => null,
         'uploadRequired' => CodeConstant::UPLOAD_FILE_REQUIRED_ERROR,
         'tooBig'  => CodeConstant::UPLOAD_FILE_SIZE_BIG,
         'tooSmall' => CodeConstant::UPLOAD_FILE_SIZE_SMALL,
