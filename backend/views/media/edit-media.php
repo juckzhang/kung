@@ -101,6 +101,11 @@ $categories   = $mediaService->categories($sourceType);
                 <input id="pdf" size="60" class="upload-input" data-type="pdf" data-name="<?=$sourceType == 3 ? 'link' : 'lines';?>" style="display: none" type="file" name="UploadForm[file]">
                 <img id="upload" class="upload-btn" src="<?= ! empty($model['play_link']) ? \Yii::$app->params['imageUrlPrefix'] .$model['play_link'] : '/images/upload.png'?>" width="100px"/>
             </p>
+            <p>
+                <label>音频资源:</label>
+                <input id="audio" size="60" class="upload-input" data-type="audio" data-name="link" style="display: none" type="file" name="UploadForm[file]">
+                <img id="upload" class="upload-btn" src="<?= ! empty($model['play_link']) ? \Yii::$app->params['imageUrlPrefix'] .$model['play_link'] : '/images/upload.png'?>" width="100px"/>
+            </p>
         </div>
         <div class="formBar">
             <ul>
