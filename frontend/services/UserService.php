@@ -18,15 +18,11 @@ class UserService extends FrontendService{
             'icon_url' => ArrayHelper::getValue($params,'icon_url', \Yii::$app->params['domain'].'upload/default_icon_url.jpg'),
 
         ];
-        $userId      = ArrayHelper::getValue($params, 'user_id');
         if(!$data['third_account'] or ! in_array($data['account_type'], ['1', '2', '3'])){
             return CodeConstant::PARAM_ERROR;
         }
         //判断账号是否存在
         $where = ['third_account' => $data['third_account'], 'account_type' => $data['account_type']];
-        if($userId){
-            $where = ['id' => $userId];
-        }
         $model = UserModel::find()
             ->select(['id','nick_name','icon_url','third_account','account_type'])
             ->where($where)
