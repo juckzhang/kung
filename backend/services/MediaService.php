@@ -133,9 +133,7 @@ class MediaService extends BackendService
         $lineFile = \Yii::$app->request->post('lines');
         $lang = \Yii::$app->request->post('MediaModel')['lang_type'];
         if($model->source_type != 3 and $lineFile){
-            $lineFile = realpath(__DIR__.'/../../frontend/web/upload/media-pdf/'.basename($lineFile));
-            if(file_exists($lineFile))
-                $this->addLinesFromFile($model->id, $lang, $lineFile);
+            $this->addLinesFromFile($model->id, $lang, $lineFile);
         }
 
         return $model;
