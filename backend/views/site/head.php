@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>最影后台管理平台</title>
+<title>Kung后台管理平台</title>
 
 <link href="/themes/default/style.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
