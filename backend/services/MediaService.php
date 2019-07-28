@@ -98,7 +98,7 @@ class MediaService extends BackendService
         $lineNumber = 1;
         foreach ($lines as $key => $value){
             $index = $key % 5;
-            if(!$index and !trim($value)) break;
+            if(!$index and !is_numeric(trim($value))) break;
 
             switch ($index){
                 case 0:
