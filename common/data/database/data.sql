@@ -67,7 +67,7 @@ CREATE TABLE if NOT EXISTS kung_media_lines(
   source_id int unsigned NOT NULL DEFAULT 0 comment'资源id',
   lang_type char(10) NOT NULL DEFAULT '' comment'台词语言类型 中文: zh_CN, 英文: en_US',
   line_number int unsigned NOT NULL DEFAULT 0 comment'表示第几段台词',
-  content varchar(255) NOT NULL DEFAULT '' comment'内容',
+  content varchar(1024) NOT NULL DEFAULT '' comment'内容',
   start_time char(25) NOT NULL default '' comment'开始时间',
   end_time char(25) NOT NULL default '' comment'结束时间',
   sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',

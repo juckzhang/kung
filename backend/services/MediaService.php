@@ -95,12 +95,16 @@ class MediaService extends BackendService
     public function addLinesFromFile($sourceId, $lang, $file){
         $lines = explode("\n", file_get_contents(\Yii::$app->params['imageUrlPrefix'].$file));
         $item = ['source_id' => $sourceId];
+        $lineNumber = 1;
         foreach ($lines as $key => $value){
             $index = $key % 5;
             if(!$index and !trim($value)) break;
 
             switch ($index){
-                case 0: $item['line_number'] = trim($value); break;
+                case 0:
+                    $item['line_number'] = $lineNumber;
+                    ++ $lineNumber;
+                    break;
                 case 1:
                     $time = explode('-->', $value);
                     $item['start_time'] = trim($time[0]);
