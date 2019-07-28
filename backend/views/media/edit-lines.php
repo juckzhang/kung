@@ -49,7 +49,7 @@ $sourceId = ArrayHelper::getValue($model, 'source_id', $defaultSourceId);
             <dl>
                 <dt>台词内容：</dt>
                 <dd>
-                    <textarea type="text" name="MediaLinesModel[content]" class="required" value="<?=ArrayHelper::getValue($model,'content','')?>"><?=ArrayHelper::getValue($model, 'content', '')?></textarea>
+                    <textarea style="width: 453px;height: 56px;" type="text" name="MediaLinesModel[content]" class="required" value="<?=ArrayHelper::getValue($model,'content','')?>"><?=ArrayHelper::getValue($model, 'content', '')?></textarea>
                     <span class="info">台词内容不能为空</span>
                 </dd>
             </dl>
