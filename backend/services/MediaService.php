@@ -116,6 +116,9 @@ class MediaService extends BackendService
                 case 3: //处理其他语言
                     $item['lang_type'] = $index == 2 ? 'zh_CN' : $lang;
                     $item['content'] = trim($value);
+                    if(!$item['content']){
+                        break;
+                    }
                     //先删除存在的台词
                     MediaLinesModel::deleteAll([
                         'source_id' => $sourceId,
