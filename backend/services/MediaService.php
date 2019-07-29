@@ -96,8 +96,9 @@ class MediaService extends BackendService
         $lines = explode("\n", file_get_contents(\Yii::$app->params['imageUrlPrefix'].$file));
         $item = ['source_id' => $sourceId];
         $lineNumber = 1;
+        $count = $lang == 'zh_CN' ? 4 : 5;
         foreach ($lines as $key => $value){
-            $index = $key % 5;
+            $index = $key % $count;
             switch ($index){
                 case 0:
                     $item['line_number'] = $lineNumber;
