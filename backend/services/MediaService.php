@@ -98,8 +98,6 @@ class MediaService extends BackendService
         $lineNumber = 1;
         foreach ($lines as $key => $value){
             $index = $key % 5;
-            if(!$index and !is_numeric(trim($value))) break;
-
             switch ($index){
                 case 0:
                     $item['line_number'] = $lineNumber;
@@ -107,6 +105,9 @@ class MediaService extends BackendService
                     break;
                 case 1:
                     $time = explode('-->', $value);
+                    if(count($time) != 2){
+                        break 2;
+                    }
                     $item['start_time'] = trim($time[0]);
                     $item['end_time'] = trim($time[1]);
                     break;
