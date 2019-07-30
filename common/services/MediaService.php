@@ -204,7 +204,7 @@ class MediaService extends OperationService
             'id','cate_id','source_type','title' => 'title',
             'total_time','level','poster_url',
             'play_link','download_link','play_num','collection_num',
-            'download_num','create_time'
+            'download_num','create_time','media_desc'
         ];
         $lang = $this->changeLang($lang);
         if($lang){

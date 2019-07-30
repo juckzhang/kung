@@ -24,7 +24,7 @@ use yii\helpers\Url;
                 </ul>
             </div>
             <h2 class="login_title">
-                <img src="/themes/default/images/login_title.png" />
+                <img src="/themes/default/images/login_title_default.png" />
             </h2>
         </div>
     </div>
@@ -57,7 +57,7 @@ use yii\helpers\Url;
             </form>
         </div>
         <div class="login_banner">
-            <img src="/themes/default/images/login_banner.jpg" />
+            <img src="/themes/default/images/login_banner.png" />
         </div>
         <div class="login_main">
             <ul class="helpList">

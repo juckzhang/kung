@@ -81,6 +81,9 @@ $categories   = $mediaService->categories($sourceType);
                 </select>
             </p>
 
+            <label>描述(参考文本):</label>
+            <textarea style="width: 550px;height: 56px;" type="text" name="MediaLinesModel[media_desc]" class="required" value="<?=ArrayHelper::getValue($model,'media_desc','')?>"><?=ArrayHelper::getValue($model, 'media_desc', '')?></textarea>
+
             <p>
                 <label>海报图片：</label>
                 <input type="text" name="MediaModel[poster_url]" class='poster-url' value="<?=ArrayHelper::getValue($model,'poster_url','')?>"/>
