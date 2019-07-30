@@ -82,7 +82,7 @@ $categories   = $mediaService->categories($sourceType);
             </p>
 
             <label>描述(参考文本):</label>
-            <textarea style="width: 634px;height: 94px;" type="text" name="MediaLinesModel[media_desc]" class="required" value="<?=ArrayHelper::getValue($model,'media_desc','')?>"><?=ArrayHelper::getValue($model, 'media_desc', '')?></textarea>
+            <textarea style="width: 634px;height: 94px;" type="text" name="MediaModel[media_desc]" class="required" value="<?=ArrayHelper::getValue($model,'media_desc','')?>"><?=ArrayHelper::getValue($model, 'media_desc', '')?></textarea>
 
             <p>
                 <label>海报图片：</label>
