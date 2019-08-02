@@ -175,6 +175,6 @@ class OperationService extends Service
     }
 
     protected function formatLink($link){
-        return \Yii::$app->params['imageUrlPrefix'].$link;
+        return $link ? \Yii::$app->params['imageUrlPrefix'].$link : '';
     }
 }

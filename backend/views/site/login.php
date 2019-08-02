@@ -57,7 +57,7 @@ use yii\helpers\Url;
             </form>
         </div>
         <div class="login_banner">
-            <img src="/themes/default/images/login_banner.png" />
+            <img src="/themes/default/images/login_banner_default.png" />
         </div>
         <div class="login_main">
             <ul class="helpList">
