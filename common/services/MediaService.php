@@ -38,11 +38,8 @@ class MediaService extends OperationService
         list($offset,$limit) = $this->parsePageParam($page,$count);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
         $lang = $this->changeLang($lang);
-        $column = ['id','source_type','name' => 'name'];
-        if($lang){
-            $column['name'] = 'name_'.$lang;
-        }
-        else $column[] = 'name';
+        $column = ['id','source_type'];
+        $column['name'] = $lang == 'zh_CN' ? 'name' : 'name_'.$lang;
         $models = MediaCategoryModel::find()
             ->select($column)
             ->where(['status' => MediaCategoryModel::STATUS_ACTIVE])
@@ -80,9 +77,9 @@ class MediaService extends OperationService
         $order != 'play_num' && $order = 'create_time';
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
-        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_link','play_num','collection_num','download_num','title' => 'title'];
+        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_link','play_num','collection_num','download_num'];
         $formatLang = $this->changeLang($lang);
-        if($formatLang) $column['title']  = 'title_'.$formatLang;
+        $column['title']  = $formatLang != 'zh_CN' ? 'title_'.$formatLang : 'title';
         $models = MediaModel::find()
             ->select($column)
             ->where(['and',
@@ -123,9 +120,9 @@ class MediaService extends OperationService
     public function recommendList($lang)
     {
         $data = [];
-        $column = ['id','cate_id','source_type','level','poster_url','play_link','download_link','play_num','collection_num','download_num','title' => 'title'];
+        $column = ['id','cate_id','source_type','level','poster_url','play_link','download_link','play_num','collection_num','download_num'];
         $formatLang = $this->changeLang($lang);
-        if($formatLang) $column['title']  = 'title_'.$formatLang;
+        $column['title']  = $formatLang != 'zh_CN' ? 'title_'.$formatLang : 'title';
         foreach (['videoList', 'autoList','pdfList'] as $key => $item){
             $models = MediaModel::find()
                 ->select($column)
@@ -203,15 +200,13 @@ class MediaService extends OperationService
     //视频音频资源详情
     public function mediaDetails($id, $lang, $uid){
         $column = [
-            'id','cate_id','source_type','title' => 'title',
+            'id','cate_id','source_type',
             'total_time','level','poster_url',
             'play_link','download_link','play_num','collection_num',
             'download_num','create_time','media_desc'
         ];
         $lang = $this->changeLang($lang);
-        if($lang){
-            $column['title'] = 'title_'.$lang;
-        }
+        $column['title'] = $lang == 'zh_CN' ? 'title' : 'title_'.$lang;
         $data = MediaModel::find()
             ->select($column)
             ->where(['id' => $id])
