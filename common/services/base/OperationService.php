@@ -157,10 +157,8 @@ class OperationService extends Service
                 if($model['media']){
                     $model = $model['media'];
                     $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
-                    if($lang){
-                        $model['title'] = $model['title_'.$lang];
-                        $model['category']['name'] = $model['category']['name_'.$lang];
-                    }
+                    $model['title'] = $model['title_'.$lang] ?: $model['title'];
+                    $model['category']['name'] = $model['category']['name_'.$lang] ?: $model['category']['name'];
                     $model['poster_url'] = $this->formatLink($model['poster_url']);
                     if($model['source_type'] != 1){
                         $model['play_link'] = $this->formatLink($model['play_link']);

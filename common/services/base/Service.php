@@ -96,6 +96,6 @@ class Service extends Model
     }
 
     protected function changeLang($lang){
-        return isset($this->lang[$lang]) ? $this->lang[$lang] : null;
+        return isset($this->lang[$lang]) ? $this->lang[$lang] : $lang;
     }
 }

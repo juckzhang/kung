@@ -87,7 +87,10 @@ class MediaService extends OperationService
             ->select($column)
             ->where(['and',
                 ['status' => MediaModel::STATUS_ACTIVE],
-                ['like', 'lang_type', $lang],
+                ['or',
+                    ['like','lang_type',$lang],
+                    ['lang_type' => 'zh_CN'],
+                ],
             ])
             ->andFilterWhere(['source_type' => $sourceType])
             ->andFilterWhere(['cate_id' => $cateId]);
@@ -102,10 +105,7 @@ class MediaService extends OperationService
                 ->offset($offset)->limit($limit)->all();
             foreach ($models as $key => $model){
                 $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
-                if($lang == 'en_US'){
-                    $model['category']['name'] = $model['category']['name_en'];
-                }
-                unset($model['category']['name_en']);
+                $model['category']['name'] = $model['category']['name_'.$formatLang] ?: $model['category']['name'];
                 $model['poster_url'] = $this->formatLink($model['poster_url']);
                 if($model['source_type'] != 1){
                     $model['play_link'] = $this->formatLink($model['play_link']);
@@ -132,7 +132,11 @@ class MediaService extends OperationService
                 ->where(['and',
                     ['source_type' => $key + 1],
                     ['status' => MediaModel::STATUS_ACTIVE],
-                    ['like','lang_type',$lang],
+                    ['or',
+                        ['like','lang_type',$lang],
+                        ['lang_type' => 'zh_CN'],
+                    ],
+
                 ])
                 ->orderBy(['sort_order' => SORT_DESC,'create_time' => SORT_DESC,'play_num' => SORT_DESC])
                 ->with('category')
@@ -141,9 +145,7 @@ class MediaService extends OperationService
                 ->all();
             foreach ($models as $key => $model){
                 $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
-                if($formatLang){
-                    $model['category']['name'] = $model['category']['name_'.$formatLang];
-                }
+                $model['category']['name'] = $model['category']['name_'.$formatLang] ?: $model['category']['name'];
                 $model['poster_url'] = $this->formatLink($model['poster_url']);
                 if($model['source_type'] != 1){
                     $model['play_link'] = $this->formatLink($model['play_link']);
