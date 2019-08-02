@@ -40,16 +40,15 @@ class SiteController extends BaseController
         }
         $res = $translateComponent->translate($text, $target);
         $toText = $res['text'];
-        if($target == 'zh_CN'){
-            $pinyin = \Yii::$app->get('pinyin')->sentence($toText, PINYIN_TONE);
-        }
         $ret = [
             'from_lang' => $translateComponent->lang($res['source']),
             'from_text' => $res['input'],
             'to_lang' => $translateComponent->lang($target),
             'to_text' => $toText,
-            'to_text_pinyin' => $pinyin,
         ];
+        if($target == 'zh-CN'){
+            $ret['to_text_pinyin'] = \Yii::$app->get('pinyin')->sentence($toText, PINYIN_TONE);
+        }
 
         return $this->returnSuccess($ret);
     }
