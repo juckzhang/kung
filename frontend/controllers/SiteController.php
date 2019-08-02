@@ -33,9 +33,9 @@ class SiteController extends BaseController
         $lang = ArrayHelper::getValue($this->paramData,'lang');
         $text = ArrayHelper::getValue($this->paramData,'text');
         $translateComponent = \Yii::$app->get('trans');
-        $sourceLang = $translateComponent->translate($text);
-        $target = $sourceLang == 'zh-CN' ? $translateComponent->lang($lang) : 'zh-CN';
-        $res = \Yii::$app->get('trans')->translate($text, $target);
+        $sourceLang = $translateComponent->detectLanguage($text);
+        $target = $sourceLang['languageCode'] == 'zh-CN' ? $translateComponent->lang($lang) : 'zh_CN';
+        $res = $translateComponent->translate($text, $target);
         $toText = $res['text'];
         if($target == 'zh_CN'){
             $pinyin = \Yii::$app->get('pinyin')->sentence($toText, PINYIN_TONE);
