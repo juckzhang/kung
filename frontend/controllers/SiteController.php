@@ -31,7 +31,7 @@ class SiteController extends BaseController
     public function actionTranslate()
     {
         $translateComponent = \Yii::$app->get('trans');
-        $lang = $translateComponent->lang(ArrayHelper::getValue($this->paramData,'lang'));
+        $lang = $translateComponent->lang(ArrayHelper::getValue($this->paramData,'lang'), true);
         $text = ArrayHelper::getValue($this->paramData,'text');
         $sourceLang = $translateComponent->detectLanguage($text);
         $target = 'zh-CN';
