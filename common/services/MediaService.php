@@ -80,7 +80,7 @@ class MediaService extends OperationService
         $order != 'play_num' && $order = 'create_time';
         list($offset,$limit) = $this->parsePageParam($page,$prePage);
         $data = ['dataList' => [],'pageCount' => 0,'dataCount' => 0];
-        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num','title' => 'title'];
+        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_link','play_num','collection_num','download_num','title' => 'title'];
         $formatLang = $this->changeLang($lang);
         if($formatLang) $column['title']  = 'title_'.$formatLang;
         $models = MediaModel::find()
@@ -123,7 +123,7 @@ class MediaService extends OperationService
     public function recommendList($lang)
     {
         $data = [];
-        $column = ['id','cate_id','source_type','level','poster_url','download_link','play_num','collection_num','download_num','title' => 'title'];
+        $column = ['id','cate_id','source_type','level','poster_url','play_link','download_link','play_num','collection_num','download_num','title' => 'title'];
         $formatLang = $this->changeLang($lang);
         if($formatLang) $column['title']  = 'title_'.$formatLang;
         foreach (['videoList', 'autoList','pdfList'] as $key => $item){
