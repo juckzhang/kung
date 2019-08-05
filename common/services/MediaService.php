@@ -135,7 +135,7 @@ class MediaService extends OperationService
                     ],
 
                 ])
-                ->orderBy(['sort_order' => SORT_DESC,'create_time' => SORT_DESC,'play_num' => SORT_DESC])
+                ->orderBy(['is_recommend' => SORT_DESC, 'sort_order' => SORT_DESC,'create_time' => SORT_DESC,'play_num' => SORT_DESC])
                 ->with('category')
                 ->asArray()
                 ->limit(3)
