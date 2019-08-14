@@ -14,7 +14,7 @@ class UserService extends FrontendService{
         $data = [
             'third_account' => ArrayHelper::getValue($params, 'third_account'),
             'account_type' => ArrayHelper::getValue($params, 'account_type'),
-            'nick_name' => ArrayHelper::getValue($params, 'nick_name', 'guest'),
+            'nick_name' => ArrayHelper::getValue($params, 'nick_name', 'Guest'.mt_rand(1000000000, 9999999999)),
             'icon_url' => ArrayHelper::getValue($params,'icon_url', \Yii::$app->params['domain'].'upload/default_icon_url.jpg'),
 
         ];
@@ -30,6 +30,8 @@ class UserService extends FrontendService{
 
         if(!($model instanceof UserModel)){
             $model = new UserModel();
+        }elseif ($data['account_type'] == 3){
+            unset($data['nick_name']);
         }
         $data['access_token'] = md5($params['third_account'] .'-'.$params['account_type'].'-'.time().'-'.mt_rand());
         if($model->load(['UserModel' => $data]) and $model->save()){
