@@ -16,7 +16,6 @@ class UserService extends FrontendService{
             'account_type' => ArrayHelper::getValue($params, 'account_type'),
             'nick_name' => ArrayHelper::getValue($params, 'nick_name', 'Guest'.mt_rand(1000000000, 9999999999)),
             'icon_url' => ArrayHelper::getValue($params,'icon_url', \Yii::$app->params['domain'].'upload/default_icon_url.jpg'),
-
         ];
         if(!$data['third_account'] or ! in_array($data['account_type'], ['1', '2', '3'])){
             return CodeConstant::PARAM_ERROR;
