@@ -1,7 +1,7 @@
 <?php
 return [
-    'level-1' => 'chuji',
-    'level-2' => 'zhongji',
-    'level-3' => 'gaoji',
+    'level-1' => 'Elementary',
+    'level-2' => 'Intermediate',
+    'level-3' => 'Advanced',
     'all'     => 'All',
 ];

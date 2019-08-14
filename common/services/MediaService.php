@@ -128,17 +128,16 @@ class MediaService extends OperationService
                 ->select($column)
                 ->where(['and',
                     ['source_type' => $key + 1],
-                    ['status' => MediaModel::STATUS_ACTIVE],
                     ['or',
                         ['like','lang_type',$lang],
                         ['lang_type' => 'zh_CN'],
                     ],
-
+                    ['status' => MediaModel::STATUS_ACTIVE],
                 ])
                 ->orderBy(['is_recommend' => SORT_DESC, 'sort_order' => SORT_DESC,'create_time' => SORT_DESC,'play_num' => SORT_DESC])
                 ->with('category')
                 ->asArray()
-                ->limit(3)
+                ->limit(4)
                 ->all();
             foreach ($models as $key => $model){
                 $model['level_name'] = CommonHelper::t('app', 'level-'.$model['level']);
@@ -216,6 +215,7 @@ class MediaService extends OperationService
         //判断用户是否已下载和已收藏
         $data['has_collected'] = false;
         $data['has_download'] = false;
+        $data['level_name'] = CommonHelper::t('app', 'level-'.$data['level']);
         if($uid){
             $data['has_collected'] = (bool)$this->isCollected($data['id'], $uid);
             $data['has_download'] = (bool)$this->isDownload($data['id'], $uid);

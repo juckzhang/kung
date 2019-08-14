@@ -6,10 +6,6 @@ use frontend\services\UserService;
 use yii\helpers\ArrayHelper;
 
 class UserController extends BaseController{
-
-    protected function actionFilter(){
-        return ['collection-list','download-list'];
-    }
     //收藏列表
     public function actionCollectionList()
     {

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dongbin
- * Date: 22/04/2017
- * Time: 5:57 PM
- */
 
 namespace common\constants;
 
