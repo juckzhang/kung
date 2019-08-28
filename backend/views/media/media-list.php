@@ -101,6 +101,7 @@ $categories = $mediaService->categories($sourceType);
                 <th width="80">语言</th>
                 <th width="80">中文标题</th>
                 <th width="80">英文标题</th>
+                <th width="120">资源描述</th>
                 <th width="80">播放链接</th>
                 <th width="80">下载链接</th>
                 <th width="80">海报图片</th>
@@ -125,6 +126,7 @@ $categories = $mediaService->categories($sourceType);
                     <td><?= $data['lang_type']?></td>
                     <td><?= $data['title']?></td>
                     <td><?= $data['title_en']?></td>
+                    <td><?= $data['media_desc']?></td>
                     <td><?= $data['play_link']?></td>
                     <td><?= $data['download_link']?></td>
                     <td><img width="50" height="50" src="<?= \Yii::$app->params['imageUrlPrefix'].$data['poster_url']?>"/></td>
