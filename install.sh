@@ -49,4 +49,4 @@ chown -R nobody.nobody kung
 /data1/openresty/nginx/sbin/nginx
 
 # 删除文件
-rm -rf /opt/openresty-1.13.6.2*
+rm -rf /opt/openresty-1.18.8.1*
