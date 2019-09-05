@@ -10,8 +10,8 @@ apt-get update
 mkdir /data1
 # 编译安装openresty
 apt-get install -y libpcre3-dev libssl-dev perl make build-essential curl
-cd /opt && wget https://openresty.org/download/openresty-1.13.6.2.tar.gz && tar -zxvf openresty-1.13.6.2.tar.gz
-cd openresty-1.13.6.2
+cd /opt && wget https://openresty.org/download/openresty-1.15.8.1.tar.gz && tar -zxvf openresty-1.15.8.1.tar.gz
+cd openresty-1.15.8.1
 ./configure --prefix=/data1/openresty
 make && make install
 
