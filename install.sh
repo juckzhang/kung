@@ -45,7 +45,7 @@ cp -f kung/conf/php-fpm.d/www.conf /etc/php/7.2/fpm/pool.d/www.conf
 chown -R nobody.nobody kung
 
 # 启动服务
-`which php-fpm7.0`
+`which php-fpm7.2`
 /data1/openresty/nginx/sbin/nginx
 
 # 删除文件
