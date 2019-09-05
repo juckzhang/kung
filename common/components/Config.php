@@ -2,13 +2,12 @@
 
 namespace common\components;
 use \yii\helpers\ArrayHelper;
-use \yii\base\InvalidParamException;
 
 /**
  * Class MobileCode
  * @package common\components
  */
-class Config extends \yii\base\Object
+class Config extends \yii\base\BaseObject
 {
     /**
      * List of all loaded config values

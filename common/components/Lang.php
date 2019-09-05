@@ -1,7 +1,7 @@
 <?php
 namespace common\components;
 
-use yii\base\Object;
+use yii\base\BaseObject;
 use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 /**
@@ -13,7 +13,7 @@ use yii\helpers\ArrayHelper;
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/language.html
  */
-class Lang extends Object{
+class Lang extends BaseObject{
 
     /**
      * List of translations
