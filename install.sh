@@ -9,7 +9,7 @@ apt-get update
 # 创建/data1目录
 mkdir /data1
 # 编译安装openresty
-apt-get install -y libpcre3-dev libssl-dev perl make build-essential curl
+apt-get install -y libpcre3-dev libssl-dev perl make build-essential curl zlib1g-dev
 cd /opt && wget https://openresty.org/download/openresty-1.15.8.1.tar.gz && tar -zxvf openresty-1.15.8.1.tar.gz
 cd openresty-1.15.8.1
 ./configure --prefix=/data1/openresty
@@ -37,9 +37,9 @@ cp -f kung/console/yii kung/console/yii.php
 
 # 拷贝配置文件
 cp -f kung/conf/nginx.conf /data1/openresty/nginx/conf/nginx.conf
-cp -f kung/conf/php.ini /etc/php/7.0/fpm/php.ini
-cp -f kung/conf/php-fpm.conf /etc/php/7.0/fpm/php-fpm.conf
-cp -f kung/conf/php-fpm.d/www.conf /etc/php/7.0/fpm/pool.d/www.conf
+cp -f kung/conf/php.ini /etc/php/7.2/fpm/php.ini
+cp -f kung/conf/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf
+cp -f kung/conf/php-fpm.d/www.conf /etc/php/7.2/fpm/pool.d/www.conf
 
 # 修改目录所属人
 chown -R nobody.nobody kung
