@@ -33,15 +33,15 @@ $categories   = $mediaService->categories($sourceType);
             </p>
             <p>
                 <label>播放量：</label>
-                <input type="text" name="MediaModel[play_num]" value="<?=ArrayHelper::getValue($model,'play_num',100)?>">
+                <input type="text" name="MediaModel[play_num]" value="<?=ArrayHelper::getValue($model,'play_num',50)?>">
             </p>
             <p>
                 <label>下载量：</label>
-                <input type="text" name="MediaModel[download_num]" value="<?=ArrayHelper::getValue($model,'download_num',20)?>">
+                <input type="text" name="MediaModel[download_num]" value="<?=ArrayHelper::getValue($model,'download_num',10)?>">
             </p>
             <p>
                 <label>收藏量：</label>
-                <input type="text" name="MediaModel[collection_num]" value="<?=ArrayHelper::getValue($model,'collection_num',20)?>">
+                <input type="text" name="MediaModel[collection_num]" value="<?=ArrayHelper::getValue($model,'collection_num',10)?>">
             </p>
             <p>
                 <label>播放总时长：</label>
