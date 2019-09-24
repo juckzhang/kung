@@ -12,7 +12,7 @@ $prePage = ArrayHelper::getValue($params,'numPerPage','20');
 $roleId = ArrayHelper::getValue($params,'other.roleId');
 $roles = SystemService::getService()->roleAll();
 ?>
-<div class="" id="menu-list" rel="menu-list">
+<div class="" id="user-list" rel="user-list">
 <form id="pagerForm" method="post" action="#rel#">
     <input type="hidden" name="pageNum" value="<?=$page?>" />
     <input type="hidden" name="numPerPage" value="<?=$prePage?>" />

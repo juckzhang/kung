@@ -8,7 +8,7 @@ $orderFiled = ArrayHelper::getValue($params,'orderFiled','');
 $orderDirection = ArrayHelper::getValue($params,'orderDirection','asc');
 $prePage = ArrayHelper::getValue($params,'numPerPage','20');
 ?>
-<div class="" id="menu-list" rel="menu-list">
+<div class="" id="role-list" rel="role-list">
 <form id="pagerForm" method="post" action="#rel#">
     <input type="hidden" name="pageNum" value="<?=$page?>" />
     <input type="hidden" name="numPerPage" value="<?=$prePage?>" />
