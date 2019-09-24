@@ -3,9 +3,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-             'dsn' => 'mysql:host=127.0.0.1;dbname=kung', // MySQL, MariaDB
-             'username' => 'root',
-             'password' => 'admin123',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=kung', // MySQL, MariaDB
+            'username' => 'root',
+            'password' => 'admin123',
             'charset' => 'utf8mb4',
             'tablePrefix' => 'kung_',
         ],

@@ -17,7 +17,7 @@ return [
     'picture' => [
         'extensions' => null,
         'path'  => 'picture',
-        'url'   => 'kongchinese1.oss-cn-hongkong.aliyuncs.com/',
+        'url'   => 'http://kongchinese1.oss-cn-hongkong.aliyuncs.com/',
         'remoteUpload' => true,
         'recursive' => false,
     ],

@@ -11,15 +11,13 @@ return [
         ],
 
         'uploadTool' => [
-            'uploadTool' => [
-                'class' => 'common\components\uploadRemote\UploadTool',
-                'handler' => [
-                    'class' => 'common\components\uploadRemote\UploadAliYun',
-                    'accessKeyId' => 'LTAIhqAEiHvZxEs3',
-                    'accessKeySecret' => 'HZnqx1EnrjLv4WZCUNNOoqx4NjHRkS',
-                    'bucket' => 'kongchinese1',
-                    'endPoint' => 'oss-cn-hongkong.aliyuncs.com',
-                ],
+            'class' => 'common\components\uploadRemote\UploadTool',
+            'handler' => [
+                'class' => 'common\components\uploadRemote\UploadAliYun',
+                'accessKeyId' => 'LTAIhqAEiHvZxEs3',
+                'accessKeySecret' => 'HZnqx1EnrjLv4WZCUNNOoqx4NjHRkS',
+                'bucket' => 'kongchinese1',
+                'endPoint' => 'oss-cn-hongkong.aliyuncs.com',
             ],
         ],
     ],
