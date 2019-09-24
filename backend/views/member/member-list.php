@@ -9,7 +9,7 @@ $orderDirection = ArrayHelper::getValue($params,'orderDirection','asc');
 $prePage = ArrayHelper::getValue($params,'numPerPage','20');
 
 ?>
-<div class="" id="card-list" rel="card-list">
+<div class="" id="member-list" rel="member-list">
     <form id="pagerForm" method="post" action="#rel#">
         <input type="hidden" name="pageNum" value="<?=$page?>" />
         <input type="hidden" name="numPerPage" value="<?=$prePage?>" />
