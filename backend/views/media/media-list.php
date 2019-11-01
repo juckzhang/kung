@@ -101,17 +101,11 @@ $categories = $mediaService->categories($sourceType);
                 <th width="80">语言</th>
                 <th width="80">中文标题</th>
                 <th width="80">英文标题</th>
-                <th width="120">资源描述</th>
-                <th width="80">播放链接</th>
-                <th width="80">下载链接</th>
                 <th width="80">海报图片</th>
                 <th width="60">播放数</th>
-                <th width="60">真实播放数</th>
                 <th class="<?= $orderDirection ?>" tyle="cursor: pointer;" orderfield="complete_play_num" width="60">完整播放数</th>
                 <th width="60">下载数</th>
-                <th width="60">真实下载数</th>
                 <th width="60">收藏数</th>
-                <th width="60">真实收藏数</th>
                 <th width="80">首页推荐</th>
                 <th width="100">建档日期</th>
                 <th width="250">操作</th>
@@ -126,17 +120,11 @@ $categories = $mediaService->categories($sourceType);
                     <td><?= $data['lang_type']?></td>
                     <td><?= $data['title']?></td>
                     <td><?= $data['title_en']?></td>
-                    <td><?= $data['media_desc']?></td>
-                    <td><?= $data['play_link']?></td>
-                    <td><?= $data['download_link']?></td>
                     <td><img width="50" height="50" src="<?= \Yii::$app->params['imageUrlPrefix'].$data['poster_url']?>"/></td>
                     <td align="center"><?= $data['play_num']?></td>
-                    <td align="center"><?= $data['real_play_num']?></td>
                     <td align="center"><?= $data['complete_play_num']?></td>
                     <td align="center"><?= $data['download_num']?></td>
-                    <td align="center"><?= $data['real_download_num']?></td>
                     <td align="center"><?= $data['collection_num']?></td>
-                    <td align="center"><?= $data['real_collection_num']?></td>
                     <td align="center"><?= $data['is_recommend'] ? '推荐' : '不推荐' ?></td>
                     <td><?= date('Y-m-d', $data['create_time']) ?></td>
                     <td>
