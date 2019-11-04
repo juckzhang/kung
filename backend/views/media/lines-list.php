@@ -48,7 +48,7 @@ $sourceId = ArrayHelper::getValue($params, 'source_id');
             <th width="80">台词内容</th>
             <th width="80">开始时间</th>
             <th width="80">结束时间</th>
-            <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="80">修改时间</th>
+            <th class="<?=$orderDirection?>" style="cursor: pointer;" orderfield="update_time" width="80">修改时间</th>
             <th width="70">操作</th>
         </tr>
         </thead>

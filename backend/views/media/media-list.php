@@ -102,10 +102,10 @@ $categories = $mediaService->categories($sourceType);
                 <th width="80">中文标题</th>
                 <th width="80">英文标题</th>
                 <th width="80">海报图片</th>
-                <th width="60">播放数</th>
-                <th class="<?= $orderDirection ?>" tyle="cursor: pointer;" orderfield="complete_play_num" width="60">完整播放数</th>
-                <th width="60">下载数</th>
-                <th width="60">收藏数</th>
+                <th class="<?= $orderDirection ?>" style="cursor: pointer;" orderfield="play_num" width="60">播放数</th>
+                <th class="<?= $orderDirection ?>" style="cursor: pointer;" orderfield="complete_play_num" width="60">完整播放数</th>
+                <th class="<?= $orderDirection ?>" style="cursor: pointer;" orderfield="download_num" width="60">下载数</th>
+                <th class="<?= $orderDirection ?>" style="cursor: pointer;" orderfield="collection_num" width="60">收藏数</th>
                 <th width="80">首页推荐</th>
                 <th width="100">建档日期</th>
                 <th width="250">操作</th>

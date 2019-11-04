@@ -47,7 +47,7 @@ $roles = SystemService::getService()->roleAll();
             <th width="22">用户ID</th>
             <th width="20">用户名</th>
             <th width="60">所属角色</th>
-            <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="40">建档日期</th>
+            <th class="<?=$orderDirection?>" style="cursor: pointer;" orderfield="update_time" width="40">建档日期</th>
             <th width="25">操作</th>
         </tr>
         </thead>

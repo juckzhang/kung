@@ -66,7 +66,7 @@ $search = ArrayHelper::getValue($params,'search');
             <th width="40">分类ID</th>
             <th width="80">中文名称</th>
             <th width="80">英文名称</th>
-            <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="80">修改时间</th>
+            <th class="<?=$orderDirection?>" style="cursor: pointer;" orderfield="update_time" width="80">修改时间</th>
             <th width="70">操作</th>
         </tr>
         </thead>

@@ -36,7 +36,7 @@ $prePage = ArrayHelper::getValue($params,'numPerPage','20');
                 <th width="80">回复ID</th>
                 <th width="50">用户ID</th>
                 <th width="30">反馈内容</th>
-                <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="create_time" width="80">建档日期</th>
+                <th class="<?=$orderDirection?>" style="cursor: pointer;" orderfield="create_time" width="80">建档日期</th>
                 <th width="170">操作</th>
             </tr>
             </thead>

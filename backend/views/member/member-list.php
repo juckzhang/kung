@@ -54,7 +54,7 @@ $prePage = ArrayHelper::getValue($params,'numPerPage','20');
                 <th width="80">用户昵称</th>
                 <th width="50">用户头像</th>
 <!--                <th width="30">积分</th>-->
-                <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="create_time" width="80">建档日期</th>
+                <th class="<?=$orderDirection?>" style="cursor: pointer;" orderfield="create_time" width="80">建档日期</th>
                 <th width="170">操作</th>
             </tr>
             </thead>

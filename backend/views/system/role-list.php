@@ -42,7 +42,7 @@ $prePage = ArrayHelper::getValue($params,'numPerPage','20');
             <th width="10"><input type="checkbox" group="ids[]" class="checkboxCtrl"></th>
             <th width="22">角色ID</th>
             <th width="20">角色名称</th>
-            <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="40">建档日期</th>
+            <th class="<?=$orderDirection?>" style="cursor: pointer;" orderfield="update_time" width="40">建档日期</th>
             <th width="25">操作</th>
         </tr>
         </thead>

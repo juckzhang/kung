@@ -47,7 +47,7 @@ $search = ArrayHelper::getValue($params,'search');
             <th width="80">资源名称</th>
             <th width="80">用户ID</th>
             <th width="80">评论内容</th>
-            <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="80">建档日期</th>
+            <th class="<?=$orderDirection?>" style="cursor: pointer;" orderfield="update_time" width="80">建档日期</th>
             <th width="70">操作</th>
         </tr>
         </thead>

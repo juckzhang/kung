@@ -46,7 +46,7 @@ $prePage = ArrayHelper::getValue($params,'numPerPage','20');
             <th width="20">资源名称</th>
             <th width="20">请求地址</th>
             <th width="20">所属资源</th>
-            <th class="<?=$orderDirection?>" tyle="cursor: pointer;" orderfield="update_time" width="40">建档日期</th>
+            <th class="<?=$orderDirection?>" style="cursor: pointer;" orderfield="update_time" width="40">建档日期</th>
             <th width="25">操作</th>
         </tr>
         </thead>
