@@ -6,7 +6,7 @@ use backend\services\MediaService;
 $mediaService = MediaService::getService();
 $params = \Yii::$app->request->getPost();
 $page   = ArrayHelper::getValue($params,'pageNum','1');
-$orderFiled = ArrayHelper::getValue($params,'orderFiled','');
+$orderFiled = ArrayHelper::getValue($params,'orderField','');
 $orderDirection = ArrayHelper::getValue($params,'orderDirection','asc');
 $prePage = ArrayHelper::getValue($params,'numPerPage','20');
 $search = 0;

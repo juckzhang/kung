@@ -76,7 +76,7 @@ class BaseController extends CommonController
 
     protected function _sortOrder($prefix='')
     {
-        $orderFiled = ArrayHelper::getValue($this->paramData,'orderFiled',$prefix.'create_time');
+        $orderFiled = ArrayHelper::getValue($this->paramData,'orderField',$prefix.'create_time');
         $orderDesc  = ArrayHelper::getValue($this->paramData,'orderDirection','desc');
 
         $desc = SORT_DESC;
