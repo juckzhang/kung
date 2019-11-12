@@ -3,10 +3,12 @@
 namespace frontend\services;
 
 use common\models\mysql\FeedbackModel;
+use common\models\mysql\UserCharsModel;
 use common\models\mysql\UserModel;
 use frontend\services\base\FrontendService;
 use common\constants\CodeConstant;
 use yii\helpers\ArrayHelper;
+use yii\log\EmailTarget;
 
 class UserService extends FrontendService{
 
@@ -82,5 +84,40 @@ class UserService extends FrontendService{
         }
 
         return $data;
+    }
+
+    public function knowChars($userId, $data){
+        if(empty($params['user_id'])){
+            return CodeConstant::USER_TOKEN_NOT_EXISTS;
+        }
+        $data['user_id'] = $userId;
+        $model = new UserCharsModel();
+        if($model->load($params,'') and $model->save()){
+            return CodeConstant::SUCCESS;
+        }
+
+        return CodeConstant::FEED_BACK_FAILED;
+    }
+
+    public function showChars($userId){
+        if(empty($params['user_id'])){
+            return CodeConstant::USER_TOKEN_NOT_EXISTS;
+        }
+        $ret = [];
+        //获取当前用户的信息
+        $data = UserCharsModel::find()->where([
+            'user_id' => $userId,
+            'status' => UserCharsModel::STATUS_ACTIVE
+        ])->orderBy(['create_time' => SORT_DESC])->toArray()->one();
+        if(empty($data)){
+            return $ret;
+        }
+        $charNum = $data['char_num'];
+        //获取低于分数的人数
+        $num = UserCharsModel::find()->where(['<', 'char_num', $charNum])->count();
+        //参与总人数
+        $totalNum = UserCharsModel::find()->count();
+
+        return ['data' => $data, 'num' => $num, 'totalNum' => $totalNum];
     }
 }

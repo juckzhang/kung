@@ -139,6 +139,21 @@ CREATE TABLE IF NOT EXISTS kung_feedback(
   key parent_id(parent_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 auto_increment=1 comment'用户反馈列表';
 
+CREATE TABLE IF NOT EXISTS kung_user_chars(
+  id int unsigned NOT NULL PRIMARY KEY auto_increment comment'id',
+  user_id int unsigned NOT NULL DEFAULT 0 comment'用户id',
+  char_num int NOT NULL DEFAULT 0 comment'认识的文字数量',
+  country char(255) not null default '' comment'国家',
+  birth_year char(4) not null  default '2000' comment '出生年份',
+  learn_age int not null default 1 comment'学习年限',
+  first_lang tinyint not null default 1 comment '中文是第几语言',
+  sort_order int unsigned NOT NULL DEFAULT 500 comment'排序字段',
+  create_time bigint unsigned NOT NULL DEFAULT 0 comment'创建时间',
+  update_time bigint unsigned NOT NULL DEFAULT 0 comment'修改时间',
+  status tinyint unsigned NOT NULL DEFAULT 0 comment'状态 0：1：删除',
+  key user_id(user_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 auto_increment=1 comment'用户汉字识字表';
+
 CREATE TABLE IF NOT EXISTS kung_role(
   `id` int unsigned NOT NULL PRIMARY  key AUTO_INCREMENT COMMENT '自增ID，主键',
   `name` char(25) NOT NULL comment'角色名称',

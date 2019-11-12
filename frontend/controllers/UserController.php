@@ -68,4 +68,29 @@ class UserController extends BaseController{
         }
         return $this->returnSuccess($ret);
     }
+
+    // 返回字库
+    public function charsAction(){
+        $chars = \common\helpers\CommonHelper::loadConfig('main.php',['@common','@frontend']);
+
+        return $this->returnSuccess(shuffle($chars));
+    }
+
+    // 记录当前用户汉字识别率
+    public function knowCharsAction()
+    {
+        $userId  = ArrayHelper::getValue($this->paramData,'user_id');
+        $data = ArrayHelper::getValue($this->paramData,'data');
+
+        UserService::getService()->knowChars($userId, $data);
+
+        return $this->returnSuccess();
+    }
+
+    public function showCharsAction(){
+        $userId  = ArrayHelper::getValue($this->paramData,'user_id');
+        $ret = UserService::getService()->showChars($userId);
+
+        return $this->returnSuccess($ret);
+    }
 }
