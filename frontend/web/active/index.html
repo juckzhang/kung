@@ -33,24 +33,14 @@
         (Don't check boxes for words you know you've seen before, but whose meaning you aren't exactly sure of.)
     </p>
     <p>
-        <a href="/active/select-chars.html">Begin Testing</a>
+        <a id = "start" href="/active/select-chars.html">Begin Testing</a>
     </p>
 </div>
 <script>
     $(function() {
-        function fn() {
-            var baseFontSize = window.innerWidth / 10;
+        $('#start').on('click',function(event){
 
-            document.getElementsByTagName("html")[0].style.fontSize = baseFontSize + "px";
-            console.log(document.getElementsByTagName("html")[0].style.fontSize);
-
-        }
-        fn();
-        window.onresize = function() {
-            fn();
-
-        };
-
+        })
     })
 </script>
 </body>
