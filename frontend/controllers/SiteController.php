@@ -13,7 +13,8 @@ class SiteController extends BaseController
     public function actionRecommendList()
     {
         $lang = ArrayHelper::getValue($this->paramData,'lang');
-        $ret = MediaService::getService()->recommendList($lang);
+        $userLevel = ArrayHelper::getValue($this->paramData,'user_level');
+        $ret = MediaService::getService()->recommendList($lang, $userLevel);
         return $this->returnSuccess($ret);
     }
 

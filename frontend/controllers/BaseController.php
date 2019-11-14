@@ -24,9 +24,13 @@ class BaseController extends CommonController
         }
 
         $accessToken = \Yii::$app->request->headers->get('Access-Token');
+        $userLevel = \Yii::$app->request->headers->get('User-Level');
         $lang = \Yii::$app->request->headers->get('App-Lang','zh_CN');
         !in_array($lang, $this->lang) && $lang = 'zh_CN';
         $_GET['lang'] = $lang;
+        if($userLevel){
+            $_GET['user_level'] = $_POST['user_level'] = $userLevel;
+        }
         if($accessToken){
             $model = UserModel::findOne(['access_token' => $accessToken]);
             if($model instanceof UserModel){

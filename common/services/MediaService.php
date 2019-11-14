@@ -117,7 +117,7 @@ class MediaService extends OperationService
     }
 
     //推荐列表
-    public function recommendList($lang)
+    public function recommendList($lang, $userLevel)
     {
         $data = [];
         $column = ['id','cate_id','source_type','level','poster_url','play_link','download_link','play_num','collection_num','download_num'];
@@ -134,7 +134,8 @@ class MediaService extends OperationService
                     ],
                     ['status' => MediaModel::STATUS_ACTIVE],
                 ])
-                ->orderBy(['is_recommend' => SORT_DESC, 'sort_order' => SORT_DESC,'create_time' => SORT_DESC,'play_num' => SORT_DESC])
+                ->filterWhere(['<=', 'level', $userLevel])
+                ->orderBy(['is_recommend' => SORT_DESC, 'level' => SORT_DESC, 'create_time' => SORT_DESC])
                 ->with('category')
                 ->asArray()
                 ->limit(4)
