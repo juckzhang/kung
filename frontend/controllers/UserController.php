@@ -72,8 +72,10 @@ class UserController extends BaseController{
     // 返回字库
     public function charsAction(){
         $chars = \common\helpers\CommonHelper::loadConfig('main.php',['@common','@frontend']);
+        shuffle($chars);
+        $chars = array_slice($chars, 0, 80);
 
-        return $this->returnSuccess(shuffle($chars));
+        return $this->returnSuccess($chars);
     }
 
     // 记录当前用户汉字识别率

@@ -2,44 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>联系我们</title>
+    <title>活动入口</title>
     <script src="/js/jquery-3.1.1.js"></script>
 </head>
 <style>
-    .center{
-        text-align: left;
-        background-color: #fff;
-        border-radius: 20px;
-        width: 240px;
-        height: 120px;
-        margin: auto;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+    .container{
+        text-align: center;
+        padding: 20px;
+        margin: 10px;
+    }
+    .title{
+        background-image: url("/images/title-bg.png");
+        height: 40px;
     }
 </style>
 <body>
-<div class="center">
-    <p>
+<div class="title">
+    <
+</div>
+<div class="container">
+    <p style="margin-top: 30px; size: 20px; color: #00a0e9;">
         Test how many Chinese characters you know
     </p>
-    <p>
+    <p style="border-bottom: 1px solid #00a0e9;">
         All of the characters are selected from 3755 most commonly used ones. Check the box
         for each one you know at least one definition for.
     </p>
-    <p>
+    <p style="border-bottom: 1px solid #00a0e9;">
         (Don't check boxes for words you know you've seen before, but whose meaning you aren't exactly sure of.)
     </p>
-    <p>
-        <a id = "start" href="/active/select-chars.html">Begin Testing</a>
-    </p>
+    <a id="link" href="javascript:void(0);"><img src="/images" /></a>
 </div>
 <script>
     $(function() {
-        $('#start').on('click',function(event){
-
+        $('#link').on('click',function(event){
+            var url = '/site/start.html?uid=' + Math.round(Math.random()*100000000);;
+            location.href = url;
         })
     })
 </script>
