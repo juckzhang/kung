@@ -1,47 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>活动入口</title>
-    <script src="/js/jquery-3.1.1.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <title></title>
+  <link href="/css/common.css" rel=stylesheet>
+  <script src="/js/jquery-3.1.1.js" ></script>
+  <style>
+    .content {
+      padding: 15px;
+    }
+  </style>
 </head>
-<style>
-    .container{
-        text-align: center;
-    }
-    .title{
-        background-image: url("/images/title-bg.png");
-        height: 120px;
-        line-height: 120px;
-        font-size: 40px;
-    }
-</style>
 <body>
-<div class="title">
-    <
-</div>
-<div class="container">
-    <p style="color: #00a0e9; font-size:40px; margin: 100px 20px 40px 20px; padding: 40px;">
-        Test how many Chinese characters you know
-    </p>
-    <p style="border-bottom: 1px solid #00a0e9; font-size: 12px; padding: 80px 40px;">
-        All of the characters are selected from 3755 most commonly used ones. Check the box
-        for each one you know at least one definition for.
-    </p>
-    <p style="border-bottom: 1px solid #00a0e9; font-size: 12px; padding: 80px 40px;">
-        (Don't check boxes for words you know you've seen before, but whose meaning you aren't exactly sure of.)
-    </p>
-    <a id="link" href="javascript:void(0);">
-        <img src="/images/begin-testing.png" style="margin-top: 80px;"/>
-    </a>
-</div>
-<script>
-    $(function() {
-        $('#link').on('click',function(event){
-            var url = '/active/select-chars.html?uid=' + Math.round(Math.random()*100000000);;
-            location.href = url;
-        })
-    })
-</script>
+  <header class="bg_1 header">
+    <i class="rt_pos"></i>
+  </header>
+  <div class="content fs_14 txt-align">
+    <h1 class="fs_18 color_1 margin_30 lh_15">Test how many Chinese characters you know</h1>
+    <article class="lh_18 border-bottom color_2 padding_30">
+      All of the characters are selected from 3755
+      most commonly used ones.Check the box for
+      each one you know at least one definition for.
+    </article>
+    <article class="lh_18 border-bottom color_2 padding_30">
+      (Don't check boxes for words you know you've
+      seen before,but whose meaning you aren't exactly sure of.)
+    </article>
+    <button class="button bg_1 color_3" id="start">
+      Begin Testing
+    </button>
+  </div>
 </body>
+<script>
+  $(function () {
+      $('#start').on('click', function (event) {
+          location.href = '/active/select-chars.html';
+      });
+  });
+</script>
 </html>

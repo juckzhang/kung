@@ -1,28 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>选择词语</title>
-</head>
-<style>
-    .center{
-        text-align: left;
-        background-color: #fff;
-        border-radius: 20px;
-        width: 240px;
-        height: 120px;
-        margin: auto;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <title></title>
+  <link href="/css/common.css" rel=stylesheet>
+  <script src="/js/jquery-3.1.1.js" ></script>
+  <style>
+    .content_list {
+      background: #fff;
+      margin: 10px;
+      padding: 0.15rem 0 0.15rem 0.15rem;
     }
-</style>
-<body>
-<div class="center">
-    <input type="checkbox" name="vehicle" value="Car" /> 1
-    <input type="checkbox" name="vehicle" value="Car" /> 1
-</div>
+    .select_text {
+      display: inline-block;
+      width: 0.35rem;
+      height: 0.35rem;
+      line-height: 0.35rem;
+    }
+    .button_con {
+      display: inherit;
+      width: 1.5rem;
+      height: 0.35rem;
+      margin: 0 auto;
+      border-radius: 0.06rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="bg_2">
+  <header class="bg_1 header" id="header">
+    <i class="rt_pos"></i>
+    step 2/3
+  </header>
+  <div class="fs_14">
+    <div class="content_list">
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars">刘</span>
+      </label>
+      <label class="choose-box">
+        <input type="radio" checked/>
+        <span class="bg_1 select_text color_3 chars chars">刘</span>
+      </label>
+    </div>
+  </div>
+  <button class="button_con bg_1 color_3">
+    continue
+  </button>
 </body>
+<script>
+    function get_query(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+  $(function () {
+      var chars = get_query('chars');
+      var num = get_query('num');
+      //内容填充
+      if(!chars){
+          $.get('/user/chars.json', function (data) {
+              
+          });
+      }else{
+          chars = chars.parseJSON();
+          $('.chars').each(function (i) {
+              var char = chars[i];
+              $(this).text(char);
+          });
+      }
+
+      //返回键
+      $('#header').on('click', function (event) {
+          if(chars) {
+              location.href = '/active/select-chars.html';
+              return;
+          }
+          location.href = '/active/index.html';
+      });
+  });
+</script>
 </html>

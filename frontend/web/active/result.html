@@ -1,35 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>结果页</title>
-</head>
-<style>
-    .center{
-        text-align: left;
-        background-color: #fff;
-        border-radius: 20px;
-        width: 240px;
-        height: 120px;
-        margin: auto;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <title></title>
+  <link href="/css/common.css" rel=stylesheet>
+  <script src="/js/jquery-3.1.1.js" ></script>
+  <style>
+    .content {
+      padding: 0 20px;
     }
-</style>
+    .bg_logo {
+      background: url(/images/KungChinese.png)no-repeat center;
+      background-size: 1.1rem 0.8rem;
+      width: 1.1rem;
+      height: 0.8rem;
+      padding: 0.35rem 0;
+      margin: 0 auto;
+    }
+    .result_logo {
+      background: url(/images/excellent.png)no-repeat center;
+      background-size: 100% 0.5rem;
+      width: 100%;
+      height: 0.5rem;
+      margin: 0 auto;
+    }
+    .share {
+      margin-top: 5%;
+    }
+  </style>
+</head>
 <body>
-<div class="center">
-    <img src="" />
-    <p>
-        Excellent!
-        You have already learnt 1000 Chinese characters, it is better than 30% foreign learners
+  <div class="content fs_14">
+    <div class="bg_logo"></div>
+    <div class="result_logo"></div>
+    <article class="lh_20 padding_40">
+      You have already learnt
+      <span class="color_4 fs_20">1000</span> Chinese characters,
+      it is better than <span class="color_4 fs_20">30%</span> foreign learner
+    </article>
+    <p class="fs_12 color_5 lh_15">
+      Search "KungChinese" on Googleplay to download
+      our app for learning Chinese more easily
     </p>
-    <p>
-        Search "KungChinese" on Googleplay to download our app for learing Chinese more easily.
-    </p>
-    <button>Share to your friends</button>
-</div>
+    <button class="button bg_1 color_3 share">
+      Share to your friends
+    </button>
+  </div>
 </body>
 </html>
