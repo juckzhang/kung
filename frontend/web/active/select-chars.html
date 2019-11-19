@@ -166,13 +166,14 @@
           });
       }else{
           $('#back').html('<i class="rt_pos"></i>step 2/3');
-          chars = JSON.parse(decodeURI(chars));
-          $('.chars').each(function (i) {
-              var char = chars[i];
-              $(this).text(char);
-          });
-          $('#next').data('num', num);
-          $('#next').data('next', '1');
+          history.back(-1);
+          // chars = JSON.parse(decodeURI(chars));
+          // $('.chars').each(function (i) {
+          //     var char = chars[i];
+          //     $(this).text(char);
+          // });
+          // $('#next').data('num', num);
+          // $('#next').data('next', '1');
       }
 
       //$(":radio")

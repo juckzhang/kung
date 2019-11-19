@@ -5,7 +5,8 @@
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
   <meta name="format-detection" content="telephone=no" />
   <title></title>
-  <link href="../css/common.css" rel=stylesheet>
+  <link href="/css/common.css" rel=stylesheet>
+  <script src="/js/jquery-3.1.1.js" ></script>
   <style>
     .content {
       background: #fff;
@@ -15,7 +16,7 @@
   </style>
 </head>
 <body class="bg_2">
-  <header class="bg_1 header">
+  <header class="bg_1 header" id="back">
     <i class="rt_pos"></i>
     step 3/3
   </header>
@@ -23,39 +24,120 @@
     <div>
       <p class="padding_20">1、Which country are you from?</p>
       <label>
-        <select class="select">
-          <option>America</option>
+        <select class="select" name="country">
+          <option selected>America</option>
+          <option>England</option>
           <option>China</option>
+          <option>Japan</option>
         </select>
       </label>
     </div>
     <div>
       <p class="padding_20">2、Which year were you born in?</p>
       <label>
-        <select class="select">
-          <option>2000</option>
-          <option>2001</option>
+        <select class="select" name="birthday">
+          <option value="1982" selected>1982</option>
+          <option value="1983">1983</option>
+          <option value="1984">1984</option>
+          <option value="1985">1985</option>
+          <option value="1986">1986</option>
+          <option value="1987">1987</option>
+          <option value="1988">1988</option>
+          <option value="1989">1989</option>
+          <option value="1990">1990</option>
+          <option value="1991">1991</option>
+          <option value="1992">1992</option>
+          <option value="1993">1993</option>
+          <option value="1994">1994</option>
+          <option value="1995">1995</option>
+          <option value="1996">1996</option>
+          <option value="1997">1997</option>
+          <option value="1998">1998</option>
+          <option value="1999">1999</option>
+          <option value="2000">2000</option>
+          <option value="2001">2001</option>
+          <option value="2002">2002</option>
+          <option value="2003">2003</option>
+          <option value="2004">2004</option>
+          <option value="2005">2005</option>
+          <option value="2006">2006</option>
+          <option value="2007">2007</option>
+          <option value="2008">2006</option>
+          <option value="2009">2009</option>
+          <option value="2010">2010</option>
+          <option value="2011">2011</option>
+          <option value="2012">2012</option>
+          <option value="2013">2013</option>
+          <option value="2014">2014</option>
+          <option value="2015">2015</option>
         </select>
       </label>
     </div>
     <div>
       <p class="padding_20">3、How many years have you learnt Chinese?</p>
       <label>
-        <select class="select">
-          <option>1</option>
-          <option>2</option>
+        <select class="select" name="years">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">2</option>
+          <option value="4">2</option>
+          <option value="5">more than 10 years</option>
         </select>
       </label>
     </div>
     <div>
       <p class="padding_20">4、Is Chinese your first or second foreign language?</p>
       <label>
-        <select class="select">
-          <option>First</option>
-          <option>Second</option>
+        <select class="select" name="lang">
+          <option value="0" selected>First</option>
+          <option value="1">Second</option>
         </select>
       </label>
     </div>
   </div>
+  <button class="button_con bg_1 color_3" id="next" data-num="0">
+    Finish
+  </button>
 </body>
+<script>
+  function get_query(variable)
+  {
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i=0;i<vars.length;i++) {
+          var pair = vars[i].split("=");
+          if(pair[0] == variable){return pair[1];}
+      }
+      return(false);
+  }
+  $(function () {
+      // back
+      $('#back').click(function () {
+          history.back(-1);
+      });
+
+      $('#next').click(function () {
+          var num = get_query(num);
+          var country = $('input[name="country"]').val();
+          var birthday = $('input[name="birthdat"]').val();
+          var years = $('input[name="years"]').val();
+          var lang = $('input[name="lang"]').val();
+          var uid = Math.ceil(Math.random()*100000000);
+          $.post('/user/commit-chars.json', {
+              data: {
+                  user_id: uid,
+                  char_num: num,
+                  country: country,
+                  birth_year: birthday,
+                  learn_age: years,
+                  first_lang: lang,
+              },
+          }, function (data) {
+              if(data['code'] == 200){
+                  location.href = '/active/result.html?uid='+uid;
+              }
+          });
+      })
+  });
+</script>
 </html>

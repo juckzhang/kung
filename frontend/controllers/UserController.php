@@ -81,16 +81,15 @@ class UserController extends BaseController{
     // 记录当前用户汉字识别率
     public function actionCommitChars()
     {
-        $userId  = ArrayHelper::getValue($this->paramData,'user_id');
         $data = ArrayHelper::getValue($this->paramData,'data');
 
-        UserService::getService()->knowChars($userId, $data);
+        UserService::getService()->knowChars($data);
 
         return $this->returnSuccess();
     }
 
     public function actionResult(){
-        $userId  = ArrayHelper::getValue($this->paramData,'user_id');
+        $userId  = ArrayHelper::getValue($this->paramData,'uid');
         $ret = UserService::getService()->showChars($userId);
 
         return $this->returnSuccess($ret);

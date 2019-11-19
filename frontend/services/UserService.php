@@ -86,13 +86,12 @@ class UserService extends FrontendService{
         return $data;
     }
 
-    public function knowChars($userId, $data){
-        if(empty($params['user_id'])){
+    public function knowChars($data){
+        if(empty($data['user_id'])){
             return CodeConstant::USER_TOKEN_NOT_EXISTS;
         }
-        $data['user_id'] = $userId;
         $model = new UserCharsModel();
-        if($model->load($params,'') and $model->save()){
+        if($model->load($data,'') and $model->save()){
             return CodeConstant::SUCCESS;
         }
 
@@ -100,7 +99,7 @@ class UserService extends FrontendService{
     }
 
     public function showChars($userId){
-        if(empty($params['user_id'])){
+        if(empty($userId)){
             return CodeConstant::USER_TOKEN_NOT_EXISTS;
         }
         $ret = [];
@@ -118,6 +117,6 @@ class UserService extends FrontendService{
         //参与总人数
         $totalNum = UserCharsModel::find()->count();
 
-        return ['data' => $data, 'num' => $num, 'totalNum' => $totalNum];
+        return ['rate' => sprintf('%.2f%', ($num+100)*100/($totalNum+150)), 'charNum' => ceil($charNum/80*3755*1.2)];
     }
 }
