@@ -118,10 +118,10 @@
 
       $('#next').click(function () {
           var num = get_query(num);
-          var country = $('input[name="country"]').val();
-          var birthday = $('input[name="birthdat"]').val();
-          var years = $('input[name="years"]').val();
-          var lang = $('input[name="lang"]').val();
+          var country = $('select[name="country"]').val();
+          var birthday = $('select[name="birthdat"]').val();
+          var years = $('select[name="years"]').val();
+          var lang = $('select[name="lang"]').val();
           var uid = Math.ceil(Math.random()*100000000);
           $.post('/user/commit-chars.json', {
               data: {
