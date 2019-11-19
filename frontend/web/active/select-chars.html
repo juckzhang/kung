@@ -166,7 +166,7 @@
               $('#next').data('chars', otherchars);
           });
       }else{
-          chars = JSON.parse(chars);
+          chars = JSON.parse(decodeURI(chars));
           $('.chars').each(function (i) {
               var char = chars[i];
               $(this).text(char);
