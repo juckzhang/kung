@@ -71,7 +71,7 @@ class UserController extends BaseController{
 
     // 返回字库
     public function actionChars(){
-        $chars = \common\helpers\CommonHelper::loadConfig('main.php',['@common','@frontend']);
+        $chars = \common\helpers\CommonHelper::loadConfig('chars.php',['@common','@frontend']);
         shuffle($chars);
         $chars = array_slice($chars, 0, 80);
 
