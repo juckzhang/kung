@@ -116,14 +116,13 @@
           history.back(-1);
       });
 
-      var uid = Math.ceil(Math.random()*100000000);
-
       $('#next').click(function () {
           var num = get_query(num);
           var country = $('select[name="country"]').val();
           var birthday = $('select[name="birthdat"]').val();
           var years = $('select[name="years"]').val();
           var lang = $('select[name="lang"]').val();
+          var uid = Math.ceil(Math.random()*100000000);
           $.post('/user/commit-chars.json', {
               data: {
                   user_id: uid,
@@ -135,7 +134,7 @@
               },
           }, function (data) {
               if(data['code'] == 200){
-                  location.href = '/active/result.html?uid='+uid;
+                  location.href = '/active/result.html?uid='+uid+'&test=1';
               }
           });
       })
