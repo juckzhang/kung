@@ -31,8 +31,7 @@
 </head>
 <body class="bg_2">
   <header class="bg_1 header" id="back">
-    <i class="rt_pos"></i>
-    step 2/3
+    <i class="rt_pos"></i>step 1/3
   </header>
   <div class="fs_14">
     <div class="content_list">
@@ -155,8 +154,6 @@
       var num = get_query('num');
       //内容填充
       if(!chars){
-          var hl = '<i class="rt_pos"></i>step 1/3';
-          $('#back').html(hl);
           $.get('/user/chars.json', function (data) {
               var chs = data['data'];
               $('.chars').each(function (i) {
@@ -168,8 +165,7 @@
               $('#next').data('chars', otherchars);
           });
       }else{
-          var hl = '<i class="rt_pos"></i>step 2/3';
-          $('#back').html(hl);
+          $('#back').html('<i class="rt_pos"></i>step 2/3');
           chars = JSON.parse(decodeURI(chars));
           $('.chars').each(function (i) {
               var char = chars[i];
