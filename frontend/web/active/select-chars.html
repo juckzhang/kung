@@ -182,7 +182,7 @@
       }
 
       //$(":radio")
-      $(":radio").on('click', function (event) {
+      $(":radio").click(function () {
           var num = $('#next').data('num');
           var ischecked = $(this).attr('checked');
           if(ischecked){
@@ -193,7 +193,7 @@
               num = num + 1;
           }
           $('#next').data('num', num);
-      })
+      });
 
       //返回键
       $('#back').on('click', function (event) {
