@@ -30,111 +30,111 @@
   </style>
 </head>
 <body class="bg_2">
-  <header class="bg_1 header" id="header">
+  <header class="bg_1 header" id="back">
     <i class="rt_pos"></i>
     step 2/3
   </header>
   <div class="fs_14">
     <div class="content_list">
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars">刘</span>
       </label>
       <label class="choose-box">
-        <input type="radio" checked/>
+        <input type="radio" />
         <span class="bg_1 select_text color_3 chars chars">刘</span>
       </label>
     </div>
   </div>
-  <button class="button_con bg_1 color_3">
+  <button class="button_con bg_1 color_3" id="next" data-num="0" data-chars="" data-next="0">
     continue
   </button>
 </body>
@@ -156,7 +156,14 @@
       //内容填充
       if(!chars){
           $.get('/user/chars.json', function (data) {
-              
+              var chs = data['data'];
+              $('.chars').each(function (i) {
+                  var char = chs[i];
+                  $(this).text(char);
+              });
+              var otherchars = chs.slice(40, 80);
+              otherchars = JSON.stringify(otherchars);
+              $('#next').data('chars', otherchars);
           });
       }else{
           chars = chars.parseJSON();
@@ -164,16 +171,44 @@
               var char = chars[i];
               $(this).text(char);
           });
+          $('#next').data('num', num);
+          $('#next').data('next', '1');
       }
 
+      //$(":radio")
+      $(":radio").each(function (i) {
+          var num = $('#next').data('num');
+          var ischecked = $(this).attr('checked');
+          if(ischecked){
+              $(this).removeAttr('checked');
+              num = num - 1;
+          }else {
+              $(this).attr("checked",'true');
+              num = num + 1;
+          }
+          $('#next').data('num', num);
+      })
+
       //返回键
-      $('#header').on('click', function (event) {
+      $('#back').on('click', function (event) {
           if(chars) {
               location.href = '/active/select-chars.html';
               return;
           }
           location.href = '/active/index.html';
       });
+
+      //下一步
+      $('#next').on('click', function (event) {
+          var next = $('#next').data('next');
+          var num = $('#next').data('num');
+          if(next == 1){
+              location.href = '/active/commit-info.html?num='+num;
+          }else{
+              var chars = $('#next').data('chars');
+              location.href = '/active/select-chars.html?num='+num+'&chars='+chars;
+          }
+      })
   });
 </script>
 </html>
