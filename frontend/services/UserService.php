@@ -107,7 +107,7 @@ class UserService extends FrontendService{
         $data = UserCharsModel::find()->where([
             'user_id' => $userId,
             'status' => UserCharsModel::STATUS_ACTIVE
-        ])->orderBy(['create_time' => SORT_DESC])->toArray()->one();
+        ])->orderBy(['create_time' => SORT_DESC])->asArray()->one();
         if(empty($data)){
             return $ret;
         }
