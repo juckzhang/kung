@@ -94,7 +94,7 @@
         </select>
       </label>
     </div>
-    <button class="button_con bg_1 color_3" id="next" data-num="0">
+    <button class="button_con bg_1 color_3" id="next" data-num="0" data-uid="0">
       Finish
     </button>
   </div>
@@ -116,13 +116,14 @@
           history.back(-1);
       });
 
+      var uid = Math.ceil(Math.random()*100000000);
+
       $('#next').click(function () {
           var num = get_query(num);
           var country = $('select[name="country"]').val();
           var birthday = $('select[name="birthdat"]').val();
           var years = $('select[name="years"]').val();
           var lang = $('select[name="lang"]').val();
-          var uid = Math.ceil(Math.random()*100000000);
           $.post('/user/commit-chars.json', {
               data: {
                   user_id: uid,
