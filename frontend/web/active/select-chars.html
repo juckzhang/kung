@@ -176,7 +176,7 @@
       }
 
       //$(":radio")
-      $(":radio").each(function (i) {
+      $(":radio").on('click', function (event) {
           var num = $('#next').data('num');
           var ischecked = $(this).attr('checked');
           if(ischecked){
