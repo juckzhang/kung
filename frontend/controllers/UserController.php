@@ -70,7 +70,7 @@ class UserController extends BaseController{
     }
 
     // 返回字库
-    public function charsAction(){
+    public function actionChars(){
         $chars = \common\helpers\CommonHelper::loadConfig('main.php',['@common','@frontend']);
         shuffle($chars);
         $chars = array_slice($chars, 0, 80);
@@ -79,7 +79,7 @@ class UserController extends BaseController{
     }
 
     // 记录当前用户汉字识别率
-    public function knowCharsAction()
+    public function actionCommitChars()
     {
         $userId  = ArrayHelper::getValue($this->paramData,'user_id');
         $data = ArrayHelper::getValue($this->paramData,'data');
@@ -89,7 +89,7 @@ class UserController extends BaseController{
         return $this->returnSuccess();
     }
 
-    public function showCharsAction(){
+    public function actionResult(){
         $userId  = ArrayHelper::getValue($this->paramData,'user_id');
         $ret = UserService::getService()->showChars($userId);
 
