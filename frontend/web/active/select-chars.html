@@ -155,8 +155,7 @@
       var num = get_query('num');
       //内容填充
       if(!chars){
-          var hl = '<i class="rt_pos"></i>\n' +
-              '    step 1/3';
+          var hl = '<i class="rt_pos"></i>step 1/3';
           $('#back').html(hl);
           $.get('/user/chars.json', function (data) {
               var chs = data['data'];
@@ -169,8 +168,7 @@
               $('#next').data('chars', otherchars);
           });
       }else{
-          var hl = '<i class="rt_pos"></i>\n' +
-              '    step 2/3';
+          var hl = '<i class="rt_pos"></i>step 2/3';
           $('#back').html(hl);
           chars = JSON.parse(decodeURI(chars));
           $('.chars').each(function (i) {
