@@ -166,14 +166,13 @@
           });
       }else{
           $('#back').html('<i class="rt_pos"></i>step 2/3');
-          history.back(-1);
-          // chars = JSON.parse(decodeURI(chars));
-          // $('.chars').each(function (i) {
-          //     var char = chars[i];
-          //     $(this).text(char);
-          // });
-          // $('#next').data('num', num);
-          // $('#next').data('next', '1');
+          chars = JSON.parse(decodeURI(chars));
+          $('.chars').each(function (i) {
+              var char = chars[i];
+              $(this).text(char);
+          });
+          $('#next').data('num', num);
+          $('#next').data('next', '1');
       }
 
       //$(":radio")
@@ -192,11 +191,12 @@
 
       //返回键
       $('#back').on('click', function (event) {
-          if(chars) {
-              location.href = '/active/select-chars.html';
-              return;
-          }
-          location.href = '/active/index.html';
+          history.back(-1);
+          // if(chars) {
+          //     location.href = '/active/select-chars.html';
+          //     return;
+          // }
+          // location.href = '/active/index.html';
       });
 
       //下一步
