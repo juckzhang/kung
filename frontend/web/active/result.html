@@ -66,8 +66,8 @@
       return(false);
   }
   $(function () {
-      var uid = get_query(uid);
-      $.get('/user/result.json?uid='+uid, function (data) {
+      var uid = get_query('uid');
+      $.get('/user/result.json', {uid: uid}, function (data) {
           $('#rate').text(data['rate']);
           $('#char_num').text(data['charNum']);
       });
