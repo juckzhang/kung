@@ -117,6 +117,6 @@ class UserService extends FrontendService{
         //参与总人数
         $totalNum = UserCharsModel::find()->count();
 
-        return ['rate' => sprintf('%.2f%', ($num+100)*100/($totalNum+150)), 'charNum' => ceil($charNum/80*3755*1.2)];
+        return ['rate' => sprintf("%.2f\%", ($num+100)*100/($totalNum+150)), 'charNum' => ceil($charNum/80*3755*1.2)];
     }
 }
