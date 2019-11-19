@@ -177,7 +177,7 @@
 
       //$(":radio")
       $(":radio").click(function () {
-          var num = $('#next').data('num');
+          var num = parseInt($('#next').data('num'));
           var ischecked = $(this).attr('checked');
           if(ischecked){
               $(this).removeAttr('checked');
