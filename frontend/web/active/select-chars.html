@@ -179,12 +179,12 @@
         //$(":radio")
         $(":checkbox").click(function () {
             var num = parseInt($('#next').data('num'));
-            var is = $(this).attr('');
+            var is = $(this).attr('checked');
             if(is){
-                $(this).removeAttr('');
+                $(this).removeAttr('checked');
                 num = num - 1;
             }else {
-                $(this).attr("",'true');
+                $(this).attr("checked",'checked');
                 num = num + 1;
             }
             $('#next').data('num', num);
