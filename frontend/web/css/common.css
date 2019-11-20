@@ -285,9 +285,9 @@ html {font-size: 625%; /*100 ÷ 16 × 100% = 625%*/}
 .header {
   height: 50px;
   font-size: 0.14rem;
-  padding: 13px 0;
+  padding: 13px;
   box-sizing: border-box;
-  padding-left: 40px;
+  /*padding-left: 40px;*/
   color: rgb(255, 255, 255);
 }
 
