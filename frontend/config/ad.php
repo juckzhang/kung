@@ -1,7 +1,7 @@
 <?php
 return [
     [
-        'pic' => 'http://ss1.kungchinese.com/pdf/f9edff123568f5c545c631c67154293b.png',
+        'pic' => 'http://ss1.kungchinese.com/picture/1554809b53c8eede1b5c70715c5a32ec.png',
         'scheme' => '',
     ],
     [
