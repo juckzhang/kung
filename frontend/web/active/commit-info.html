@@ -24,10 +24,10 @@
   </style>
 </head>
 <body class="bg_2">
-  <header class="bg_1 header" id="back">
-    <i class="rt_pos"></i>
-    step 3/3
-  </header>
+  <!--<header class="bg_1 header" id="back">-->
+    <!--<i class="rt_pos"></i>-->
+    <!--step 3/3-->
+  <!--</header>-->
   <div class="content fs_14">
     <div>
       <p class="padding_20">1、Which country are you from?</p>
@@ -119,10 +119,6 @@
       return(false);
   }
   $(function () {
-      // back
-      $('#back').click(function () {
-          history.back(-1);
-      });
 
       $('#next').click(function () {
           var num = get_query('num');

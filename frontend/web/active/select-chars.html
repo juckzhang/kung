@@ -30,10 +30,10 @@
   </style>
 </head>
 <body class="bg_2">
-<header class="bg_1 header" id="back">
-  <i class="rt_pos"></i>
-  step 1/3
-</header>
+<!--<header class="bg_1 header" id="back">-->
+  <!--<i class="rt_pos"></i>-->
+  <!--step 1/3-->
+<!--</header>-->
 <div class="fs_14">
   <div class="content_list">
     <label class="choose-box">
@@ -166,7 +166,6 @@
                 $('#next').data('chars', otherchars);
             });
         }else{
-            $('#back').html('<i class="rt_pos"></i>step 2/3');
             chars = JSON.parse(decodeURI(chars));
             $('.chars').each(function (i) {
                 var char = chars[i];
@@ -188,11 +187,6 @@
                 num = num + 1;
             }
             $('#next').data('num', num);
-        });
-
-        //返回键
-        $('#back').on('click', function (event) {
-            history.back(-1);
         });
 
         //下一步
