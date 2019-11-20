@@ -53,4 +53,10 @@ class SiteController extends BaseController
 
         return $this->returnSuccess($ret);
     }
+
+    public function actionAdList(){
+        $adList = \common\helpers\CommonHelper::loadConfig('ad.php',['@common','@frontend']);
+
+        return $this->returnSuccess(["dataList" => $adList]);
+    }
 }
