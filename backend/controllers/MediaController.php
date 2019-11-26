@@ -22,6 +22,8 @@ class MediaController extends BaseController
         $_category = ArrayHelper::getValue($this->paramData,'category');
         $_recommend = ArrayHelper::getValue($this->paramData,'recommend');
         $_other    = ArrayHelper::getValue($this->paramData,'other',[]);
+        $_level = ArrayHelper::getValue($this->paramData,'level');
+        $_other['level'] = $_level;
         $_order = $this->_sortOrder(MediaModel::tableName().'.');
         $data = MediaService::getService()->MediaList($_keyWord,$_other,$_order,$_page,$_prePage,$_category,$_recommend);
         return $this->render('media-list',$data);

@@ -36,6 +36,7 @@ class MediaService extends BackendService
             ->andFilterWhere(['like','title',$keyWord])
             ->andFilterWhere(['cate_id' => $_category])
             ->andFilterWhere(['source_type' => ArrayHelper::getValue($other, 'source_type')])
+            ->andFilterWhere(['level' => ArrayHelper::getValue($other, 'level')])
             ->andFilterWhere(['is_recommend' => $_recommend]);
 
         $data['dataCount'] = $models->count();

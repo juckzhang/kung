@@ -14,6 +14,7 @@ $prePage = ArrayHelper::getValue($params, 'numPerPage', '20');
 $other = ArrayHelper::getValue($params, 'other', []);
 $category = ArrayHelper::getValue($other, 'category');
 $sourceType = ArrayHelper::getValue($other, 'source_type', 1);
+$level = ArrayHelper::getValue($params, 'level');
 
 $categories = $mediaService->categories($sourceType);
 
@@ -48,6 +49,14 @@ $categories = $mediaService->categories($sourceType);
                                             &nbsp;&nbsp;&nbsp;&nbsp;<?= $child['name'] ?></option>
                                     <?php endforeach; ?>
                                 <?php endforeach; ?>
+                            </select>
+                        </td>
+                        <td>等级筛选：
+                            <select name="level">
+                                <option value="" <?= $level ? '' : 'selected'?>>-- 请选择分类 --</option>
+                                <?php foreach (['1' => '初级', '2' => '中级', '3' => '高级'] as $key => $value): ?>
+                                    <option value="<?= $key ?>" <?=$key == $level ? "selected":''?>><?= $value ?></option>
+                                <?php endforeach;?>
                             </select>
                         </td>
                         <td>关键词：<input name="keyword" class="textInput" type="text" alt=""
