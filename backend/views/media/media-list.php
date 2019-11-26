@@ -107,6 +107,7 @@ $categories = $mediaService->categories($sourceType);
                 <th width="30"><input type="checkbox" group="ids[]" class="checkboxCtrl"></th>
                 <th width="80">ID</th>
                 <th width="80">分类名称</th>
+                <th width="80">等级</th>
                 <th width="80">语言</th>
                 <th width="80">中文标题</th>
                 <th width="80">英文标题</th>
@@ -126,6 +127,7 @@ $categories = $mediaService->categories($sourceType);
                     <td><input name="ids[]" value="<?= $data['id'] ?>" type="checkbox"></td>
                     <td><?= $data['id']?></td>
                     <td><?= $data['cate_id']?></td>
+                    <td><?= $data['level'] == 1 ? '初级' : ($data['level'] == 2 ? '中级' : '高级')?></td>
                     <td><?= $data['lang_type']?></td>
                     <td><?= $data['title']?></td>
                     <td><?= $data['title_en']?></td>
