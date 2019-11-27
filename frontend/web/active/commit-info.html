@@ -142,7 +142,7 @@
               html = html + '<option>'+country[j]+'</option>'
           }
       }
-      $('#country').html(html);
+      $('#country').append(html);
       //下一步
       $('#next').click(function () {
           var num = get_query('num');
