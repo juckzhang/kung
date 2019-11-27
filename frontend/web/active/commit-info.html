@@ -136,11 +136,7 @@
       ];
       var html = '';
       for(j = 0, len=country.length; j < len; j++){
-          if(j == 0){
-              html = html + '<option selected>'+country[j]+'</option>'
-          }else{
-              html = html + '<option>'+country[j]+'</option>'
-          }
+          html = html + '<option>'+country[j]+'</option>'
       }
       $('#country').append(html);
       //下一步
