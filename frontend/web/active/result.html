@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
   <meta name="format-detection" content="telephone=no" />
-  <meta property="og:url" content="https://play.google.com/store/apps/details?id=com.kung.learnchinese" />
+  <!--<meta property="og:url" content="https://play.google.com/store/apps/details?id=com.kung.learnchinese" />-->
+  <meta property="og:url" content="http://106.12.72.118/active/result.html" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="测字" />
   <meta property="og:description" content="Click the link to download Kung Chinese for free. Let you learn Chinese with interest and more easily." />
@@ -67,13 +68,19 @@
   }
   $(function () {
       var uid = get_query('uid');
+      var downloadUrl = get_query('download_url');
+      if(downloadUrl){
+          downloadUrl = decodeURI(downloadUrl);
+          location.href = downloadUrl;
+      }
       $.get('/user/result.json', {uid: uid}, function (data) {
           $('#rate').text(data['data']['rate']);
           $('#char_num').text(data['data']['charNum']);
       });
       //share
       $('#share').click(function () {
-          var url = encodeURIComponent('https://play.google.com/store/apps/details?id=com.kung.learnchinese');
+          var downlod_url = encodeURIComponent('https://play.google.com/store/apps/details?id=com.kung.learnchinese');
+          var url = encodeURIComponent(location.href+'&download_url='+downlod_url);
           var title = encodeURIComponent('Click the link to download Kung Chinese for free. Let you learn Chinese with interest and more easily.');
           window.open("http://www.facebook.com/sharer.php?u="+ url + "&t="+ title, "sharer","toolbar=0,status=0,width=626,height=436");
       })
