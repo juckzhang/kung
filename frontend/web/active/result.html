@@ -70,7 +70,7 @@
       var uid = get_query('uid');
       var downloadUrl = get_query('download_url');
       if(downloadUrl){
-          downloadUrl = decodeURI(downloadUrl);
+          downloadUrl = decodeURIComponent(downloadUrl);
           location.href = downloadUrl;
       }
       $.get('/user/result.json', {uid: uid}, function (data) {
