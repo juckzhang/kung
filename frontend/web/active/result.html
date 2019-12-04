@@ -82,6 +82,11 @@
           var downlod_url = encodeURIComponent('https://play.google.com/store/apps/details?id=com.kung.learnchinese');
           var url = encodeURIComponent('http://106.12.72.118/active/result.html?uid='+uid+'&download_url='+downlod_url);
           var title = encodeURIComponent('Click the link to download Kung Chinese for free. Let you learn Chinese with interest and more easily.');
+          //隐藏模块
+          $(this).hide();
+          setTimeout(function(){
+              $('#share').show();
+          }, 1000);
           window.open("http://www.facebook.com/sharer.php?u="+ url + "&t="+ title, "sharer","toolbar=0,status=0,width=626,height=436");
       })
   })
