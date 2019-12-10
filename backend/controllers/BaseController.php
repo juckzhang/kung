@@ -74,10 +74,13 @@ class BaseController extends CommonController
         }
     }
 
-    protected function _sortOrder($prefix='')
+    protected function _sortOrder($prefix = '')
     {
-        $orderFiled = ArrayHelper::getValue($this->paramData,'orderField',$prefix.'create_time');
-        $orderDesc  = ArrayHelper::getValue($this->paramData,'orderDirection','desc');
+        $orderFiled = ArrayHelper::getValue($this->paramData,'orderField');
+        if(!$orderFiled){
+            $orderFiled = $prefix.'create_time';
+        }
+        $orderDesc  = ArrayHelper::getValue($this->paramData,'orderDirection');
 
         $desc = SORT_DESC;
         if($orderDesc == 'asc')  $desc = SORT_ASC;
