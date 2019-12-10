@@ -136,7 +136,14 @@ class MediaService extends OperationService
                     ['status' => MediaModel::STATUS_ACTIVE],
                     ['<=', 'level', $userLevel]
                 ])
-                ->orderBy(['is_recommend' => SORT_DESC, 'level' => SORT_DESC, 'create_time' => SORT_DESC])
+                ->orderBy([
+                    'level' => SORT_DESC,
+                    'is_recommend' => SORT_DESC,
+                    'complete_play_num' => SORT_DESC,
+                    'collection_num' => SORT_DESC,
+                    'real_play_num' => SORT_DESC,
+                    'create_time' => SORT_DESC,
+                ])
                 ->with('category')
                 ->asArray()
                 ->limit(4)
